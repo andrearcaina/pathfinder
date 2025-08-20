@@ -1,0 +1,22 @@
+version: '3'
+
+tasks:
+  default:
+    cmds:
+      - echo "Code Metric Tool Created By Andre Arcaina"
+    silent: true
+
+  build:
+    cmds:
+      - go build -o bin/pathfinder main.go
+      - chmod +x bin/pathfinder
+
+  run:
+    dir: '{{.USER_WORKING_DIR}}'
+    cmds:
+      - bash -c "./bin/pathfinder"
+
+  clean:
+    dir: '{{.USER_WORKING_DIR}}'
+    cmds:
+      - rm -rf ./bin/**

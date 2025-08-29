@@ -6,36 +6,26 @@ import (
 	"path/filepath"
 	"sort"
 	"strings"
+	"sync"
 )
 
-var excludedDirsFromScan = map[string]struct{}{
-	".git":         {},
-	"node_modules": {},
-	"vendor":       {},
-	"out":          {},
-	"dist":         {},
-	"build":        {},
-	"target":       {},
-	".idea":        {},
-	".vscode":      {},
-	".cache":       {},
-}
+var (
+	wg sync.WaitGroup
+	mu sync.Mutex
+)
 
 func Analyze(flags Flags) (CodebaseReport, error) {
 	if flags.PathFlag == "" { // won't ever happen since default is "." set by cobra
 		return CodebaseReport{}, errors.New("path is required")
 	}
 
-	excludes := make(map[string]struct{}, len(excludedDirsFromScan))
-	for key := range excludedDirsFromScan {
-		excludes[key] = struct{}{}
-	}
-
 	langStatsMap := map[string]*LanguageMetrics{}
-	dirStatsmMap := map[string]int{}
-	var topFilesList []FileMetricsReport
+	dirStatsMap := map[string]int{}
+
 	var codebaseStats CodebaseMetrics
 	var annotationStats AnnotationMetrics
+
+	topFilesList := make([]FileMetricsReport, 0)
 
 	err := filepath.WalkDir(flags.PathFlag, func(path string, d fs.DirEntry, err error) error {
 		if err != nil {
@@ -44,18 +34,28 @@ func Analyze(flags Flags) (CodebaseReport, error) {
 
 		name := d.Name()
 
+		// skips files like .DS_Store, package-lock.json, etc.
+		if ExcludeFile(name) {
+			return nil
+		}
+
 		if !flags.HiddenFlag && strings.HasPrefix(name, ".") {
 			if d.IsDir() {
 				return fs.SkipDir
 			}
+
 			return nil
 		}
 
 		if d.IsDir() {
-			if _, ok := excludes[name]; ok {
+			if ExcludeDir(name) {
 				return fs.SkipDir
 			}
+
+			mu.Lock()
 			codebaseStats.TotalDirs++
+			mu.Unlock()
+
 			return nil
 		}
 
@@ -73,50 +73,60 @@ func Analyze(flags Flags) (CodebaseReport, error) {
 			return nil
 		}
 
-		code, comments, blanks, ann := CountFile(path, langDefinition.Type)
-		if code == 0 && comments == 0 && blanks == 0 {
-			return nil
-		}
+		wg.Add(1)
+		go func(filePath string, langDef *LanguageDefinition) {
+			defer wg.Done()
 
-		annotationStats.TotalTODO += ann.TotalTODO
-		annotationStats.TotalFIXME += ann.TotalFIXME
-		annotationStats.TotalHACK += ann.TotalHACK
-		annotationStats.TotalAnnotations += ann.TotalAnnotations
+			code, comments, blanks, ann := CountFile(filePath, langDef.Type)
+			if code == 0 && comments == 0 && blanks == 0 {
+				return
+			}
 
-		codebaseStats.TotalFiles++
-		codebaseStats.TotalCode += code
-		codebaseStats.TotalComments += comments
-		codebaseStats.TotalBlanks += blanks
+			mu.Lock()
+			defer mu.Unlock()
 
-		stats := langStatsMap[langDefinition.Name]
-		if stats == nil {
-			stats = &LanguageMetrics{}
-			langStatsMap[langDefinition.Name] = stats
-		}
+			annotationStats.TotalTODO += ann.TotalTODO
+			annotationStats.TotalFIXME += ann.TotalFIXME
+			annotationStats.TotalHACK += ann.TotalHACK
+			annotationStats.TotalAnnotations += ann.TotalAnnotations
 
-		stats.Files++
-		stats.Language = langDefinition.Name
-		stats.Code += code
-		stats.Comments += comments
-		stats.Blanks += blanks
-		stats.Lines += code + comments + blanks
+			codebaseStats.TotalFiles++
+			codebaseStats.TotalCode += code
+			codebaseStats.TotalComments += comments
+			codebaseStats.TotalBlanks += blanks
 
-		relativePath, _ := filepath.Rel(flags.PathFlag, path)
-		topDir := TopLevelDir(relativePath)
-		dirStatsmMap[topDir] += code + comments + blanks
+			stats := langStatsMap[langDef.Name]
+			if stats == nil {
+				stats = &LanguageMetrics{}
+				langStatsMap[langDef.Name] = stats
+			}
 
-		fileLangMetrics := LanguageMetrics{
-			Language: langDefinition.Name,
-			Code:     code,
-			Comments: comments,
-			Blanks:   blanks,
-			Lines:    code + comments + blanks,
-		}
+			stats.Files++
+			stats.Language = langDef.Name
+			stats.Code += code
+			stats.Comments += comments
+			stats.Blanks += blanks
+			stats.Lines += code + comments + blanks
 
-		topFilesList = append(topFilesList, FileMetricsReport{
-			Metrics: fileLangMetrics,
-			Path:    relativePath,
-		})
+			relativePath, _ := filepath.Rel(flags.PathFlag, filePath)
+			topDir := TopLevelDir(relativePath)
+			dirStatsMap[topDir] += code + comments + blanks
+
+			fileLangMetrics := LanguageMetrics{
+				Language: langDef.Name,
+				Code:     code,
+				Comments: comments,
+				Blanks:   blanks,
+				Lines:    code + comments + blanks,
+			}
+
+			topFilesList = append(topFilesList, FileMetricsReport{
+				Metrics: fileLangMetrics,
+				Path:    relativePath,
+			})
+
+			return
+		}(path, langDefinition)
 
 		return nil
 	})
@@ -125,42 +135,45 @@ func Analyze(flags Flags) (CodebaseReport, error) {
 		return CodebaseReport{}, err
 	}
 
-	languageStats := make([]LanguageMetricsReport, 0, len(langStatsMap))
-	for lang, stats := range langStatsMap {
-		langMetrics := LanguageMetrics{
-			Language: lang,
-			Files:    stats.Files,
-			Code:     stats.Code,
-			Comments: stats.Comments,
-			Blanks:   stats.Blanks,
-			Lines:    stats.Lines,
-		}
+	wg.Wait()
 
+	codebaseStats.TotalLines = codebaseStats.TotalCode + codebaseStats.TotalComments + codebaseStats.TotalBlanks
+
+	languageStats := make([]LanguageMetricsReport, 0, len(langStatsMap))
+	for _, stats := range langStatsMap {
 		languageStats = append(languageStats, LanguageMetricsReport{
-			// TODO: calculate percentage based on total lines
-			Metrics: langMetrics,
+			Percentage: (float64(stats.Code) / float64(codebaseStats.TotalLines)) * 100,
+			Metrics:    *stats,
 		})
 	}
+
+	dirStats := make([]DirMetricsReport, 0, len(dirStatsMap))
+	for dir, stat := range dirStatsMap {
+		dirStats = append(dirStats, DirMetricsReport{
+			Directory:  dir,
+			Percentage: (float64(stat) / float64(codebaseStats.TotalLines)) * 100,
+			Lines:      stat,
+		})
+	}
+
+	codebaseStats.TotalLanguages = len(languageStats)
 
 	sort.Slice(topFilesList, func(i, j int) bool {
 		return topFilesList[i].Metrics.Lines > topFilesList[j].Metrics.Lines
 	})
 
-	dirs := make([]DirMetricsReport, 0, len(dirStatsmMap))
-	for dir, stat := range dirStatsmMap {
-		dirs = append(dirs, DirMetricsReport{
-			Directory: dir,
-			Lines:     stat,
-		})
-	}
+	sort.Slice(languageStats, func(i, j int) bool {
+		return languageStats[i].Percentage > languageStats[j].Percentage
+	})
 
-	codebaseStats.TotalLanguages = len(languageStats)
-	codebaseStats.TotalLines = codebaseStats.TotalCode + codebaseStats.TotalComments + codebaseStats.TotalBlanks
+	sort.Slice(dirStats, func(i, j int) bool {
+		return dirStats[i].Percentage > dirStats[j].Percentage
+	})
 
 	return CodebaseReport{
 		LanguageMetrics:   languageStats,
 		FileMetrics:       topFilesList,
-		DirMetrics:        dirs,
+		DirMetrics:        dirStats,
 		CodebaseMetrics:   codebaseStats,
 		AnnotationMetrics: annotationStats,
 	}, nil

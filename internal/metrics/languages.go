@@ -110,14 +110,14 @@ func DetermineLangByExt(ext string) *LanguageDefinition {
 func slashType() CommentType {
 	return CommentType{
 		SingleLine: "//",
-		BLockStart: "/*",
+		BlockStart: "/*",
 		BlockEnd:   "*/",
 	}
 }
 
 func htmlType() CommentType {
 	return CommentType{
-		BLockStart: "<!--",
+		BlockStart: "<!--",
 		BlockEnd:   "-->",
 	}
 }

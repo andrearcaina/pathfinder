@@ -1,6 +1,9 @@
 package ui
 
-import "github.com/charmbracelet/lipgloss"
+import (
+	"github.com/charmbracelet/bubbles/progress"
+	"github.com/charmbracelet/lipgloss"
+)
 
 func TitleStyle() lipgloss.Style {
 	return lipgloss.NewStyle().
@@ -25,4 +28,12 @@ func BadgeStyle() lipgloss.Style {
 		Bold(true).
 		Padding(0, 1).
 		MarginRight(1)
+}
+
+func BarStyle() progress.Model {
+	return progress.New(
+		progress.WithWidth(maxBarWidth),
+		progress.WithDefaultGradient(),
+		progress.WithoutPercentage(),
+	)
 }

@@ -2,20 +2,17 @@ package metrics
 
 import (
 	"bufio"
+	"bytes"
 	"io"
 	"os"
-	"strings"
 )
 
-const (
-	_  = iota
-	KB = 1 << (10 * iota)
-	MB = 1 << (10 * iota)
-
-	maxBufferSize = 1 << 16 // 2^16 bytes (64 KB)
-)
-
-func CountFile(path string, commentType CommentType) (code int, comments int, blanks int, ann AnnotationMetrics) {
+func CountFile(path string, commentType CommentType) (
+	code int,
+	comments int,
+	blanks int,
+	ann AnnotationMetrics,
+) {
 	f, err := os.Open(path)
 	if err != nil {
 		return
@@ -25,77 +22,77 @@ func CountFile(path string, commentType CommentType) (code int, comments int, bl
 	return scanLines(f, commentType)
 }
 
-func scanLines(r io.Reader, commentType CommentType) (code int, comments int, blanks int, ann AnnotationMetrics) {
-	sc := bufio.NewScanner(r)
-
-	buf := make([]byte, 0, maxBufferSize)
-	sc.Buffer(buf, MB)
-
+func scanLines(r io.Reader, commentType CommentType) (
+	code int,
+	comments int,
+	blanks int,
+	ann AnnotationMetrics,
+) {
+	br := bufio.NewReaderSize(r, bufio.MaxScanTokenSize)
 	inBlockComment := false
 
-	for sc.Scan() {
-		line := sc.Text()
-		line = strings.TrimSpace(line)
+	for {
+		line, err := br.ReadBytes('\n')
+		if len(line) == 0 && err != nil {
+			break
+		}
 
-		if line == "" {
+		line = bytes.TrimSpace(line)
+
+		if len(line) == 0 {
 			blanks++
-			continue
-		}
-
-		if commentType.SingleLine != "" && strings.HasPrefix(line, commentType.SingleLine) {
+		} else if len(commentType.SingleLine) > 0 && bytes.HasPrefix(line, []byte(commentType.SingleLine)) {
 			comments++
-			checkAnnotations(line, &ann)
-			continue
-		}
+			checkAnnotationsBytes(line, &ann)
+		} else if len(commentType.BlockStart) > 0 && bytes.Contains(line, []byte(commentType.BlockStart)) {
+			i := bytes.Index(line, []byte(commentType.BlockStart))
+			before := bytes.TrimSpace(line[:i])
+			after := line[i+len(commentType.BlockStart):]
 
-		if commentType.BLockStart != "" {
-			if i := strings.Index(line, commentType.BLockStart); i != -1 {
-				beforeIndex := strings.TrimSpace(line[:i])
-				afterIndex := line[i+len(commentType.BLockStart):]
+			if len(commentType.BlockEnd) > 0 && bytes.Contains(after, []byte(commentType.BlockEnd)) {
+				j := bytes.Index(after, []byte(commentType.BlockEnd))
+				left := before
+				right := bytes.TrimSpace(after[j+len(commentType.BlockEnd):])
 
-				if commentType.BlockEnd != "" && strings.Contains(afterIndex, commentType.BlockEnd) {
-					j := strings.Index(afterIndex, commentType.BlockEnd)
-					left := beforeIndex
-					right := strings.TrimSpace(afterIndex[j+len(commentType.BlockEnd):])
-					if left != "" || right != "" {
-						code++
-					} else {
-						comments++
-					}
+				if len(left) > 0 || len(right) > 0 {
+					code++
 				} else {
-					if beforeIndex != "" {
-						code++
-					} else {
-						comments++
-					}
-					inBlockComment = true
+					comments++
 				}
-
-				checkAnnotations(line, &ann)
-				continue
+			} else {
+				if len(before) > 0 {
+					code++
+				} else {
+					comments++
+				}
+				inBlockComment = true
 			}
-		}
 
-		if inBlockComment {
+			checkAnnotationsBytes(line, &ann)
+		} else if inBlockComment {
 			comments++
-			if commentType.BlockEnd != "" && strings.Contains(line, commentType.BlockEnd) {
+			if len(commentType.BlockEnd) > 0 && bytes.Contains(line, []byte(commentType.BlockEnd)) {
 				inBlockComment = false
 			}
-			continue
+		} else {
+			code++
 		}
 
-		code++
+		if err == io.EOF {
+			break
+		}
 	}
+
 	return
 }
 
-func checkAnnotations(line string, ann *AnnotationMetrics) {
+func checkAnnotationsBytes(line []byte, ann *AnnotationMetrics) {
 	switch {
-	case strings.Contains(line, "TODO"):
+	case bytes.Contains(line, []byte("TODO")):
 		ann.TotalTODO++
-	case strings.Contains(line, "FIXME"):
+	case bytes.Contains(line, []byte("FIXME")):
 		ann.TotalFIXME++
-	case strings.Contains(line, "HACK"):
+	case bytes.Contains(line, []byte("HACK")):
 		ann.TotalHACK++
 	}
 	ann.TotalAnnotations = ann.TotalTODO + ann.TotalFIXME + ann.TotalHACK

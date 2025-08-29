@@ -9,7 +9,7 @@ type Flags struct {
 // CommentType defines the comment syntax for a programming language
 type CommentType struct {
 	SingleLine string // Single line comment prefixes
-	BLockStart string // Block comment start
+	BlockStart string // Block comment start
 	BlockEnd   string // Block comment end
 }
 
@@ -51,8 +51,9 @@ type FileMetricsReport struct {
 }
 
 type DirMetricsReport struct {
-	Directory string // Directory path
-	Lines     int    // Total lines in the directory (sum of all files)
+	Directory  string  // Directory path
+	Percentage float64 // Percentage of total lines in the specific directory
+	Lines      int     // Total lines in the directory (sum of all files)
 }
 
 type LanguageMetricsReport struct {

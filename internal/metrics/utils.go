@@ -15,6 +15,39 @@ func IsBinary(name string) bool {
 	}
 }
 
+func ExcludeDir(name string) bool {
+	// using a map for O(1) lookups (instead of a slice with O(n) lookups)
+	var excludedDirsFromScan = map[string]struct{}{
+		".git":         {},
+		"node_modules": {},
+		"vendor":       {},
+		"out":          {},
+		"dist":         {},
+		"build":        {},
+		"target":       {},
+		".idea":        {},
+		".vscode":      {},
+		".cache":       {},
+	}
+
+	_, ok := excludedDirsFromScan[name]
+	return ok
+}
+
+func ExcludeFile(name string) bool {
+	var excludedFilesFromScan = map[string]struct{}{
+		".DS_Store":         {},
+		"desktop.ini":       {},
+		".gitignore":        {},
+		"package-lock.json": {},
+		"yarn.lock":         {},
+		"go.sum":            {},
+	}
+
+	_, ok := excludedFilesFromScan[name]
+	return ok
+}
+
 func HasNoExt(name string) string {
 	return strings.ToLower(filepath.Ext(name))
 }

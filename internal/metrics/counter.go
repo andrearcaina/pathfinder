@@ -7,7 +7,7 @@ import (
 	"os"
 )
 
-func CountFile(path string, commentType CommentType) (
+func CountFile(path string, bufferSize int, commentType CommentType) (
 	code int,
 	comments int,
 	blanks int,
@@ -19,16 +19,16 @@ func CountFile(path string, commentType CommentType) (
 	}
 	defer f.Close()
 
-	return scanLines(f, commentType)
+	return scanLines(f, bufferSize, commentType)
 }
 
-func scanLines(r io.Reader, commentType CommentType) (
+func scanLines(r io.Reader, bufferSize int, commentType CommentType) (
 	code int,
 	comments int,
 	blanks int,
 	ann AnnotationMetrics,
 ) {
-	br := bufio.NewReaderSize(r, bufio.MaxScanTokenSize)
+	br := bufio.NewReaderSize(r, bufferSize)
 	inBlockComment := false
 
 	for {

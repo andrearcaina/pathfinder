@@ -32,6 +32,23 @@ func Analyze(flags Flags) (CodebaseReport, error) {
 			return nil
 		}
 
+		// if the user didn't set recursive flag, skip subdirectories
+		if !flags.RecursiveFlag && path != flags.PathFlag && d.IsDir() {
+			return fs.SkipDir
+		}
+
+		// if the user set max depth, skip directories deeper than max depth
+		if flags.RecursiveFlag && flags.MaxDepthFlag != -1 {
+			relPath, _ := filepath.Rel(flags.PathFlag, path)
+			depth := len(strings.Split(relPath, string(filepath.Separator)))
+			if depth > flags.MaxDepthFlag {
+				if d.IsDir() {
+					return fs.SkipDir
+				}
+				return nil
+			}
+		}
+
 		name := d.Name()
 
 		// skips files like .DS_Store, package-lock.json, etc.
@@ -74,10 +91,10 @@ func Analyze(flags Flags) (CodebaseReport, error) {
 		}
 
 		wg.Add(1)
-		go func(filePath string, langDef *LanguageDefinition) {
+		go func(filePath string, langDef *LanguageDefinition, bufferSize int) {
 			defer wg.Done()
 
-			code, comments, blanks, ann := CountFile(filePath, langDef.Type)
+			code, comments, blanks, ann := CountFile(filePath, bufferSize, langDef.Type)
 			if code == 0 && comments == 0 && blanks == 0 {
 				return
 			}
@@ -126,7 +143,7 @@ func Analyze(flags Flags) (CodebaseReport, error) {
 			})
 
 			return
-		}(path, langDefinition)
+		}(path, langDefinition, flags.BufferSizeFlag)
 
 		return nil
 	})

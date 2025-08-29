@@ -10,6 +10,11 @@ import (
 const maxBarWidth = 40
 
 func PrintReport(report metrics.CodebaseReport) {
+	if report.CodebaseMetrics.TotalFiles == 0 {
+		fmt.Println("No files analyzed. Please check the path and try again.")
+		return // exit program
+	}
+
 	fmt.Println(TitleStyle().Render("☁️ Pathfinder • Codebase Overview"))
 
 	fmt.Println(strings.Join([]string{

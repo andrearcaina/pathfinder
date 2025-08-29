@@ -1,8 +1,11 @@
 package metrics
 
 type Flags struct {
-	PathFlag   string // Path to the codebase/repository
-	HiddenFlag bool   // Include hidden files and directories
+	PathFlag       string // Path to the codebase/repository
+	HiddenFlag     bool   // Include hidden files and directories
+	BufferSizeFlag int    // Buffer size for reading files in bytes
+	RecursiveFlag  bool   // Scan directories recursively (default: false)
+	MaxDepthFlag   int    // Maximum recursion depth. Only works if RecursiveFlag is true
 	// TODO: add more flags (like dependencies)
 }
 

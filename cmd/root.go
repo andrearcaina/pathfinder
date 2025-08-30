@@ -11,6 +11,7 @@ import (
 )
 
 var (
+	debugFlag      bool
 	pathFlag       string
 	hiddenFlag     bool
 	bufferSizeFlag int
@@ -54,7 +55,12 @@ Examples:
 			return err
 		}
 
-		ui.PrintReport(report)
+		if debugFlag { // print raw report for debugging (this is just printing the struct, not really "debugging")
+			fmt.Printf("Debug: %+v\n", report)
+		} else {
+			ui.PrintReport(report)
+		}
+
 		return nil
 	},
 }
@@ -67,6 +73,7 @@ func Execute() {
 }
 
 func init() {
+	rootCmd.Flags().BoolVarP(&debugFlag, "debug", "d", false, "Enable debug mode")
 	rootCmd.Flags().StringVarP(&pathFlag, "path", "p", ".", "Path to codebase/repository")
 	rootCmd.Flags().BoolVarP(&hiddenFlag, "hidden", "i", false, "Include hidden files and directories")
 	rootCmd.Flags().IntVarP(&bufferSizeFlag, "buffer-size", "b", 4, "Buffer size for reading files in KB. Options are 4, 8, 16, 32, 64")

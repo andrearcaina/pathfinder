@@ -9,11 +9,6 @@ import (
 	"sync"
 )
 
-var (
-	wg sync.WaitGroup
-	mu sync.Mutex
-)
-
 func Analyze(flags Flags) (CodebaseReport, error) {
 	if flags.PathFlag == "" { // won't ever happen since default is "." set by cobra
 		return CodebaseReport{}, errors.New("path is required")
@@ -24,8 +19,11 @@ func Analyze(flags Flags) (CodebaseReport, error) {
 
 	var codebaseStats CodebaseMetrics
 	var annotationStats AnnotationMetrics
-
 	topFilesList := make([]FileMetricsReport, 0)
+
+	// Local variables for synchronization
+	var wg sync.WaitGroup
+	var mu sync.Mutex
 
 	err := filepath.WalkDir(flags.PathFlag, func(path string, d fs.DirEntry, err error) error {
 		if err != nil {
@@ -60,7 +58,6 @@ func Analyze(flags Flags) (CodebaseReport, error) {
 			if d.IsDir() {
 				return fs.SkipDir
 			}
-
 			return nil
 		}
 
@@ -72,7 +69,6 @@ func Analyze(flags Flags) (CodebaseReport, error) {
 			mu.Lock()
 			codebaseStats.TotalDirs++
 			mu.Unlock()
-
 			return nil
 		}
 
@@ -94,55 +90,55 @@ func Analyze(flags Flags) (CodebaseReport, error) {
 		go func(filePath string, langDef *LanguageDefinition, bufferSize int) {
 			defer wg.Done()
 
-			code, comments, blanks, ann := CountFile(filePath, bufferSize, langDef.Type)
-			if code == 0 && comments == 0 && blanks == 0 {
+			fileMetrics, annMetrics, err := FileCounter(filePath, bufferSize, langDef)
+			if err != nil {
 				return
 			}
 
 			mu.Lock()
 			defer mu.Unlock()
 
-			annotationStats.TotalTODO += ann.TotalTODO
-			annotationStats.TotalFIXME += ann.TotalFIXME
-			annotationStats.TotalHACK += ann.TotalHACK
-			annotationStats.TotalAnnotations += ann.TotalAnnotations
+			// aggregate codebase stats (this is generic stats for the entire codebase)
+			// the difference between codebaseStats and langStatsMap is that codebaseStats is for the entire codebase
+			// while langStatsMap is per language
+			// so codebaseStats.TotalFiles is the total number of files in the entire code
+			// while langStatsMap[fileMetrics.Language].Files is the total number of files for that specific language
+			codebaseStats.TotalFiles += fileMetrics.Files
+			codebaseStats.TotalCode += fileMetrics.Code
+			codebaseStats.TotalComments += fileMetrics.Comments
+			codebaseStats.TotalBlanks += fileMetrics.Blanks
 
-			codebaseStats.TotalFiles++
-			codebaseStats.TotalCode += code
-			codebaseStats.TotalComments += comments
-			codebaseStats.TotalBlanks += blanks
+			// aggregate annotation metrics (this is for the entire codebase)
+			annotationStats.TotalTODO += annMetrics.TotalTODO
+			annotationStats.TotalFIXME += annMetrics.TotalFIXME
+			annotationStats.TotalHACK += annMetrics.TotalHACK
+			annotationStats.TotalAnnotations += annMetrics.TotalAnnotations
 
-			stats := langStatsMap[langDef.Name]
-			if stats == nil {
-				stats = &LanguageMetrics{}
-				langStatsMap[langDef.Name] = stats
-			}
-
-			stats.Files++
-			stats.Language = langDef.Name
-			stats.Code += code
-			stats.Comments += comments
-			stats.Blanks += blanks
-			stats.Lines += code + comments + blanks
-
+			// aggregate directory stats (this is for the entire codebase)
 			relativePath, _ := filepath.Rel(flags.PathFlag, filePath)
 			topDir := TopLevelDir(relativePath)
-			dirStatsMap[topDir] += code + comments + blanks
+			dirStatsMap[topDir] += fileMetrics.Lines
 
-			fileLangMetrics := LanguageMetrics{
-				Language: langDef.Name,
-				Code:     code,
-				Comments: comments,
-				Blanks:   blanks,
-				Lines:    code + comments + blanks,
+			// this key sorta matters because we want to group by the language being used, but it won't be used in the final report
+			stats := langStatsMap[fileMetrics.Language]
+			if stats == nil {
+				stats = &LanguageMetrics{}
+				langStatsMap[fileMetrics.Language] = stats
 			}
 
+			stats.Language = fileMetrics.Language // we write fileMetrics.Language here because this is what's actually being used (not the map key)
+			stats.Files += fileMetrics.Files      // always being incremented by 1
+			stats.Code += fileMetrics.Code
+			stats.Comments += fileMetrics.Comments
+			stats.Blanks += fileMetrics.Blanks
+			stats.Lines += fileMetrics.Lines
+
+			// append the file metrics to the top files list
+			// we'll sort and pick the top 10 later in the final report
 			topFilesList = append(topFilesList, FileMetricsReport{
-				Metrics: fileLangMetrics,
+				Metrics: fileMetrics,
 				Path:    relativePath,
 			})
-
-			return
 		}(path, langDefinition, flags.BufferSizeFlag)
 
 		return nil
@@ -154,8 +150,12 @@ func Analyze(flags Flags) (CodebaseReport, error) {
 
 	wg.Wait()
 
+	// this is done after the walk is complete and all goroutines have finished
+	// because we need the final aggregated stats to calculate percentages
+	// it doesn't make sense to calculate percentages while we're still walking the directory
 	codebaseStats.TotalLines = codebaseStats.TotalCode + codebaseStats.TotalComments + codebaseStats.TotalBlanks
 
+	// prepare language stats for the final report
 	languageStats := make([]LanguageMetricsReport, 0, len(langStatsMap))
 	for _, stats := range langStatsMap {
 		languageStats = append(languageStats, LanguageMetricsReport{
@@ -164,6 +164,7 @@ func Analyze(flags Flags) (CodebaseReport, error) {
 		})
 	}
 
+	// prepare directory stats for the final report
 	dirStats := make([]DirMetricsReport, 0, len(dirStatsMap))
 	for dir, stat := range dirStatsMap {
 		dirStats = append(dirStats, DirMetricsReport{
@@ -173,8 +174,10 @@ func Analyze(flags Flags) (CodebaseReport, error) {
 		})
 	}
 
+	// total languages is simply the length of the language stats map
 	codebaseStats.TotalLanguages = len(languageStats)
 
+	// sort the lists for better presentation in the final report
 	sort.Slice(topFilesList, func(i, j int) bool {
 		return topFilesList[i].Metrics.Lines > topFilesList[j].Metrics.Lines
 	})
@@ -186,7 +189,7 @@ func Analyze(flags Flags) (CodebaseReport, error) {
 	sort.Slice(dirStats, func(i, j int) bool {
 		return dirStats[i].Percentage > dirStats[j].Percentage
 	})
-
+	
 	return CodebaseReport{
 		LanguageMetrics:   languageStats,
 		FileMetrics:       topFilesList,

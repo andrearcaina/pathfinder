@@ -7,29 +7,27 @@ import (
 	"os"
 )
 
-func CountFile(path string, bufferSize int, commentType CommentType) (
-	code int,
-	comments int,
-	blanks int,
-	ann AnnotationMetrics,
-) {
+func FileCounter(path string, bufferSize int, langDef *LanguageDefinition) (LanguageMetrics, AnnotationMetrics, error) {
 	f, err := os.Open(path)
 	if err != nil {
-		return
+		return LanguageMetrics{}, AnnotationMetrics{}, err
 	}
 	defer f.Close()
 
-	return scanLines(f, bufferSize, commentType)
+	langMetrics, annMetrics, err := countLinesInFile(f, bufferSize, langDef)
+	if err != nil {
+		return LanguageMetrics{}, AnnotationMetrics{}, err
+	}
+
+	return langMetrics, annMetrics, nil
 }
 
-func scanLines(r io.Reader, bufferSize int, commentType CommentType) (
-	code int,
-	comments int,
-	blanks int,
-	ann AnnotationMetrics,
-) {
+func countLinesInFile(r io.Reader, bufferSize int, langDef *LanguageDefinition) (LanguageMetrics, AnnotationMetrics, error) {
 	br := bufio.NewReaderSize(r, bufferSize)
 	inBlockComment := false
+
+	var langMetrics LanguageMetrics
+	var annMetrics AnnotationMetrics
 
 	for {
 		line, err := br.ReadBytes('\n')
@@ -40,42 +38,42 @@ func scanLines(r io.Reader, bufferSize int, commentType CommentType) (
 		line = bytes.TrimSpace(line)
 
 		if len(line) == 0 {
-			blanks++
-		} else if len(commentType.SingleLine) > 0 && bytes.HasPrefix(line, []byte(commentType.SingleLine)) {
-			comments++
-			checkAnnotationsBytes(line, &ann)
-		} else if len(commentType.BlockStart) > 0 && bytes.Contains(line, []byte(commentType.BlockStart)) {
-			i := bytes.Index(line, []byte(commentType.BlockStart))
+			langMetrics.Blanks++
+		} else if len(langDef.Type.SingleLine) > 0 && bytes.HasPrefix(line, []byte(langDef.Type.SingleLine)) {
+			langMetrics.Comments++
+			checkAnnotationsBytes(line, &annMetrics)
+		} else if len(langDef.Type.BlockStart) > 0 && bytes.Contains(line, []byte(langDef.Type.BlockStart)) {
+			i := bytes.Index(line, []byte(langDef.Type.BlockStart))
 			before := bytes.TrimSpace(line[:i])
-			after := line[i+len(commentType.BlockStart):]
+			after := line[i+len(langDef.Type.BlockStart):]
 
-			if len(commentType.BlockEnd) > 0 && bytes.Contains(after, []byte(commentType.BlockEnd)) {
-				j := bytes.Index(after, []byte(commentType.BlockEnd))
+			if len(langDef.Type.BlockEnd) > 0 && bytes.Contains(after, []byte(langDef.Type.BlockEnd)) {
+				j := bytes.Index(after, []byte(langDef.Type.BlockEnd))
 				left := before
-				right := bytes.TrimSpace(after[j+len(commentType.BlockEnd):])
+				right := bytes.TrimSpace(after[j+len(langDef.Type.BlockEnd):])
 
 				if len(left) > 0 || len(right) > 0 {
-					code++
+					langMetrics.Code++
 				} else {
-					comments++
+					langMetrics.Comments++
 				}
 			} else {
 				if len(before) > 0 {
-					code++
+					langMetrics.Code++
 				} else {
-					comments++
+					langMetrics.Comments++
 				}
 				inBlockComment = true
 			}
 
-			checkAnnotationsBytes(line, &ann)
+			checkAnnotationsBytes(line, &annMetrics)
 		} else if inBlockComment {
-			comments++
-			if len(commentType.BlockEnd) > 0 && bytes.Contains(line, []byte(commentType.BlockEnd)) {
+			langMetrics.Comments++
+			if len(langDef.Type.BlockEnd) > 0 && bytes.Contains(line, []byte(langDef.Type.BlockEnd)) {
 				inBlockComment = false
 			}
 		} else {
-			code++
+			langMetrics.Code++
 		}
 
 		if err == io.EOF {
@@ -83,7 +81,16 @@ func scanLines(r io.Reader, bufferSize int, commentType CommentType) (
 		}
 	}
 
-	return
+	langMetrics.Language = langDef.Name
+	langMetrics.Files = 1
+	langMetrics.Lines = langMetrics.Code + langMetrics.Comments + langMetrics.Blanks
+
+	/* example output
+	langMetrics = LanguageMetrics{ Language: "Go", Files: 1, Code: 100, Comments: 20, Blanks: 10, Lines: 130 }
+	annMetrics = AnnotationMetrics{ TotalTODO: 5, TotalFIXME: 2, TotalHACK: 1, TotalAnnotations: 8 }
+	error = nil
+	*/
+	return langMetrics, annMetrics, nil
 }
 
 func checkAnnotationsBytes(line []byte, ann *AnnotationMetrics) {

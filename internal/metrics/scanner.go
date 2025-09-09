@@ -9,7 +9,7 @@ import (
 	"sync"
 )
 
-func Analyze(flags Flags) (CodebaseReport, error) {
+func ScanCodebase(flags Flags) (CodebaseReport, error) {
 	if flags.PathFlag == "" { // won't ever happen since default is "." set by cobra
 		return CodebaseReport{}, errors.New("path is required")
 	}
@@ -189,7 +189,7 @@ func Analyze(flags Flags) (CodebaseReport, error) {
 	sort.Slice(dirStats, func(i, j int) bool {
 		return dirStats[i].Percentage > dirStats[j].Percentage
 	})
-	
+
 	return CodebaseReport{
 		LanguageMetrics:   languageStats,
 		FileMetrics:       topFilesList,

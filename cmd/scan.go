@@ -67,18 +67,19 @@ pf scan -p /path/to/codebase -R -m 3 -f json -o report.json,
 			return nil
 		}
 
-		if formatFlag == "" {
-			ui.PrintReport(report)
-			return nil
+		if metrics.HasNoExt(outputFlag) == "" {
+			return errors.New("output file must have an extension (e.g. .json)")
 		}
 
 		formatFlag = strings.ToLower(formatFlag)
-		if formatFlag == "json" {
+		if formatFlag == "json" || strings.Contains(outputFlag, "json") {
 			if err := export.CreateJSON(report, outputFlag); err != nil {
 				return err
 			}
+			return nil
 		}
 
+		ui.PrintReport(report)
 		return nil
 	},
 }

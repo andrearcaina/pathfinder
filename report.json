@@ -1,0 +1,225 @@
+{
+  "LanguageMetrics": [
+    {
+      "Percentage": 62.36842105263158,
+      "Metrics": {
+        "Language": "Go",
+        "Files": 12,
+        "Code": 711,
+        "Comments": 37,
+        "Blanks": 133,
+        "Lines": 881
+      }
+    },
+    {
+      "Percentage": 19.736842105263158,
+      "Metrics": {
+        "Language": "JSON",
+        "Files": 1,
+        "Code": 225,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 225
+      }
+    },
+    {
+      "Percentage": 1.8421052631578945,
+      "Metrics": {
+        "Language": "Markdown",
+        "Files": 1,
+        "Code": 21,
+        "Comments": 4,
+        "Blanks": 9,
+        "Lines": 34
+      }
+    }
+  ],
+  "FileMetrics": [
+    {
+      "Path": "report.json",
+      "Metrics": {
+        "Language": "JSON",
+        "Files": 1,
+        "Code": 225,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 225
+      }
+    },
+    {
+      "Path": "internal/metrics/scanner.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 143,
+        "Comments": 21,
+        "Blanks": 36,
+        "Lines": 200
+      }
+    },
+    {
+      "Path": "internal/metrics/languages.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 129,
+        "Comments": 1,
+        "Blanks": 9,
+        "Lines": 139
+      }
+    },
+    {
+      "Path": "internal/metrics/counter.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 85,
+        "Comments": 5,
+        "Blanks": 16,
+        "Lines": 106
+      }
+    },
+    {
+      "Path": "cmd/scan.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 81,
+        "Comments": 1,
+        "Blanks": 14,
+        "Lines": 96
+      }
+    },
+    {
+      "Path": "internal/ui/print.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 61,
+        "Comments": 4,
+        "Blanks": 16,
+        "Lines": 81
+      }
+    },
+    {
+      "Path": "internal/metrics/types.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 61,
+        "Comments": 4,
+        "Blanks": 10,
+        "Lines": 75
+      }
+    },
+    {
+      "Path": "internal/metrics/utils.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 52,
+        "Comments": 1,
+        "Blanks": 8,
+        "Lines": 61
+      }
+    },
+    {
+      "Path": "internal/ui/styles.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 34,
+        "Comments": 0,
+        "Blanks": 5,
+        "Lines": 39
+      }
+    },
+    {
+      "Path": "README.md",
+      "Metrics": {
+        "Language": "Markdown",
+        "Files": 1,
+        "Code": 21,
+        "Comments": 4,
+        "Blanks": 9,
+        "Lines": 34
+      }
+    },
+    {
+      "Path": "cmd/root.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 23,
+        "Comments": 0,
+        "Blanks": 6,
+        "Lines": 29
+      }
+    },
+    {
+      "Path": "internal/ui/utils.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 19,
+        "Comments": 0,
+        "Blanks": 6,
+        "Lines": 25
+      }
+    },
+    {
+      "Path": "internal/export/json.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 18,
+        "Comments": 0,
+        "Blanks": 5,
+        "Lines": 23
+      }
+    },
+    {
+      "Path": "main.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 5,
+        "Comments": 0,
+        "Blanks": 2,
+        "Lines": 7
+      }
+    }
+  ],
+  "DirMetrics": [
+    {
+      "Directory": "internal",
+      "Percentage": 65.70175438596492,
+      "Lines": 749
+    },
+    {
+      "Directory": ".",
+      "Percentage": 23.333333333333332,
+      "Lines": 266
+    },
+    {
+      "Directory": "cmd",
+      "Percentage": 10.964912280701753,
+      "Lines": 125
+    }
+  ],
+  "CodebaseMetrics": {
+    "TotalFiles": 14,
+    "TotalDirs": 8,
+    "TotalLanguages": 3,
+    "TotalCode": 957,
+    "TotalComments": 41,
+    "TotalBlanks": 142,
+    "TotalLines": 1140
+  },
+  "AnnotationMetrics": {
+    "TotalTODO": 5,
+    "TotalFIXME": 0,
+    "TotalHACK": 0,
+    "TotalAnnotations": 5
+  }
+}

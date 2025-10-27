@@ -1,0 +1,179 @@
+{
+  "LanguageMetrics": [
+    {
+      "Percentage": 29.045643153526974,
+      "Metrics": {
+        "Language": "XML",
+        "Files": 1,
+        "Code": 70,
+        "Comments": 0,
+        "Blanks": 8,
+        "Lines": 78
+      }
+    },
+    {
+      "Percentage": 28.63070539419087,
+      "Metrics": {
+        "Language": "Markdown",
+        "Files": 4,
+        "Code": 69,
+        "Comments": 21,
+        "Blanks": 41,
+        "Lines": 131
+      }
+    },
+    {
+      "Percentage": 7.053941908713693,
+      "Metrics": {
+        "Language": "Java",
+        "Files": 2,
+        "Code": 17,
+        "Comments": 6,
+        "Blanks": 8,
+        "Lines": 31
+      }
+    },
+    {
+      "Percentage": 0.4149377593360996,
+      "Metrics": {
+        "Language": "YAML",
+        "Files": 1,
+        "Code": 1,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 1
+      }
+    }
+  ],
+  "FileMetrics": [
+    {
+      "Path": "pom.xml",
+      "Metrics": {
+        "Language": "XML",
+        "Files": 1,
+        "Code": 70,
+        "Comments": 0,
+        "Blanks": 8,
+        "Lines": 78
+      }
+    },
+    {
+      "Path": "CODE_OF_CONDUCT.md",
+      "Metrics": {
+        "Language": "Markdown",
+        "Files": 1,
+        "Code": 45,
+        "Comments": 6,
+        "Blanks": 23,
+        "Lines": 74
+      }
+    },
+    {
+      "Path": "CONTRIBUTING.md",
+      "Metrics": {
+        "Language": "Markdown",
+        "Files": 1,
+        "Code": 14,
+        "Comments": 5,
+        "Blanks": 10,
+        "Lines": 29
+      }
+    },
+    {
+      "Path": "README.md",
+      "Metrics": {
+        "Language": "Markdown",
+        "Files": 1,
+        "Code": 9,
+        "Comments": 9,
+        "Blanks": 8,
+        "Lines": 26
+      }
+    },
+    {
+      "Path": "src/test/java/com/github/romankh3/maventemplaterepository/MavenTemplateRepositoryTest.java",
+      "Metrics": {
+        "Language": "Java",
+        "Files": 1,
+        "Code": 10,
+        "Comments": 3,
+        "Blanks": 5,
+        "Lines": 18
+      }
+    },
+    {
+      "Path": "src/main/java/com/github/romankh3/maventemplaterepository/MavenTemplateRepository.java",
+      "Metrics": {
+        "Language": "Java",
+        "Files": 1,
+        "Code": 7,
+        "Comments": 3,
+        "Blanks": 3,
+        "Lines": 13
+      }
+    },
+    {
+      "Path": "RELEASE_NOTES.md",
+      "Metrics": {
+        "Language": "Markdown",
+        "Files": 1,
+        "Code": 1,
+        "Comments": 1,
+        "Blanks": 0,
+        "Lines": 2
+      }
+    },
+    {
+      "Path": "_config.yml",
+      "Metrics": {
+        "Language": "YAML",
+        "Files": 1,
+        "Code": 1,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 1
+      }
+    }
+  ],
+  "DirMetrics": [
+    {
+      "Directory": ".",
+      "Percentage": 87.13692946058092,
+      "Lines": 210
+    },
+    {
+      "Directory": "src",
+      "Percentage": 12.863070539419086,
+      "Lines": 31
+    }
+  ],
+  "CodebaseMetrics": {
+    "TotalFiles": 8,
+    "TotalDirs": 14,
+    "TotalLanguages": 4,
+    "TotalCode": 157,
+    "TotalComments": 27,
+    "TotalBlanks": 57,
+    "TotalLines": 241
+  },
+  "AnnotationMetrics": {
+    "TotalTODO": 0,
+    "TotalFIXME": 0,
+    "TotalHACK": 0,
+    "TotalAnnotations": 0
+  },
+  "DependencyMetrics": {
+    "TotalDependencies": 3,
+    "DependencyFiles": [
+      {
+        "Path": "/home/andre/Downloads/GitHub/maven_test/pom.xml",
+        "Type": "Maven",
+        "Dependencies": [
+          "org.mockito:mockito-core",
+          "org.junit.jupiter:junit-jupiter-api",
+          "org.junit.jupiter:junit-jupiter-engine"
+        ]
+      }
+    ]
+  }
+}

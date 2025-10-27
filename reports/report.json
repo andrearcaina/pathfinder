@@ -1,0 +1,294 @@
+{
+  "LanguageMetrics": [
+    {
+      "Percentage": 82.59146744155329,
+      "Metrics": {
+        "Language": "JSON",
+        "Files": 3,
+        "Code": 6253,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 6253
+      }
+    },
+    {
+      "Percentage": 13.697001717078324,
+      "Metrics": {
+        "Language": "Go",
+        "Files": 13,
+        "Code": 1037,
+        "Comments": 49,
+        "Blanks": 198,
+        "Lines": 1284
+      }
+    },
+    {
+      "Percentage": 0.27737419099194294,
+      "Metrics": {
+        "Language": "Markdown",
+        "Files": 1,
+        "Code": 21,
+        "Comments": 4,
+        "Blanks": 9,
+        "Lines": 34
+      }
+    }
+  ],
+  "FileMetrics": [
+    {
+      "Path": "report.json",
+      "Metrics": {
+        "Language": "JSON",
+        "Files": 1,
+        "Code": 2413,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 2413
+      }
+    },
+    {
+      "Path": "vivid.json",
+      "Metrics": {
+        "Language": "JSON",
+        "Files": 1,
+        "Code": 2413,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 2413
+      }
+    },
+    {
+      "Path": "fafnir.json",
+      "Metrics": {
+        "Language": "JSON",
+        "Files": 1,
+        "Code": 1427,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 1427
+      }
+    },
+    {
+      "Path": "internal/metrics/dependencies.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 238,
+        "Comments": 2,
+        "Blanks": 50,
+        "Lines": 290
+      }
+    },
+    {
+      "Path": "internal/metrics/scanner.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 154,
+        "Comments": 23,
+        "Blanks": 37,
+        "Lines": 214
+      }
+    },
+    {
+      "Path": "internal/ui/print.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 105,
+        "Comments": 10,
+        "Blanks": 26,
+        "Lines": 141
+      }
+    },
+    {
+      "Path": "internal/metrics/languages.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 129,
+        "Comments": 1,
+        "Blanks": 9,
+        "Lines": 139
+      }
+    },
+    {
+      "Path": "cmd/scan.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 94,
+        "Comments": 3,
+        "Blanks": 15,
+        "Lines": 112
+      }
+    },
+    {
+      "Path": "internal/metrics/counter.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 85,
+        "Comments": 5,
+        "Blanks": 16,
+        "Lines": 106
+      }
+    },
+    {
+      "Path": "internal/metrics/types.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 81,
+        "Comments": 4,
+        "Blanks": 13,
+        "Lines": 98
+      }
+    },
+    {
+      "Path": "internal/metrics/utils.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 52,
+        "Comments": 1,
+        "Blanks": 8,
+        "Lines": 61
+      }
+    },
+    {
+      "Path": "internal/ui/styles.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 34,
+        "Comments": 0,
+        "Blanks": 5,
+        "Lines": 39
+      }
+    },
+    {
+      "Path": "README.md",
+      "Metrics": {
+        "Language": "Markdown",
+        "Files": 1,
+        "Code": 21,
+        "Comments": 4,
+        "Blanks": 9,
+        "Lines": 34
+      }
+    },
+    {
+      "Path": "cmd/root.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 23,
+        "Comments": 0,
+        "Blanks": 6,
+        "Lines": 29
+      }
+    },
+    {
+      "Path": "internal/ui/utils.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 19,
+        "Comments": 0,
+        "Blanks": 6,
+        "Lines": 25
+      }
+    },
+    {
+      "Path": "internal/export/json.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 18,
+        "Comments": 0,
+        "Blanks": 5,
+        "Lines": 23
+      }
+    },
+    {
+      "Path": "main.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 5,
+        "Comments": 0,
+        "Blanks": 2,
+        "Lines": 7
+      }
+    }
+  ],
+  "DirMetrics": [
+    {
+      "Directory": ".",
+      "Percentage": 83.13300752872804,
+      "Lines": 6294
+    },
+    {
+      "Directory": "internal",
+      "Percentage": 15.004622903183199,
+      "Lines": 1136
+    },
+    {
+      "Directory": "cmd",
+      "Percentage": 1.86236956808876,
+      "Lines": 141
+    }
+  ],
+  "CodebaseMetrics": {
+    "TotalFiles": 17,
+    "TotalDirs": 8,
+    "TotalLanguages": 3,
+    "TotalCode": 7311,
+    "TotalComments": 53,
+    "TotalBlanks": 207,
+    "TotalLines": 7571
+  },
+  "AnnotationMetrics": {
+    "TotalTODO": 5,
+    "TotalFIXME": 0,
+    "TotalHACK": 0,
+    "TotalAnnotations": 5
+  },
+  "DependencyMetrics": {
+    "TotalDependencies": 25,
+    "DependencyFiles": [
+      {
+        "Path": "/home/andre/Downloads/GitHub/pathfinder/go.mod",
+        "Type": "Go Modules",
+        "Dependencies": [
+          "github.com/charmbracelet/bubbles",
+          "github.com/charmbracelet/lipgloss",
+          "github.com/spf13/cobra",
+          "golang.org/x/text",
+          "github.com/aymanbagabas/go-osc52/v2",
+          "github.com/charmbracelet/bubbletea",
+          "github.com/charmbracelet/colorprofile",
+          "github.com/charmbracelet/harmonica",
+          "github.com/charmbracelet/x/ansi",
+          "github.com/charmbracelet/x/cellbuf",
+          "github.com/charmbracelet/x/term",
+          "github.com/erikgeiser/coninput",
+          "github.com/inconshreveable/mousetrap",
+          "github.com/lucasb-eyer/go-colorful",
+          "github.com/mattn/go-isatty",
+          "github.com/mattn/go-localereader",
+          "github.com/mattn/go-runewidth",
+          "github.com/muesli/ansi",
+          "github.com/muesli/cancelreader",
+          "github.com/muesli/termenv",
+          "github.com/rivo/uniseg",
+          "github.com/spf13/pflag",
+          "github.com/xo/terminfo",
+          "golang.org/x/sync",
+          "golang.org/x/sys"
+        ]
+      }
+    ]
+  }
+}

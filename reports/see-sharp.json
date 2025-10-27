@@ -1,0 +1,546 @@
+{
+  "LanguageMetrics": [
+    {
+      "Percentage": 47.89800137835975,
+      "Metrics": {
+        "Language": "C#",
+        "Files": 19,
+        "Code": 695,
+        "Comments": 106,
+        "Blanks": 161,
+        "Lines": 962
+      }
+    },
+    {
+      "Percentage": 19.228118538938663,
+      "Metrics": {
+        "Language": "CSS",
+        "Files": 5,
+        "Code": 279,
+        "Comments": 3,
+        "Blanks": 60,
+        "Lines": 342
+      }
+    },
+    {
+      "Percentage": 8.270158511371468,
+      "Metrics": {
+        "Language": "JSON",
+        "Files": 9,
+        "Code": 120,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 120
+      }
+    },
+    {
+      "Percentage": 1.2405237767057202,
+      "Metrics": {
+        "Language": "Markdown",
+        "Files": 2,
+        "Code": 18,
+        "Comments": 1,
+        "Blanks": 4,
+        "Lines": 23
+      }
+    },
+    {
+      "Percentage": 0.06891798759476223,
+      "Metrics": {
+        "Language": "JavaScript",
+        "Files": 1,
+        "Code": 1,
+        "Comments": 2,
+        "Blanks": 1,
+        "Lines": 4
+      }
+    }
+  ],
+  "FileMetrics": [
+    {
+      "Path": "collections/Program.cs",
+      "Metrics": {
+        "Language": "C#",
+        "Files": 1,
+        "Code": 166,
+        "Comments": 20,
+        "Blanks": 41,
+        "Lines": 227
+      }
+    },
+    {
+      "Path": "control-flow/Program.cs",
+      "Metrics": {
+        "Language": "C#",
+        "Files": 1,
+        "Code": 103,
+        "Comments": 17,
+        "Blanks": 20,
+        "Lines": 140
+      }
+    },
+    {
+      "Path": "TodoApp/Controllers/TodoItemsController.cs",
+      "Metrics": {
+        "Language": "C#",
+        "Files": 1,
+        "Code": 84,
+        "Comments": 8,
+        "Blanks": 16,
+        "Lines": 108
+      }
+    },
+    {
+      "Path": "BlazorApp/Components/Layout/NavMenu.razor.css",
+      "Metrics": {
+        "Language": "CSS",
+        "Files": 1,
+        "Code": 85,
+        "Comments": 2,
+        "Blanks": 18,
+        "Lines": 105
+      }
+    },
+    {
+      "Path": "BlazorApp/Components/Layout/MainLayout.razor.css",
+      "Metrics": {
+        "Language": "CSS",
+        "Files": 1,
+        "Code": 83,
+        "Comments": 0,
+        "Blanks": 15,
+        "Lines": 98
+      }
+    },
+    {
+      "Path": "objects/Program.cs",
+      "Metrics": {
+        "Language": "C#",
+        "Files": 1,
+        "Code": 63,
+        "Comments": 17,
+        "Blanks": 14,
+        "Lines": 94
+      }
+    },
+    {
+      "Path": "objects/Class.cs",
+      "Metrics": {
+        "Language": "C#",
+        "Files": 1,
+        "Code": 53,
+        "Comments": 14,
+        "Blanks": 9,
+        "Lines": 76
+      }
+    },
+    {
+      "Path": "variables/Program.cs",
+      "Metrics": {
+        "Language": "C#",
+        "Files": 1,
+        "Code": 44,
+        "Comments": 9,
+        "Blanks": 9,
+        "Lines": 62
+      }
+    },
+    {
+      "Path": "BlazorApp/wwwroot/app.css",
+      "Metrics": {
+        "Language": "CSS",
+        "Files": 1,
+        "Code": 47,
+        "Comments": 0,
+        "Blanks": 13,
+        "Lines": 60
+      }
+    },
+    {
+      "Path": "MVCApp/Views/Shared/_Layout.cshtml.css",
+      "Metrics": {
+        "Language": "CSS",
+        "Files": 1,
+        "Code": 39,
+        "Comments": 1,
+        "Blanks": 8,
+        "Lines": 48
+      }
+    },
+    {
+      "Path": "conversions/Program.cs",
+      "Metrics": {
+        "Language": "C#",
+        "Files": 1,
+        "Code": 29,
+        "Comments": 5,
+        "Blanks": 5,
+        "Lines": 39
+      }
+    },
+    {
+      "Path": "MVCApp/Controllers/HomeController.cs",
+      "Metrics": {
+        "Language": "C#",
+        "Files": 1,
+        "Code": 25,
+        "Comments": 0,
+        "Blanks": 6,
+        "Lines": 31
+      }
+    },
+    {
+      "Path": "MVCApp/wwwroot/css/site.css",
+      "Metrics": {
+        "Language": "CSS",
+        "Files": 1,
+        "Code": 25,
+        "Comments": 0,
+        "Blanks": 6,
+        "Lines": 31
+      }
+    },
+    {
+      "Path": "MVCApp/Program.cs",
+      "Metrics": {
+        "Language": "C#",
+        "Files": 1,
+        "Code": 17,
+        "Comments": 3,
+        "Blanks": 9,
+        "Lines": 29
+      }
+    },
+    {
+      "Path": "BlazorApp/Program.cs",
+      "Metrics": {
+        "Language": "C#",
+        "Files": 1,
+        "Code": 16,
+        "Comments": 3,
+        "Blanks": 9,
+        "Lines": 28
+      }
+    },
+    {
+      "Path": "TodoApp/Program.cs",
+      "Metrics": {
+        "Language": "C#",
+        "Files": 1,
+        "Code": 17,
+        "Comments": 0,
+        "Blanks": 8,
+        "Lines": 25
+      }
+    },
+    {
+      "Path": "MVCApp/Properties/launchSettings.json",
+      "Metrics": {
+        "Language": "JSON",
+        "Files": 1,
+        "Code": 23,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 23
+      }
+    },
+    {
+      "Path": "BlazorApp/Properties/launchSettings.json",
+      "Metrics": {
+        "Language": "JSON",
+        "Files": 1,
+        "Code": 23,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 23
+      }
+    },
+    {
+      "Path": "TodoApp/Properties/launchSettings.json",
+      "Metrics": {
+        "Language": "JSON",
+        "Files": 1,
+        "Code": 23,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 23
+      }
+    },
+    {
+      "Path": "WPFApp/MainWindow.xaml.cs",
+      "Metrics": {
+        "Language": "C#",
+        "Files": 1,
+        "Code": 18,
+        "Comments": 3,
+        "Blanks": 2,
+        "Lines": 23
+      }
+    },
+    {
+      "Path": "MVCApp/wwwroot/lib/jquery-validation/LICENSE.md",
+      "Metrics": {
+        "Language": "Markdown",
+        "Files": 1,
+        "Code": 18,
+        "Comments": 0,
+        "Blanks": 4,
+        "Lines": 22
+      }
+    },
+    {
+      "Path": "objects/Enum.cs",
+      "Metrics": {
+        "Language": "C#",
+        "Files": 1,
+        "Code": 14,
+        "Comments": 0,
+        "Blanks": 2,
+        "Lines": 16
+      }
+    },
+    {
+      "Path": "WPFApp/App.xaml.cs",
+      "Metrics": {
+        "Language": "C#",
+        "Files": 1,
+        "Code": 7,
+        "Comments": 3,
+        "Blanks": 3,
+        "Lines": 13
+      }
+    },
+    {
+      "Path": "TodoApp/Models/TodoContext.cs",
+      "Metrics": {
+        "Language": "C#",
+        "Files": 1,
+        "Code": 10,
+        "Comments": 0,
+        "Blanks": 3,
+        "Lines": 13
+      }
+    },
+    {
+      "Path": "hello-world/Program.cs",
+      "Metrics": {
+        "Language": "C#",
+        "Files": 1,
+        "Code": 11,
+        "Comments": 0,
+        "Blanks": 1,
+        "Lines": 12
+      }
+    },
+    {
+      "Path": "WPFApp/AssemblyInfo.cs",
+      "Metrics": {
+        "Language": "C#",
+        "Files": 1,
+        "Code": 5,
+        "Comments": 4,
+        "Blanks": 1,
+        "Lines": 10
+      }
+    },
+    {
+      "Path": "MVCApp/appsettings.json",
+      "Metrics": {
+        "Language": "JSON",
+        "Files": 1,
+        "Code": 9,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 9
+      }
+    },
+    {
+      "Path": "TodoApp/appsettings.json",
+      "Metrics": {
+        "Language": "JSON",
+        "Files": 1,
+        "Code": 9,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 9
+      }
+    },
+    {
+      "Path": "BlazorApp/appsettings.json",
+      "Metrics": {
+        "Language": "JSON",
+        "Files": 1,
+        "Code": 9,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 9
+      }
+    },
+    {
+      "Path": "TodoApp/Models/TodoItem.cs",
+      "Metrics": {
+        "Language": "C#",
+        "Files": 1,
+        "Code": 7,
+        "Comments": 0,
+        "Blanks": 1,
+        "Lines": 8
+      }
+    },
+    {
+      "Path": "MVCApp/appsettings.Development.json",
+      "Metrics": {
+        "Language": "JSON",
+        "Files": 1,
+        "Code": 8,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 8
+      }
+    },
+    {
+      "Path": "TodoApp/appsettings.Development.json",
+      "Metrics": {
+        "Language": "JSON",
+        "Files": 1,
+        "Code": 8,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 8
+      }
+    },
+    {
+      "Path": "MVCApp/Models/ErrorViewModel.cs",
+      "Metrics": {
+        "Language": "C#",
+        "Files": 1,
+        "Code": 6,
+        "Comments": 0,
+        "Blanks": 2,
+        "Lines": 8
+      }
+    },
+    {
+      "Path": "BlazorApp/appsettings.Development.json",
+      "Metrics": {
+        "Language": "JSON",
+        "Files": 1,
+        "Code": 8,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 8
+      }
+    },
+    {
+      "Path": "MVCApp/wwwroot/js/site.js",
+      "Metrics": {
+        "Language": "JavaScript",
+        "Files": 1,
+        "Code": 1,
+        "Comments": 2,
+        "Blanks": 1,
+        "Lines": 4
+      }
+    },
+    {
+      "Path": "README.md",
+      "Metrics": {
+        "Language": "Markdown",
+        "Files": 1,
+        "Code": 0,
+        "Comments": 1,
+        "Blanks": 0,
+        "Lines": 1
+      }
+    }
+  ],
+  "DirMetrics": [
+    {
+      "Directory": "BlazorApp",
+      "Percentage": 22.8118538938663,
+      "Lines": 331
+    },
+    {
+      "Directory": "collections",
+      "Percentage": 15.644383184011026,
+      "Lines": 227
+    },
+    {
+      "Directory": "MVCApp",
+      "Percentage": 14.679531357684356,
+      "Lines": 213
+    },
+    {
+      "Directory": "TodoApp",
+      "Percentage": 13.370089593383874,
+      "Lines": 194
+    },
+    {
+      "Directory": "objects",
+      "Percentage": 12.818745692625773,
+      "Lines": 186
+    },
+    {
+      "Directory": "control-flow",
+      "Percentage": 9.648518263266713,
+      "Lines": 140
+    },
+    {
+      "Directory": "variables",
+      "Percentage": 4.272915230875259,
+      "Lines": 62
+    },
+    {
+      "Directory": "WPFApp",
+      "Percentage": 3.1702274293590627,
+      "Lines": 46
+    },
+    {
+      "Directory": "conversions",
+      "Percentage": 2.6878015161957274,
+      "Lines": 39
+    },
+    {
+      "Directory": "hello-world",
+      "Percentage": 0.8270158511371467,
+      "Lines": 12
+    },
+    {
+      "Directory": ".",
+      "Percentage": 0.06891798759476223,
+      "Lines": 1
+    }
+  ],
+  "CodebaseMetrics": {
+    "TotalFiles": 36,
+    "TotalDirs": 35,
+    "TotalLanguages": 5,
+    "TotalCode": 1113,
+    "TotalComments": 112,
+    "TotalBlanks": 226,
+    "TotalLines": 1451
+  },
+  "AnnotationMetrics": {
+    "TotalTODO": 0,
+    "TotalFIXME": 0,
+    "TotalHACK": 0,
+    "TotalAnnotations": 0
+  },
+  "DependencyMetrics": {
+    "TotalDependencies": 6,
+    "DependencyFiles": [
+      {
+        "Path": "/home/andre/Downloads/GitHub/see-sharp/TodoApp/TodoApi.csproj",
+        "Type": ".NET/NuGet",
+        "Dependencies": [
+          "Microsoft.AspNetCore.OpenApi",
+          "Microsoft.EntityFrameworkCore.Design",
+          "Microsoft.EntityFrameworkCore.InMemory",
+          "Microsoft.EntityFrameworkCore.SqlServer",
+          "Microsoft.EntityFrameworkCore.Tools",
+          "Microsoft.VisualStudio.Web.CodeGeneration.Design"
+        ]
+      }
+    ]
+  }
+}

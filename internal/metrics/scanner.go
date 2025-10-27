@@ -19,9 +19,10 @@ func ScanCodebase(flags Flags) (CodebaseReport, error) {
 
 	var codebaseStats CodebaseMetrics
 	var annotationStats AnnotationMetrics
+	var dependencyStats DependencyMetrics
 	topFilesList := make([]FileMetricsReport, 0)
 
-	// Local variables for synchronization
+	// local variables for synchronization
 	var wg sync.WaitGroup
 	var mu sync.Mutex
 
@@ -32,7 +33,7 @@ func ScanCodebase(flags Flags) (CodebaseReport, error) {
 
 		// if the user didn't set recursive flag, skip subdirectories
 		if !flags.RecursiveFlag && path != flags.PathFlag && d.IsDir() {
-			return fs.SkipDir
+			return filepath.SkipDir
 		}
 
 		// if the user set max depth, skip directories deeper than max depth
@@ -41,7 +42,7 @@ func ScanCodebase(flags Flags) (CodebaseReport, error) {
 			depth := len(strings.Split(relPath, string(filepath.Separator)))
 			if depth > flags.MaxDepthFlag {
 				if d.IsDir() {
-					return fs.SkipDir
+					return filepath.SkipDir
 				}
 				return nil
 			}
@@ -56,14 +57,14 @@ func ScanCodebase(flags Flags) (CodebaseReport, error) {
 
 		if !flags.HiddenFlag && strings.HasPrefix(name, ".") {
 			if d.IsDir() {
-				return fs.SkipDir
+				return filepath.SkipDir
 			}
 			return nil
 		}
 
 		if d.IsDir() {
 			if ExcludeDir(name) {
-				return fs.SkipDir
+				return filepath.SkipDir
 			}
 
 			mu.Lock()
@@ -150,6 +151,18 @@ func ScanCodebase(flags Flags) (CodebaseReport, error) {
 
 	wg.Wait()
 
+	// scan for dependencies if flag is enabled
+	if flags.DependencyFlag {
+		depFiles, err := ScanDependencies(flags.PathFlag, flags)
+		if err == nil {
+			dependencyStats.DependencyFiles = depFiles
+			// count total dependencies across all files
+			for _, depFile := range depFiles {
+				dependencyStats.TotalDependencies += len(depFile.Dependencies)
+			}
+		}
+	}
+
 	// this is done after the walk is complete and all goroutines have finished
 	// because we need the final aggregated stats to calculate percentages
 	// it doesn't make sense to calculate percentages while we're still walking the directory
@@ -196,5 +209,6 @@ func ScanCodebase(flags Flags) (CodebaseReport, error) {
 		DirMetrics:        dirStats,
 		CodebaseMetrics:   codebaseStats,
 		AnnotationMetrics: annotationStats,
+		DependencyMetrics: dependencyStats,
 	}, nil
 }

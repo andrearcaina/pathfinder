@@ -6,6 +6,8 @@ type Flags struct {
 	BufferSizeFlag int    // Buffer size for reading files in bytes
 	RecursiveFlag  bool   // Scan directories recursively (default: false)
 	MaxDepthFlag   int    // Maximum recursion depth. Only works if RecursiveFlag is true
+	DependencyFlag bool   // Analyze dependencies (default: false)
+	GitFlag        bool   // Analyze git information (default: false)
 	// TODO: add more flags (like dependencies)
 }
 
@@ -48,6 +50,26 @@ type CodebaseMetrics struct {
 	TotalLines     int // Total lines (code + comments + blanks)
 }
 
+type DependencyFile struct {
+	Path         string
+	Type         string
+	Dependencies []string
+}
+
+type DependencyMetrics struct {
+	TotalDependencies int              // Total number of dependencies (libraries/packages)
+	DependencyFiles   []DependencyFile // List of dependency files found
+}
+
+type GitMetrics struct {
+	TotalCommits    int      // Total number of commits in the git repository
+	FirstCommitISO  string   // ISO timestamp of the first commit (initial commit)
+	LastCommitISO   string   // ISO timestamp of the last commit
+	CommitsThisYear int      // Number of commits made in the current year
+	RecentActivity  []string // List of recent commit messages (e.g. last 5 commits)
+	Branches        int      // Total number of branches
+}
+
 type FileMetricsReport struct {
 	Path    string          // File path
 	Metrics LanguageMetrics // Language metrics for this specific file
@@ -70,6 +92,7 @@ type CodebaseReport struct {
 	DirMetrics        []DirMetricsReport
 	CodebaseMetrics   CodebaseMetrics
 	AnnotationMetrics AnnotationMetrics
-	// TODO: add more reports (like dependencies)
+	DependencyMetrics DependencyMetrics
+	// TODO: add git metrics
 	// TODO: add time taken to analyze the codebase
 }

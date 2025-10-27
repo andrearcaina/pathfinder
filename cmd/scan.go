@@ -21,6 +21,8 @@ var (
 	maxDepthFlag   int
 	formatFlag     string
 	outputFlag     string
+	dependencyFlag bool
+	gitFlag        bool
 )
 
 // scanCmd represents the scan command
@@ -55,6 +57,8 @@ pf scan -p /path/to/codebase -R -m 3 -f json -o report.json,
 			BufferSizeFlag: bufferSizeFlag * 1024, // convert KB to bytes for internal use
 			RecursiveFlag:  recursiveFlag,
 			MaxDepthFlag:   maxDepthFlag,
+			DependencyFlag: dependencyFlag,
+			GitFlag:        gitFlag,
 		}
 
 		report, err := metrics.ScanCodebase(flags)
@@ -67,16 +71,26 @@ pf scan -p /path/to/codebase -R -m 3 -f json -o report.json,
 			return nil
 		}
 
-		if metrics.HasNoExt(outputFlag) == "" {
-			return errors.New("output file must have an extension (e.g. .json)")
+		// validate that both format and output are set together
+		if (formatFlag != "" && outputFlag == "") || (outputFlag != "" && formatFlag == "") {
+			return errors.New("both --format and --output flags must be set together")
 		}
 
-		formatFlag = strings.ToLower(formatFlag)
-		if formatFlag == "json" || strings.Contains(outputFlag, "json") {
-			if err := export.CreateJSON(report, outputFlag); err != nil {
-				return err
+		// handle export if output and format flags are set
+		if outputFlag != "" && formatFlag != "" {
+			if metrics.HasNoExt(outputFlag) == "" {
+				return errors.New("output file must have an extension (e.g. .json)")
 			}
-			return nil
+
+			formatFlag = strings.ToLower(formatFlag)
+			if formatFlag == "json" && strings.HasSuffix(outputFlag, ".json") {
+				if err := export.CreateJSON(report, outputFlag); err != nil {
+					return err
+				}
+				return nil
+			} else {
+				return fmt.Errorf("unsupported format '%s'. Supported formats: json", formatFlag)
+			}
 		}
 
 		ui.PrintReport(report)
@@ -85,12 +99,14 @@ pf scan -p /path/to/codebase -R -m 3 -f json -o report.json,
 }
 
 func init() {
-	scanCmd.Flags().BoolVarP(&debugFlag, "debug", "d", false, "Enable debug mode")
+	scanCmd.Flags().BoolVarP(&debugFlag, "debug", "", false, "Enable debug mode")
 	scanCmd.Flags().StringVarP(&pathFlag, "path", "p", ".", "Path to codebase/repository")
 	scanCmd.Flags().BoolVarP(&hiddenFlag, "hidden", "i", false, "Include hidden files and directories")
 	scanCmd.Flags().IntVarP(&bufferSizeFlag, "buffer-size", "b", 4, "Buffer size for reading files in KB. Options are 4, 8, 16, 32, 64")
 	scanCmd.Flags().BoolVarP(&recursiveFlag, "recursive", "R", false, "Scan directories recursively")
 	scanCmd.Flags().IntVarP(&maxDepthFlag, "max-depth", "m", -1, "Maximum recursion depth. Only works if --recursive is set")
 	scanCmd.Flags().StringVarP(&formatFlag, "format", "f", "", "Output format. Options are: json")
-	scanCmd.Flags().StringVarP(&outputFlag, "output", "o", "report.json", "Sets output file name.")
+	scanCmd.Flags().StringVarP(&outputFlag, "output", "o", "", "Sets output file name.")
+	scanCmd.Flags().BoolVarP(&dependencyFlag, "dependencies", "d", false, "Scan for dependencies (supported for some languages)")
+	scanCmd.Flags().BoolVarP(&gitFlag, "git", "g", false, "Scan for git information (e.g. number of commits, git history, etc.)")
 }

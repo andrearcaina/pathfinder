@@ -1,0 +1,2413 @@
+{
+  "LanguageMetrics": [
+    {
+      "Percentage": 44.995408631772264,
+      "Metrics": {
+        "Language": "Python",
+        "Files": 147,
+        "Code": 2940,
+        "Comments": 156,
+        "Blanks": 515,
+        "Lines": 3611
+      }
+    },
+    {
+      "Percentage": 34.40465258647077,
+      "Metrics": {
+        "Language": "JavaScript",
+        "Files": 51,
+        "Code": 2248,
+        "Comments": 3,
+        "Blanks": 243,
+        "Lines": 2494
+      }
+    },
+    {
+      "Percentage": 4.116926844199571,
+      "Metrics": {
+        "Language": "Markdown",
+        "Files": 3,
+        "Code": 269,
+        "Comments": 33,
+        "Blanks": 71,
+        "Lines": 373
+      }
+    },
+    {
+      "Percentage": 0.642791551882461,
+      "Metrics": {
+        "Language": "JSON",
+        "Files": 2,
+        "Code": 42,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 42
+      }
+    },
+    {
+      "Percentage": 0.15304560759106214,
+      "Metrics": {
+        "Language": "CSS",
+        "Files": 1,
+        "Code": 10,
+        "Comments": 1,
+        "Blanks": 3,
+        "Lines": 14
+      }
+    }
+  ],
+  "FileMetrics": [
+    {
+      "Path": "server/classes_offered/views.py",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 169,
+        "Comments": 19,
+        "Blanks": 52,
+        "Lines": 240
+      }
+    },
+    {
+      "Path": "server/member_logs/views.py",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 139,
+        "Comments": 0,
+        "Blanks": 56,
+        "Lines": 195
+      }
+    },
+    {
+      "Path": "server/README.md",
+      "Metrics": {
+        "Language": "Markdown",
+        "Files": 1,
+        "Code": 148,
+        "Comments": 13,
+        "Blanks": 23,
+        "Lines": 184
+      }
+    },
+    {
+      "Path": "server/user_auth/views.py",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 117,
+        "Comments": 28,
+        "Blanks": 30,
+        "Lines": 175
+      }
+    },
+    {
+      "Path": "server/user_auth/tests.py",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 153,
+        "Comments": 0,
+        "Blanks": 19,
+        "Lines": 172
+      }
+    },
+    {
+      "Path": "client/utils/logs.js",
+      "Metrics": {
+        "Language": "JavaScript",
+        "Files": 1,
+        "Code": 158,
+        "Comments": 0,
+        "Blanks": 11,
+        "Lines": 169
+      }
+    },
+    {
+      "Path": "server/membership_tracker/settings.py",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 111,
+        "Comments": 16,
+        "Blanks": 34,
+        "Lines": 161
+      }
+    },
+    {
+      "Path": "server/finance_tracking/views.py",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 93,
+        "Comments": 28,
+        "Blanks": 33,
+        "Lines": 154
+      }
+    },
+    {
+      "Path": "server/message_platform/consumers.py",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 126,
+        "Comments": 1,
+        "Blanks": 27,
+        "Lines": 154
+      }
+    },
+    {
+      "Path": "README.md",
+      "Metrics": {
+        "Language": "Markdown",
+        "Files": 1,
+        "Code": 104,
+        "Comments": 14,
+        "Blanks": 35,
+        "Lines": 153
+      }
+    },
+    {
+      "Path": "server/member_logs/tests.py",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 115,
+        "Comments": 0,
+        "Blanks": 20,
+        "Lines": 135
+      }
+    },
+    {
+      "Path": "client/contexts/authContext.js",
+      "Metrics": {
+        "Language": "JavaScript",
+        "Files": 1,
+        "Code": 106,
+        "Comments": 0,
+        "Blanks": 24,
+        "Lines": 130
+      }
+    },
+    {
+      "Path": "client/components/general/buttons/manageButton.jsx",
+      "Metrics": {
+        "Language": "JavaScript",
+        "Files": 1,
+        "Code": 104,
+        "Comments": 0,
+        "Blanks": 17,
+        "Lines": 121
+      }
+    },
+    {
+      "Path": "client/app/auth/register/page.js",
+      "Metrics": {
+        "Language": "JavaScript",
+        "Files": 1,
+        "Code": 95,
+        "Comments": 0,
+        "Blanks": 14,
+        "Lines": 109
+      }
+    },
+    {
+      "Path": "client/components/interface/functionality/announcements.jsx",
+      "Metrics": {
+        "Language": "JavaScript",
+        "Files": 1,
+        "Code": 92,
+        "Comments": 0,
+        "Blanks": 15,
+        "Lines": 107
+      }
+    },
+    {
+      "Path": "client/utils/services.js",
+      "Metrics": {
+        "Language": "JavaScript",
+        "Files": 1,
+        "Code": 101,
+        "Comments": 0,
+        "Blanks": 5,
+        "Lines": 106
+      }
+    },
+    {
+      "Path": "client/components/general/nav/navbar.jsx",
+      "Metrics": {
+        "Language": "JavaScript",
+        "Files": 1,
+        "Code": 93,
+        "Comments": 0,
+        "Blanks": 3,
+        "Lines": 96
+      }
+    },
+    {
+      "Path": "server/message_platform/__pycache__/consumers.cpython-312.pyc",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 78,
+        "Comments": 0,
+        "Blanks": 13,
+        "Lines": 91
+      }
+    },
+    {
+      "Path": "client/app/chat/page.js",
+      "Metrics": {
+        "Language": "JavaScript",
+        "Files": 1,
+        "Code": 74,
+        "Comments": 0,
+        "Blanks": 11,
+        "Lines": 85
+      }
+    },
+    {
+      "Path": "client/utils/classes.js",
+      "Metrics": {
+        "Language": "JavaScript",
+        "Files": 1,
+        "Code": 78,
+        "Comments": 0,
+        "Blanks": 4,
+        "Lines": 82
+      }
+    },
+    {
+      "Path": "client/app/profile/password/page.js",
+      "Metrics": {
+        "Language": "JavaScript",
+        "Files": 1,
+        "Code": 76,
+        "Comments": 0,
+        "Blanks": 6,
+        "Lines": 82
+      }
+    },
+    {
+      "Path": "client/app/auth/reset/page.js",
+      "Metrics": {
+        "Language": "JavaScript",
+        "Files": 1,
+        "Code": 67,
+        "Comments": 0,
+        "Blanks": 10,
+        "Lines": 77
+      }
+    },
+    {
+      "Path": "server/finance_tracking/tests.py",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 64,
+        "Comments": 0,
+        "Blanks": 11,
+        "Lines": 75
+      }
+    },
+    {
+      "Path": "client/app/profile/email/page.js",
+      "Metrics": {
+        "Language": "JavaScript",
+        "Files": 1,
+        "Code": 66,
+        "Comments": 0,
+        "Blanks": 6,
+        "Lines": 72
+      }
+    },
+    {
+      "Path": "server/classes_offered/__pycache__/views.cpython-312.pyc",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 71,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 71
+      }
+    },
+    {
+      "Path": "client/components/interface/functionality/roleBasedContent.jsx",
+      "Metrics": {
+        "Language": "JavaScript",
+        "Files": 1,
+        "Code": 62,
+        "Comments": 0,
+        "Blanks": 7,
+        "Lines": 69
+      }
+    },
+    {
+      "Path": "server/classes_offered/tests.py",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 60,
+        "Comments": 0,
+        "Blanks": 8,
+        "Lines": 68
+      }
+    },
+    {
+      "Path": "client/app/calendar/page.js",
+      "Metrics": {
+        "Language": "JavaScript",
+        "Files": 1,
+        "Code": 63,
+        "Comments": 0,
+        "Blanks": 5,
+        "Lines": 68
+      }
+    },
+    {
+      "Path": "client/app/auth/login/page.js",
+      "Metrics": {
+        "Language": "JavaScript",
+        "Files": 1,
+        "Code": 56,
+        "Comments": 0,
+        "Blanks": 9,
+        "Lines": 65
+      }
+    },
+    {
+      "Path": "server/user_auth/__pycache__/views.cpython-312.pyc",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 64,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 64
+      }
+    },
+    {
+      "Path": "client/components/general/buttons/dropdownMenu.jsx",
+      "Metrics": {
+        "Language": "JavaScript",
+        "Files": 1,
+        "Code": 54,
+        "Comments": 0,
+        "Blanks": 7,
+        "Lines": 61
+      }
+    },
+    {
+      "Path": "client/app/profile/page.js",
+      "Metrics": {
+        "Language": "JavaScript",
+        "Files": 1,
+        "Code": 57,
+        "Comments": 0,
+        "Blanks": 2,
+        "Lines": 59
+      }
+    },
+    {
+      "Path": "client/components/general/nav/nav-mobile.jsx",
+      "Metrics": {
+        "Language": "JavaScript",
+        "Files": 1,
+        "Code": 55,
+        "Comments": 0,
+        "Blanks": 4,
+        "Lines": 59
+      }
+    },
+    {
+      "Path": "client/components/interface/functionality/members/memberClassSignUp.jsx",
+      "Metrics": {
+        "Language": "JavaScript",
+        "Files": 1,
+        "Code": 51,
+        "Comments": 1,
+        "Blanks": 7,
+        "Lines": 59
+      }
+    },
+    {
+      "Path": "server/message_platform/views.py",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 39,
+        "Comments": 8,
+        "Blanks": 6,
+        "Lines": 53
+      }
+    },
+    {
+      "Path": "client/components/general/nav/nav-dashboard.jsx",
+      "Metrics": {
+        "Language": "JavaScript",
+        "Files": 1,
+        "Code": 42,
+        "Comments": 0,
+        "Blanks": 7,
+        "Lines": 49
+      }
+    },
+    {
+      "Path": "client/app/finances/page.js",
+      "Metrics": {
+        "Language": "JavaScript",
+        "Files": 1,
+        "Code": 45,
+        "Comments": 0,
+        "Blanks": 3,
+        "Lines": 48
+      }
+    },
+    {
+      "Path": "client/components/interface/functionality/coach/coachUpcomingClasses.jsx",
+      "Metrics": {
+        "Language": "JavaScript",
+        "Files": 1,
+        "Code": 42,
+        "Comments": 0,
+        "Blanks": 4,
+        "Lines": 46
+      }
+    },
+    {
+      "Path": "client/components/general/buttons/logoutButton.jsx",
+      "Metrics": {
+        "Language": "JavaScript",
+        "Files": 1,
+        "Code": 38,
+        "Comments": 0,
+        "Blanks": 8,
+        "Lines": 46
+      }
+    },
+    {
+      "Path": "server/message_platform/migrations/0002_rename_sender_message_user_remove_message_message_and_more.py",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 40,
+        "Comments": 1,
+        "Blanks": 5,
+        "Lines": 46
+      }
+    },
+    {
+      "Path": "server/user_auth/migrations/0001_initial.py",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 37,
+        "Comments": 1,
+        "Blanks": 6,
+        "Lines": 44
+      }
+    },
+    {
+      "Path": "server/user_auth/models.py",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 31,
+        "Comments": 1,
+        "Blanks": 11,
+        "Lines": 43
+      }
+    },
+    {
+      "Path": "server/message_platform/models.py",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 26,
+        "Comments": 11,
+        "Blanks": 6,
+        "Lines": 43
+      }
+    },
+    {
+      "Path": "client/components/interface/functionality/coach/coachCreateClass.jsx",
+      "Metrics": {
+        "Language": "JavaScript",
+        "Files": 1,
+        "Code": 39,
+        "Comments": 0,
+        "Blanks": 3,
+        "Lines": 42
+      }
+    },
+    {
+      "Path": "server/finance_tracking/__pycache__/views.cpython-312.pyc",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 40,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 40
+      }
+    },
+    {
+      "Path": "server/message_platform/migrations/0001_initial.py",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 32,
+        "Comments": 1,
+        "Blanks": 6,
+        "Lines": 39
+      }
+    },
+    {
+      "Path": "client/utils/socket.js",
+      "Metrics": {
+        "Language": "JavaScript",
+        "Files": 1,
+        "Code": 36,
+        "Comments": 0,
+        "Blanks": 3,
+        "Lines": 39
+      }
+    },
+    {
+      "Path": "client/components/interface/functionality/members/memberEnrolledClasses.jsx",
+      "Metrics": {
+        "Language": "JavaScript",
+        "Files": 1,
+        "Code": 35,
+        "Comments": 0,
+        "Blanks": 3,
+        "Lines": 38
+      }
+    },
+    {
+      "Path": "client/components/general/nav/nav-general.jsx",
+      "Metrics": {
+        "Language": "JavaScript",
+        "Files": 1,
+        "Code": 33,
+        "Comments": 0,
+        "Blanks": 4,
+        "Lines": 37
+      }
+    },
+    {
+      "Path": "client/components/general/tables/dataTable.jsx",
+      "Metrics": {
+        "Language": "JavaScript",
+        "Files": 1,
+        "Code": 35,
+        "Comments": 0,
+        "Blanks": 2,
+        "Lines": 37
+      }
+    },
+    {
+      "Path": "server/member_logs/migrations/0004_remove_member_date_of_birth_remove_member_email_and_more.py",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 31,
+        "Comments": 1,
+        "Blanks": 5,
+        "Lines": 37
+      }
+    },
+    {
+      "Path": "client/README.md",
+      "Metrics": {
+        "Language": "Markdown",
+        "Files": 1,
+        "Code": 17,
+        "Comments": 6,
+        "Blanks": 13,
+        "Lines": 36
+      }
+    },
+    {
+      "Path": "client/utils/settings.js",
+      "Metrics": {
+        "Language": "JavaScript",
+        "Files": 1,
+        "Code": 35,
+        "Comments": 0,
+        "Blanks": 1,
+        "Lines": 36
+      }
+    },
+    {
+      "Path": "client/package.json",
+      "Metrics": {
+        "Language": "JSON",
+        "Files": 1,
+        "Code": 35,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 35
+      }
+    },
+    {
+      "Path": "client/components/interface/functionality/classesAvailable.jsx",
+      "Metrics": {
+        "Language": "JavaScript",
+        "Files": 1,
+        "Code": 31,
+        "Comments": 0,
+        "Blanks": 3,
+        "Lines": 34
+      }
+    },
+    {
+      "Path": "server/member_logs/__pycache__/views.cpython-312.pyc",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 33,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 33
+      }
+    },
+    {
+      "Path": "server/member_logs/migrations/0001_initial.py",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 26,
+        "Comments": 1,
+        "Blanks": 6,
+        "Lines": 33
+      }
+    },
+    {
+      "Path": "client/app/management/page.js",
+      "Metrics": {
+        "Language": "JavaScript",
+        "Files": 1,
+        "Code": 26,
+        "Comments": 0,
+        "Blanks": 4,
+        "Lines": 30
+      }
+    },
+    {
+      "Path": "client/components/general/buttons/darkModeButton.jsx",
+      "Metrics": {
+        "Language": "JavaScript",
+        "Files": 1,
+        "Code": 28,
+        "Comments": 0,
+        "Blanks": 2,
+        "Lines": 30
+      }
+    },
+    {
+      "Path": "server/user_auth/migrations/0003_remove_user_is_coach_remove_user_is_member_and_more.py",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 24,
+        "Comments": 1,
+        "Blanks": 5,
+        "Lines": 30
+      }
+    },
+    {
+      "Path": "server/message_platform/migrations/0003_annoucements.py",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 24,
+        "Comments": 1,
+        "Blanks": 5,
+        "Lines": 30
+      }
+    },
+    {
+      "Path": "server/message_platform/migrations/__pycache__/0002_rename_sender_message_user_remove_message_message_and_more.cpython-312.pyc",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 30,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 30
+      }
+    },
+    {
+      "Path": "server/finance_tracking/migrations/0001_initial.py",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 22,
+        "Comments": 1,
+        "Blanks": 6,
+        "Lines": 29
+      }
+    },
+    {
+      "Path": "server/user_auth/serializers.py",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 18,
+        "Comments": 7,
+        "Blanks": 4,
+        "Lines": 29
+      }
+    },
+    {
+      "Path": "server/classes_offered/migrations/0001_initial.py",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 20,
+        "Comments": 1,
+        "Blanks": 6,
+        "Lines": 27
+      }
+    },
+    {
+      "Path": "server/membership_tracker/urls.py",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 25,
+        "Comments": 0,
+        "Blanks": 2,
+        "Lines": 27
+      }
+    },
+    {
+      "Path": "server/membership_tracker/__pycache__/settings.cpython-312.pyc",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 24,
+        "Comments": 0,
+        "Blanks": 3,
+        "Lines": 27
+      }
+    },
+    {
+      "Path": "client/app/page.js",
+      "Metrics": {
+        "Language": "JavaScript",
+        "Files": 1,
+        "Code": 25,
+        "Comments": 0,
+        "Blanks": 2,
+        "Lines": 27
+      }
+    },
+    {
+      "Path": "server/member_logs/migrations/0002_remove_member_password_remove_member_username_and_more.py",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 20,
+        "Comments": 1,
+        "Blanks": 5,
+        "Lines": 26
+      }
+    },
+    {
+      "Path": "client/components/general/payment/histories.jsx",
+      "Metrics": {
+        "Language": "JavaScript",
+        "Files": 1,
+        "Code": 22,
+        "Comments": 0,
+        "Blanks": 3,
+        "Lines": 25
+      }
+    },
+    {
+      "Path": "server/membership_tracker/asgi.py",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 19,
+        "Comments": 0,
+        "Blanks": 6,
+        "Lines": 25
+      }
+    },
+    {
+      "Path": "client/app/layout.js",
+      "Metrics": {
+        "Language": "JavaScript",
+        "Files": 1,
+        "Code": 22,
+        "Comments": 0,
+        "Blanks": 2,
+        "Lines": 24
+      }
+    },
+    {
+      "Path": "server/message_platform/__pycache__/views.cpython-312.pyc",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 24,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 24
+      }
+    },
+    {
+      "Path": "server/message_platform/migrations/__pycache__/0001_initial.cpython-312.pyc",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 24,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 24
+      }
+    },
+    {
+      "Path": "server/finance_tracking/migrations/0002_rename_finance_tracking_coachfinances_and_more.py",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 17,
+        "Comments": 1,
+        "Blanks": 5,
+        "Lines": 23
+      }
+    },
+    {
+      "Path": "client/components/interface/menu.jsx",
+      "Metrics": {
+        "Language": "JavaScript",
+        "Files": 1,
+        "Code": 21,
+        "Comments": 0,
+        "Blanks": 2,
+        "Lines": 23
+      }
+    },
+    {
+      "Path": "server/classes_offered/migrations/0002_alter_classes_offered_participants.py",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 17,
+        "Comments": 1,
+        "Blanks": 5,
+        "Lines": 23
+      }
+    },
+    {
+      "Path": "client/app/auth/approval/page.js",
+      "Metrics": {
+        "Language": "JavaScript",
+        "Files": 1,
+        "Code": 20,
+        "Comments": 0,
+        "Blanks": 3,
+        "Lines": 23
+      }
+    },
+    {
+      "Path": "client/components/general/body.jsx",
+      "Metrics": {
+        "Language": "JavaScript",
+        "Files": 1,
+        "Code": 21,
+        "Comments": 0,
+        "Blanks": 2,
+        "Lines": 23
+      }
+    },
+    {
+      "Path": "server/user_auth/migrations/__pycache__/0003_remove_user_is_coach_remove_user_is_member_and_more.cpython-312.pyc",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 22,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 22
+      }
+    },
+    {
+      "Path": "server/member_logs/urls.py",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 21,
+        "Comments": 0,
+        "Blanks": 1,
+        "Lines": 22
+      }
+    },
+    {
+      "Path": "server/member_logs/migrations/__pycache__/0002_remove_member_password_remove_member_username_and_more.cpython-312.pyc",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 22,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 22
+      }
+    },
+    {
+      "Path": "server/member_logs/migrations/__pycache__/0004_remove_member_date_of_birth_remove_member_email_and_more.cpython-312.pyc",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 22,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 22
+      }
+    },
+    {
+      "Path": "server/member_logs/migrations/0005_alter_member_user.py",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 15,
+        "Comments": 1,
+        "Blanks": 5,
+        "Lines": 21
+      }
+    },
+    {
+      "Path": "server/message_platform/migrations/0004_message_title_delete_annoucements.py",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 15,
+        "Comments": 1,
+        "Blanks": 5,
+        "Lines": 21
+      }
+    },
+    {
+      "Path": "client/contexts/darkModeContext.js",
+      "Metrics": {
+        "Language": "JavaScript",
+        "Files": 1,
+        "Code": 17,
+        "Comments": 0,
+        "Blanks": 4,
+        "Lines": 21
+      }
+    },
+    {
+      "Path": "server/classes_offered/migrations/__pycache__/0002_alter_classes_offered_participants.cpython-312.pyc",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 20,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 20
+      }
+    },
+    {
+      "Path": "server/classes_offered/migrations/0004_classes_offered_participants.py",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 14,
+        "Comments": 1,
+        "Blanks": 5,
+        "Lines": 20
+      }
+    },
+    {
+      "Path": "server/membership_tracker/__pycache__/urls.cpython-312.pyc",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 19,
+        "Comments": 0,
+        "Blanks": 1,
+        "Lines": 20
+      }
+    },
+    {
+      "Path": "server/message_platform/routing.py",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 19,
+        "Comments": 0,
+        "Blanks": 1,
+        "Lines": 20
+      }
+    },
+    {
+      "Path": "server/manage.py",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 17,
+        "Comments": 1,
+        "Blanks": 2,
+        "Lines": 20
+      }
+    },
+    {
+      "Path": "server/classes_offered/urls.py",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 19,
+        "Comments": 0,
+        "Blanks": 1,
+        "Lines": 20
+      }
+    },
+    {
+      "Path": "server/classes_offered/migrations/0006_alter_classes_offered_participants.py",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 13,
+        "Comments": 1,
+        "Blanks": 5,
+        "Lines": 19
+      }
+    },
+    {
+      "Path": "server/classes_offered/migrations/0005_alter_classes_offered_participants.py",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 13,
+        "Comments": 1,
+        "Blanks": 5,
+        "Lines": 19
+      }
+    },
+    {
+      "Path": "client/tailwind.config.js",
+      "Metrics": {
+        "Language": "JavaScript",
+        "Files": 1,
+        "Code": 18,
+        "Comments": 1,
+        "Blanks": 0,
+        "Lines": 19
+      }
+    },
+    {
+      "Path": "server/user_auth/migrations/0005_alter_user_managers.py",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 12,
+        "Comments": 1,
+        "Blanks": 5,
+        "Lines": 18
+      }
+    },
+    {
+      "Path": "server/classes_offered/migrations/__pycache__/0006_alter_classes_offered_participants.cpython-312.pyc",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 18,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 18
+      }
+    },
+    {
+      "Path": "server/message_platform/__pycache__/models.cpython-312.pyc",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 18,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 18
+      }
+    },
+    {
+      "Path": "server/classes_offered/migrations/0007_alter_classes_offered_class_title.py",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 12,
+        "Comments": 1,
+        "Blanks": 5,
+        "Lines": 18
+      }
+    },
+    {
+      "Path": "server/finance_tracking/migrations/0003_coachfinances_last_payment_balance.py",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 12,
+        "Comments": 1,
+        "Blanks": 5,
+        "Lines": 18
+      }
+    },
+    {
+      "Path": "server/user_auth/migrations/__pycache__/0001_initial.cpython-312.pyc",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 18,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 18
+      }
+    },
+    {
+      "Path": "server/classes_offered/migrations/__pycache__/0005_alter_classes_offered_participants.cpython-312.pyc",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 18,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 18
+      }
+    },
+    {
+      "Path": "server/member_logs/migrations/0006_member_prepaid_fees.py",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 12,
+        "Comments": 1,
+        "Blanks": 5,
+        "Lines": 18
+      }
+    },
+    {
+      "Path": "server/user_auth/migrations/0004_user_date_of_birth.py",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 12,
+        "Comments": 1,
+        "Blanks": 5,
+        "Lines": 18
+      }
+    },
+    {
+      "Path": "server/classes_offered/migrations/__pycache__/0004_classes_offered_participants.cpython-312.pyc",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 17,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 17
+      }
+    },
+    {
+      "Path": "server/member_logs/serializers.py",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 15,
+        "Comments": 0,
+        "Blanks": 2,
+        "Lines": 17
+      }
+    },
+    {
+      "Path": "server/membership_tracker/__pycache__/asgi.cpython-312.pyc",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 15,
+        "Comments": 0,
+        "Blanks": 2,
+        "Lines": 17
+      }
+    },
+    {
+      "Path": "server/classes_offered/migrations/0003_remove_classes_offered_participants.py",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 11,
+        "Comments": 1,
+        "Blanks": 5,
+        "Lines": 17
+      }
+    },
+    {
+      "Path": "server/user_auth/migrations/0002_remove_user_name.py",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 11,
+        "Comments": 1,
+        "Blanks": 5,
+        "Lines": 17
+      }
+    },
+    {
+      "Path": "server/member_logs/migrations/0003_remove_member_phone_number.py",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 11,
+        "Comments": 1,
+        "Blanks": 5,
+        "Lines": 17
+      }
+    },
+    {
+      "Path": "client/components/interface/welcome.jsx",
+      "Metrics": {
+        "Language": "JavaScript",
+        "Files": 1,
+        "Code": 14,
+        "Comments": 0,
+        "Blanks": 2,
+        "Lines": 16
+      }
+    },
+    {
+      "Path": "server/finance_tracking/migrations/__pycache__/0001_initial.cpython-312.pyc",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 16,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 16
+      }
+    },
+    {
+      "Path": "server/message_platform/migrations/__pycache__/0004_message_title_delete_annoucements.cpython-312.pyc",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 16,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 16
+      }
+    },
+    {
+      "Path": "server/user_auth/__pycache__/models.cpython-312.pyc",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 16,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 16
+      }
+    },
+    {
+      "Path": "server/membership_tracker/wsgi.py",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 10,
+        "Comments": 0,
+        "Blanks": 6,
+        "Lines": 16
+      }
+    },
+    {
+      "Path": "server/user_auth/urls.py",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 15,
+        "Comments": 0,
+        "Blanks": 1,
+        "Lines": 16
+      }
+    },
+    {
+      "Path": "client/app/dashboard/page.js",
+      "Metrics": {
+        "Language": "JavaScript",
+        "Files": 1,
+        "Code": 14,
+        "Comments": 0,
+        "Blanks": 2,
+        "Lines": 16
+      }
+    },
+    {
+      "Path": "server/member_logs/models.py",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 10,
+        "Comments": 3,
+        "Blanks": 2,
+        "Lines": 15
+      }
+    },
+    {
+      "Path": "server/finance_tracking/serializers.py",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 14,
+        "Comments": 0,
+        "Blanks": 1,
+        "Lines": 15
+      }
+    },
+    {
+      "Path": "server/finance_tracking/urls.py",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 13,
+        "Comments": 0,
+        "Blanks": 1,
+        "Lines": 14
+      }
+    },
+    {
+      "Path": "server/classes_offered/serializers.py",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 13,
+        "Comments": 0,
+        "Blanks": 1,
+        "Lines": 14
+      }
+    },
+    {
+      "Path": "server/finance_tracking/models.py",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 11,
+        "Comments": 1,
+        "Blanks": 2,
+        "Lines": 14
+      }
+    },
+    {
+      "Path": "client/app/globals.css",
+      "Metrics": {
+        "Language": "CSS",
+        "Files": 1,
+        "Code": 10,
+        "Comments": 1,
+        "Blanks": 3,
+        "Lines": 14
+      }
+    },
+    {
+      "Path": "client/components/general/footer.jsx",
+      "Metrics": {
+        "Language": "JavaScript",
+        "Files": 1,
+        "Code": 12,
+        "Comments": 0,
+        "Blanks": 2,
+        "Lines": 14
+      }
+    },
+    {
+      "Path": "server/message_platform/urls.py",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 13,
+        "Comments": 0,
+        "Blanks": 1,
+        "Lines": 14
+      }
+    },
+    {
+      "Path": "server/classes_offered/migrations/__pycache__/0007_alter_classes_offered_class_title.cpython-312.pyc",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 13,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 13
+      }
+    },
+    {
+      "Path": "client/components/general/authorization/unAuthorized.jsx",
+      "Metrics": {
+        "Language": "JavaScript",
+        "Files": 1,
+        "Code": 12,
+        "Comments": 0,
+        "Blanks": 1,
+        "Lines": 13
+      }
+    },
+    {
+      "Path": "server/classes_offered/__pycache__/models.cpython-312.pyc",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 12,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 12
+      }
+    },
+    {
+      "Path": "server/message_platform/migrations/__pycache__/0003_annoucements.cpython-312.pyc",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 12,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 12
+      }
+    },
+    {
+      "Path": "server/finance_tracking/migrations/__pycache__/0002_rename_finance_tracking_coachfinances_and_more.cpython-312.pyc",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 12,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 12
+      }
+    },
+    {
+      "Path": "server/user_auth/migrations/__pycache__/0004_user_date_of_birth.cpython-312.pyc",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 12,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 12
+      }
+    },
+    {
+      "Path": "server/classes_offered/migrations/__pycache__/0001_initial.cpython-312.pyc",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 12,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 12
+      }
+    },
+    {
+      "Path": "server/classes_offered/models.py",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 9,
+        "Comments": 1,
+        "Blanks": 2,
+        "Lines": 12
+      }
+    },
+    {
+      "Path": "client/components/index.jsx",
+      "Metrics": {
+        "Language": "JavaScript",
+        "Files": 1,
+        "Code": 12,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 12
+      }
+    },
+    {
+      "Path": "server/member_logs/migrations/__pycache__/0005_alter_member_user.cpython-312.pyc",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 12,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 12
+      }
+    },
+    {
+      "Path": "server/classes_offered/__pycache__/serializers.cpython-312.pyc",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 11,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 11
+      }
+    },
+    {
+      "Path": "server/classes_offered/migrations/__pycache__/0003_remove_classes_offered_participants.cpython-312.pyc",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 11,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 11
+      }
+    },
+    {
+      "Path": "client/hooks/useAuthContext.js",
+      "Metrics": {
+        "Language": "JavaScript",
+        "Files": 1,
+        "Code": 10,
+        "Comments": 0,
+        "Blanks": 1,
+        "Lines": 11
+      }
+    },
+    {
+      "Path": "server/member_logs/migrations/__pycache__/0003_remove_member_phone_number.cpython-312.pyc",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 11,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 11
+      }
+    },
+    {
+      "Path": "server/member_logs/migrations/__pycache__/0006_member_prepaid_fees.cpython-312.pyc",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 11,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 11
+      }
+    },
+    {
+      "Path": "client/hooks/useDarkModeContext.js",
+      "Metrics": {
+        "Language": "JavaScript",
+        "Files": 1,
+        "Code": 10,
+        "Comments": 0,
+        "Blanks": 1,
+        "Lines": 11
+      }
+    },
+    {
+      "Path": "server/user_auth/migrations/__pycache__/0002_remove_user_name.cpython-312.pyc",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 11,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 11
+      }
+    },
+    {
+      "Path": "server/member_logs/migrations/__pycache__/0001_initial.cpython-312.pyc",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 11,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 11
+      }
+    },
+    {
+      "Path": "server/finance_tracking/migrations/__pycache__/0003_coachfinances_last_payment_balance.cpython-312.pyc",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 11,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 11
+      }
+    },
+    {
+      "Path": "server/finance_tracking/__pycache__/serializers.cpython-312.pyc",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 10,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 10
+      }
+    },
+    {
+      "Path": "server/user_auth/migrations/__pycache__/0005_alter_user_managers.cpython-312.pyc",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 10,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 10
+      }
+    },
+    {
+      "Path": "server/member_logs/__pycache__/models.cpython-312.pyc",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 9,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 9
+      }
+    },
+    {
+      "Path": "client/components/general/authorization/deactivated.jsx",
+      "Metrics": {
+        "Language": "JavaScript",
+        "Files": 1,
+        "Code": 9,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 9
+      }
+    },
+    {
+      "Path": "client/utils/helpers.js",
+      "Metrics": {
+        "Language": "JavaScript",
+        "Files": 1,
+        "Code": 8,
+        "Comments": 0,
+        "Blanks": 1,
+        "Lines": 9
+      }
+    },
+    {
+      "Path": "server/member_logs/__pycache__/urls.cpython-312.pyc",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 9,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 9
+      }
+    },
+    {
+      "Path": "server/member_logs/__pycache__/serializers.cpython-312.pyc",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 8,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 8
+      }
+    },
+    {
+      "Path": "server/user_auth/__pycache__/serializers.cpython-312.pyc",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 8,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 8
+      }
+    },
+    {
+      "Path": "client/jsconfig.json",
+      "Metrics": {
+        "Language": "JSON",
+        "Files": 1,
+        "Code": 7,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 7
+      }
+    },
+    {
+      "Path": "server/user_auth/apps.py",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 4,
+        "Comments": 0,
+        "Blanks": 2,
+        "Lines": 6
+      }
+    },
+    {
+      "Path": "client/postcss.config.js",
+      "Metrics": {
+        "Language": "JavaScript",
+        "Files": 1,
+        "Code": 6,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 6
+      }
+    },
+    {
+      "Path": "server/member_logs/admin.py",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 3,
+        "Comments": 1,
+        "Blanks": 2,
+        "Lines": 6
+      }
+    },
+    {
+      "Path": "server/message_platform/__pycache__/urls.cpython-312.pyc",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 6,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 6
+      }
+    },
+    {
+      "Path": "server/member_logs/apps.py",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 4,
+        "Comments": 0,
+        "Blanks": 2,
+        "Lines": 6
+      }
+    },
+    {
+      "Path": "server/classes_offered/apps.py",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 4,
+        "Comments": 0,
+        "Blanks": 2,
+        "Lines": 6
+      }
+    },
+    {
+      "Path": "server/finance_tracking/apps.py",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 4,
+        "Comments": 0,
+        "Blanks": 2,
+        "Lines": 6
+      }
+    },
+    {
+      "Path": "server/message_platform/apps.py",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 4,
+        "Comments": 0,
+        "Blanks": 2,
+        "Lines": 6
+      }
+    },
+    {
+      "Path": "server/user_auth/__pycache__/urls.cpython-312.pyc",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 5,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 5
+      }
+    },
+    {
+      "Path": "server/classes_offered/__pycache__/urls.cpython-312.pyc",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 5,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 5
+      }
+    },
+    {
+      "Path": "server/finance_tracking/__pycache__/models.cpython-312.pyc",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 4,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 4
+      }
+    },
+    {
+      "Path": "client/next.config.mjs",
+      "Metrics": {
+        "Language": "JavaScript",
+        "Files": 1,
+        "Code": 2,
+        "Comments": 1,
+        "Blanks": 1,
+        "Lines": 4
+      }
+    },
+    {
+      "Path": "server/member_logs/__pycache__/admin.cpython-312.pyc",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 4,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 4
+      }
+    },
+    {
+      "Path": "server/message_platform/tests.py",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 1,
+        "Comments": 1,
+        "Blanks": 1,
+        "Lines": 3
+      }
+    },
+    {
+      "Path": "server/classes_offered/__pycache__/apps.cpython-312.pyc",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 3,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 3
+      }
+    },
+    {
+      "Path": "server/finance_tracking/__pycache__/urls.cpython-312.pyc",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 3,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 3
+      }
+    },
+    {
+      "Path": "server/user_auth/admin.py",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 1,
+        "Comments": 1,
+        "Blanks": 1,
+        "Lines": 3
+      }
+    },
+    {
+      "Path": "server/member_logs/__pycache__/apps.cpython-312.pyc",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 3,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 3
+      }
+    },
+    {
+      "Path": "server/finance_tracking/admin.py",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 1,
+        "Comments": 1,
+        "Blanks": 1,
+        "Lines": 3
+      }
+    },
+    {
+      "Path": "server/user_auth/__pycache__/apps.cpython-312.pyc",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 3,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 3
+      }
+    },
+    {
+      "Path": "server/message_platform/admin.py",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 1,
+        "Comments": 1,
+        "Blanks": 1,
+        "Lines": 3
+      }
+    },
+    {
+      "Path": "server/classes_offered/admin.py",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 1,
+        "Comments": 1,
+        "Blanks": 1,
+        "Lines": 3
+      }
+    },
+    {
+      "Path": "server/finance_tracking/__pycache__/apps.cpython-312.pyc",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 3,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 3
+      }
+    },
+    {
+      "Path": "server/message_platform/__pycache__/apps.cpython-312.pyc",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 3,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 3
+      }
+    },
+    {
+      "Path": "server/member_logs/migrations/__pycache__/__init__.cpython-312.pyc",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 2,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 2
+      }
+    },
+    {
+      "Path": "server/member_logs/__pycache__/__init__.cpython-312.pyc",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 2,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 2
+      }
+    },
+    {
+      "Path": "server/finance_tracking/__pycache__/admin.cpython-312.pyc",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 2,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 2
+      }
+    },
+    {
+      "Path": "server/message_platform/__pycache__/admin.cpython-312.pyc",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 2,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 2
+      }
+    },
+    {
+      "Path": "server/user_auth/__pycache__/__init__.cpython-312.pyc",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 2,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 2
+      }
+    },
+    {
+      "Path": "server/message_platform/migrations/__pycache__/__init__.cpython-312.pyc",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 2,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 2
+      }
+    },
+    {
+      "Path": "server/user_auth/__pycache__/admin.cpython-312.pyc",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 2,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 2
+      }
+    },
+    {
+      "Path": "server/finance_tracking/__pycache__/__init__.cpython-312.pyc",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 2,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 2
+      }
+    },
+    {
+      "Path": "server/membership_tracker/__pycache__/__init__.cpython-312.pyc",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 2,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 2
+      }
+    },
+    {
+      "Path": "server/user_auth/migrations/__pycache__/__init__.cpython-312.pyc",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 2,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 2
+      }
+    },
+    {
+      "Path": "server/message_platform/__pycache__/__init__.cpython-312.pyc",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 2,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 2
+      }
+    },
+    {
+      "Path": "server/finance_tracking/migrations/__pycache__/__init__.cpython-312.pyc",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 2,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 2
+      }
+    },
+    {
+      "Path": "server/classes_offered/migrations/__pycache__/__init__.cpython-312.pyc",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 2,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 2
+      }
+    },
+    {
+      "Path": "server/message_platform/__pycache__/routing.cpython-312.pyc",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 2,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 2
+      }
+    },
+    {
+      "Path": "server/classes_offered/__pycache__/admin.cpython-312.pyc",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 2,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 2
+      }
+    },
+    {
+      "Path": "server/classes_offered/__pycache__/__init__.cpython-312.pyc",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 2,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 2
+      }
+    },
+    {
+      "Path": "server/finance_tracking/migrations/__init__.py",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 0,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 0
+      }
+    },
+    {
+      "Path": "server/classes_offered/migrations/__init__.py",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 0,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 0
+      }
+    },
+    {
+      "Path": "server/finance_tracking/__init__.py",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 0,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 0
+      }
+    },
+    {
+      "Path": "server/member_logs/migrations/__init__.py",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 0,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 0
+      }
+    },
+    {
+      "Path": "server/message_platform/__init__.py",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 0,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 0
+      }
+    },
+    {
+      "Path": "server/message_platform/migrations/__init__.py",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 0,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 0
+      }
+    },
+    {
+      "Path": "server/user_auth/migrations/__init__.py",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 0,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 0
+      }
+    },
+    {
+      "Path": "server/membership_tracker/__init__.py",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 0,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 0
+      }
+    },
+    {
+      "Path": "server/user_auth/__init__.py",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 0,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 0
+      }
+    },
+    {
+      "Path": "server/classes_offered/__init__.py",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 0,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 0
+      }
+    },
+    {
+      "Path": "server/member_logs/__init__.py",
+      "Metrics": {
+        "Language": "Python",
+        "Files": 1,
+        "Code": 0,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 0
+      }
+    }
+  ],
+  "DirMetrics": [
+    {
+      "Directory": "server",
+      "Percentage": 58.080808080808076,
+      "Lines": 3795
+    },
+    {
+      "Directory": "client",
+      "Percentage": 39.57759412304867,
+      "Lines": 2586
+    },
+    {
+      "Directory": ".",
+      "Percentage": 2.3415977961432506,
+      "Lines": 153
+    }
+  ],
+  "CodebaseMetrics": {
+    "TotalFiles": 204,
+    "TotalDirs": 58,
+    "TotalLanguages": 5,
+    "TotalCode": 5509,
+    "TotalComments": 193,
+    "TotalBlanks": 832,
+    "TotalLines": 6534
+  },
+  "AnnotationMetrics": {
+    "TotalTODO": 0,
+    "TotalFIXME": 0,
+    "TotalHACK": 0,
+    "TotalAnnotations": 0
+  },
+  "DependencyMetrics": {
+    "TotalDependencies": 59,
+    "DependencyFiles": [
+      {
+        "Path": "/mnt/c/Users/Andre/GitHub/vivid/client/package.json",
+        "Type": "npm/yarn",
+        "Dependencies": [
+          "classnames",
+          "framer-motion",
+          "hamburger-react",
+          "next",
+          "react-big-calendar",
+          "react-chartjs-2",
+          "react-dom",
+          "react-icons",
+          "moment",
+          "primereact",
+          "react",
+          "react-hot-toast",
+          "react-use",
+          "tailwindcss",
+          "@types/node",
+          "@types/react",
+          "autoprefixer",
+          "eslint",
+          "eslint-config-next",
+          "postcss"
+        ]
+      },
+      {
+        "Path": "/mnt/c/Users/Andre/GitHub/vivid/server/requirements.txt",
+        "Type": "pip",
+        "Dependencies": [
+          "asgiref",
+          "attrs",
+          "autobahn",
+          "Automat",
+          "certifi",
+          "cffi",
+          "channels",
+          "charset-normalizer",
+          "constantly",
+          "cryptography",
+          "daphne",
+          "Django",
+          "django-channels",
+          "django-cors-headers",
+          "djangorestframework",
+          "hyperlink",
+          "idna",
+          "incremental",
+          "oauthlib",
+          "psycopg2",
+          "pyasn1",
+          "pyasn1_modules",
+          "pycparser",
+          "PyJWT",
+          "pyOpenSSL",
+          "python-dotenv",
+          "requests",
+          "requests-oauthlib",
+          "service-identity",
+          "setuptools",
+          "six",
+          "sqlparse",
+          "Twisted",
+          "twisted-iocpsupport",
+          "txaio",
+          "typing_extensions",
+          "tzdata",
+          "urllib3",
+          "zope"
+        ]
+      }
+    ]
+  }
+}

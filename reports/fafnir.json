@@ -1,0 +1,1427 @@
+{
+  "LanguageMetrics": [
+    {
+      "Percentage": 62.502972651605226,
+      "Metrics": {
+        "Language": "Go",
+        "Files": 75,
+        "Code": 10513,
+        "Comments": 375,
+        "Blanks": 1457,
+        "Lines": 12345
+      }
+    },
+    {
+      "Percentage": 20.083234244946492,
+      "Metrics": {
+        "Language": "JSON",
+        "Files": 3,
+        "Code": 3378,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 3378
+      }
+    },
+    {
+      "Percentage": 2.5564803804994054,
+      "Metrics": {
+        "Language": "YAML",
+        "Files": 11,
+        "Code": 430,
+        "Comments": 93,
+        "Blanks": 56,
+        "Lines": 579
+      }
+    },
+    {
+      "Percentage": 1.896551724137931,
+      "Metrics": {
+        "Language": "Markdown",
+        "Files": 8,
+        "Code": 319,
+        "Comments": 50,
+        "Blanks": 90,
+        "Lines": 459
+      }
+    },
+    {
+      "Percentage": 0.2437574316290131,
+      "Metrics": {
+        "Language": "TypeScript",
+        "Files": 4,
+        "Code": 41,
+        "Comments": 5,
+        "Blanks": 7,
+        "Lines": 53
+      }
+    },
+    {
+      "Percentage": 0.023781212841854936,
+      "Metrics": {
+        "Language": "JavaScript",
+        "Files": 1,
+        "Code": 4,
+        "Comments": 0,
+        "Blanks": 1,
+        "Lines": 5
+      }
+    },
+    {
+      "Percentage": 0.005945303210463734,
+      "Metrics": {
+        "Language": "CSS",
+        "Files": 1,
+        "Code": 1,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 1
+      }
+    }
+  ],
+  "FileMetrics": [
+    {
+      "Path": "infra/monitoring/grafana/dashboards/example.json",
+      "Metrics": {
+        "Language": "JSON",
+        "Files": 1,
+        "Code": 3327,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 3327
+      }
+    },
+    {
+      "Path": "services/api-gateway/graph/generated/prelude.generated.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 2767,
+        "Comments": 17,
+        "Blanks": 199,
+        "Lines": 2983
+      }
+    },
+    {
+      "Path": "services/api-gateway/graph/generated/stock.generated.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 2059,
+        "Comments": 17,
+        "Blanks": 150,
+        "Lines": 2226
+      }
+    },
+    {
+      "Path": "services/api-gateway/graph/generated/base.generated.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 799,
+        "Comments": 17,
+        "Blanks": 73,
+        "Lines": 889
+      }
+    },
+    {
+      "Path": "services/api-gateway/graph/generated/root_.generated.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 541,
+        "Comments": 3,
+        "Blanks": 142,
+        "Lines": 686
+      }
+    },
+    {
+      "Path": "services/stock-service/internal/api/service.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 405,
+        "Comments": 30,
+        "Blanks": 67,
+        "Lines": 502
+      }
+    },
+    {
+      "Path": "services/stock-service/internal/db/generated/stock_search.sql.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 270,
+        "Comments": 4,
+        "Blanks": 22,
+        "Lines": 296
+      }
+    },
+    {
+      "Path": "services/api-gateway/graph/generated/user.generated.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 238,
+        "Comments": 17,
+        "Blanks": 35,
+        "Lines": 290
+      }
+    },
+    {
+      "Path": "tools/seeder/main.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 206,
+        "Comments": 0,
+        "Blanks": 45,
+        "Lines": 251
+      }
+    },
+    {
+      "Path": "services/api-gateway/graph/generated/security.generated.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 179,
+        "Comments": 17,
+        "Blanks": 35,
+        "Lines": 231
+      }
+    },
+    {
+      "Path": "services/shared/pb/user/user.pb.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 171,
+        "Comments": 9,
+        "Blanks": 26,
+        "Lines": 206
+      }
+    },
+    {
+      "Path": "services/shared/pb/security/security.pb.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 163,
+        "Comments": 9,
+        "Blanks": 25,
+        "Lines": 197
+      }
+    },
+    {
+      "Path": "services/shared/pb/base/base.pb.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 160,
+        "Comments": 9,
+        "Blanks": 18,
+        "Lines": 187
+      }
+    },
+    {
+      "Path": "deployments/compose/base.yml",
+      "Metrics": {
+        "Language": "YAML",
+        "Files": 1,
+        "Code": 172,
+        "Comments": 0,
+        "Blanks": 9,
+        "Lines": 181
+      }
+    },
+    {
+      "Path": "services/api-gateway/gqlgen.yml",
+      "Metrics": {
+        "Language": "YAML",
+        "Files": 1,
+        "Code": 33,
+        "Comments": 93,
+        "Blanks": 32,
+        "Lines": 158
+      }
+    },
+    {
+      "Path": "docs/development.md",
+      "Metrics": {
+        "Language": "Markdown",
+        "Files": 1,
+        "Code": 94,
+        "Comments": 20,
+        "Blanks": 32,
+        "Lines": 146
+      }
+    },
+    {
+      "Path": "services/api-gateway/internal/clients/stock.client.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 101,
+        "Comments": 0,
+        "Blanks": 29,
+        "Lines": 130
+      }
+    },
+    {
+      "Path": "services/shared/pkg/errors/errors.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 88,
+        "Comments": 19,
+        "Blanks": 22,
+        "Lines": 129
+      }
+    },
+    {
+      "Path": "services/shared/pb/user/user_grpc.pb.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 77,
+        "Comments": 29,
+        "Blanks": 15,
+        "Lines": 121
+      }
+    },
+    {
+      "Path": "services/shared/pb/security/security_grpc.pb.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 77,
+        "Comments": 29,
+        "Blanks": 15,
+        "Lines": 121
+      }
+    },
+    {
+      "Path": "services/auth-service/internal/db/generated/user.sql.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 89,
+        "Comments": 5,
+        "Blanks": 20,
+        "Lines": 114
+      }
+    },
+    {
+      "Path": "services/auth-service/internal/api/handler.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 79,
+        "Comments": 1,
+        "Blanks": 24,
+        "Lines": 104
+      }
+    },
+    {
+      "Path": "services/auth-service/internal/api/service.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 83,
+        "Comments": 0,
+        "Blanks": 16,
+        "Lines": 99
+      }
+    },
+    {
+      "Path": "services/stock-service/internal/api/server.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 72,
+        "Comments": 7,
+        "Blanks": 19,
+        "Lines": 98
+      }
+    },
+    {
+      "Path": "docs/schema.md",
+      "Metrics": {
+        "Language": "Markdown",
+        "Files": 1,
+        "Code": 82,
+        "Comments": 1,
+        "Blanks": 10,
+        "Lines": 93
+      }
+    },
+    {
+      "Path": "services/stock-service/internal/fmp/client.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 74,
+        "Comments": 0,
+        "Blanks": 19,
+        "Lines": 93
+      }
+    },
+    {
+      "Path": "services/auth-service/internal/api/middleware.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 73,
+        "Comments": 1,
+        "Blanks": 13,
+        "Lines": 87
+      }
+    },
+    {
+      "Path": "services/auth-service/internal/api/server.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 62,
+        "Comments": 7,
+        "Blanks": 17,
+        "Lines": 86
+      }
+    },
+    {
+      "Path": "docs/architecture.md",
+      "Metrics": {
+        "Language": "Markdown",
+        "Files": 1,
+        "Code": 65,
+        "Comments": 9,
+        "Blanks": 11,
+        "Lines": 85
+      }
+    },
+    {
+      "Path": "services/api-gateway/internal/api/server.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 67,
+        "Comments": 0,
+        "Blanks": 16,
+        "Lines": 83
+      }
+    },
+    {
+      "Path": "services/shared/pkg/utils/token_gen.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 66,
+        "Comments": 5,
+        "Blanks": 11,
+        "Lines": 82
+      }
+    },
+    {
+      "Path": "services/stock-service/internal/api/handler.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 62,
+        "Comments": 0,
+        "Blanks": 20,
+        "Lines": 82
+      }
+    },
+    {
+      "Path": "services/stock-service/internal/config/config.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 69,
+        "Comments": 0,
+        "Blanks": 12,
+        "Lines": 81
+      }
+    },
+    {
+      "Path": "services/api-gateway/graph/model/models_gen.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 65,
+        "Comments": 1,
+        "Blanks": 12,
+        "Lines": 78
+      }
+    },
+    {
+      "Path": "services/auth-service/internal/api/validate.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 52,
+        "Comments": 3,
+        "Blanks": 16,
+        "Lines": 71
+      }
+    },
+    {
+      "Path": "services/security-service/internal/api/server.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 46,
+        "Comments": 4,
+        "Blanks": 15,
+        "Lines": 65
+      }
+    },
+    {
+      "Path": "services/user-service/internal/api/server.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 46,
+        "Comments": 4,
+        "Blanks": 15,
+        "Lines": 65
+      }
+    },
+    {
+      "Path": "services/api-gateway/graph/resolvers/stock.resolvers.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 46,
+        "Comments": 7,
+        "Blanks": 10,
+        "Lines": 63
+      }
+    },
+    {
+      "Path": "services/user-service/internal/db/generated/profile.sql.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 42,
+        "Comments": 5,
+        "Blanks": 10,
+        "Lines": 57
+      }
+    },
+    {
+      "Path": "services/api-gateway/internal/clients/user.client.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 47,
+        "Comments": 0,
+        "Blanks": 10,
+        "Lines": 57
+      }
+    },
+    {
+      "Path": "services/stock-service/internal/redis/redis.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 40,
+        "Comments": 4,
+        "Blanks": 12,
+        "Lines": 56
+      }
+    },
+    {
+      "Path": "services/shared/pkg/utils/json.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 44,
+        "Comments": 3,
+        "Blanks": 8,
+        "Lines": 55
+      }
+    },
+    {
+      "Path": "services/security-service/internal/api/handler.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 45,
+        "Comments": 1,
+        "Blanks": 9,
+        "Lines": 55
+      }
+    },
+    {
+      "Path": "services/api-gateway/internal/clients/security.client.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 44,
+        "Comments": 0,
+        "Blanks": 10,
+        "Lines": 54
+      }
+    },
+    {
+      "Path": "services/auth-service/internal/api/types.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 38,
+        "Comments": 4,
+        "Blanks": 11,
+        "Lines": 53
+      }
+    },
+    {
+      "Path": "services/auth-service/internal/config/config.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 46,
+        "Comments": 0,
+        "Blanks": 6,
+        "Lines": 52
+      }
+    },
+    {
+      "Path": "services/security-service/internal/db/generated/security.sql.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 38,
+        "Comments": 5,
+        "Blanks": 9,
+        "Lines": 52
+      }
+    },
+    {
+      "Path": "services/user-service/internal/config/config.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 44,
+        "Comments": 0,
+        "Blanks": 6,
+        "Lines": 50
+      }
+    },
+    {
+      "Path": "services/user-service/internal/api/handler.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 43,
+        "Comments": 0,
+        "Blanks": 7,
+        "Lines": 50
+      }
+    },
+    {
+      "Path": "services/security-service/internal/config/config.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 44,
+        "Comments": 0,
+        "Blanks": 6,
+        "Lines": 50
+      }
+    },
+    {
+      "Path": "services/stock-service/internal/db/db.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 38,
+        "Comments": 0,
+        "Blanks": 10,
+        "Lines": 48
+      }
+    },
+    {
+      "Path": "services/security-service/internal/db/db.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 38,
+        "Comments": 0,
+        "Blanks": 10,
+        "Lines": 48
+      }
+    },
+    {
+      "Path": "services/auth-service/internal/db/db.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 38,
+        "Comments": 0,
+        "Blanks": 10,
+        "Lines": 48
+      }
+    },
+    {
+      "Path": "services/user-service/internal/db/db.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 38,
+        "Comments": 0,
+        "Blanks": 10,
+        "Lines": 48
+      }
+    },
+    {
+      "Path": "services/stock-service/internal/db/generated/models.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 38,
+        "Comments": 3,
+        "Blanks": 5,
+        "Lines": 46
+      }
+    },
+    {
+      "Path": "infra/monitoring/prometheus/prometheus.yml",
+      "Metrics": {
+        "Language": "YAML",
+        "Files": 1,
+        "Code": 40,
+        "Comments": 0,
+        "Blanks": 5,
+        "Lines": 45
+      }
+    },
+    {
+      "Path": "deployments/compose/monitoring.yml",
+      "Metrics": {
+        "Language": "YAML",
+        "Files": 1,
+        "Code": 41,
+        "Comments": 0,
+        "Blanks": 3,
+        "Lines": 44
+      }
+    },
+    {
+      "Path": "services/user-service/internal/api/interceptors.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 32,
+        "Comments": 3,
+        "Blanks": 9,
+        "Lines": 44
+      }
+    },
+    {
+      "Path": "services/security-service/internal/api/interceptors.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 31,
+        "Comments": 3,
+        "Blanks": 9,
+        "Lines": 43
+      }
+    },
+    {
+      "Path": "docs/graphql.md",
+      "Metrics": {
+        "Language": "Markdown",
+        "Files": 1,
+        "Code": 22,
+        "Comments": 5,
+        "Blanks": 11,
+        "Lines": 38
+      }
+    },
+    {
+      "Path": "services/stock-service/internal/dto/types.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 33,
+        "Comments": 0,
+        "Blanks": 3,
+        "Lines": 36
+      }
+    },
+    {
+      "Path": "frontend/README.md",
+      "Metrics": {
+        "Language": "Markdown",
+        "Files": 1,
+        "Code": 17,
+        "Comments": 6,
+        "Blanks": 13,
+        "Lines": 36
+      }
+    },
+    {
+      "Path": "frontend/app/layout.tsx",
+      "Metrics": {
+        "Language": "TypeScript",
+        "Files": 1,
+        "Code": 30,
+        "Comments": 0,
+        "Blanks": 4,
+        "Lines": 34
+      }
+    },
+    {
+      "Path": "services/security-service/internal/db/generated/db.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 22,
+        "Comments": 3,
+        "Blanks": 7,
+        "Lines": 32
+      }
+    },
+    {
+      "Path": "services/stock-service/internal/db/generated/db.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 22,
+        "Comments": 3,
+        "Blanks": 7,
+        "Lines": 32
+      }
+    },
+    {
+      "Path": "services/auth-service/internal/db/generated/db.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 22,
+        "Comments": 3,
+        "Blanks": 7,
+        "Lines": 32
+      }
+    },
+    {
+      "Path": "services/user-service/internal/db/generated/db.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 22,
+        "Comments": 3,
+        "Blanks": 7,
+        "Lines": 32
+      }
+    },
+    {
+      "Path": "services/security-service/cmd/server/main.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 22,
+        "Comments": 3,
+        "Blanks": 6,
+        "Lines": 31
+      }
+    },
+    {
+      "Path": "services/auth-service/cmd/server/main.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 22,
+        "Comments": 3,
+        "Blanks": 6,
+        "Lines": 31
+      }
+    },
+    {
+      "Path": "services/api-gateway/cmd/server/main.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 22,
+        "Comments": 3,
+        "Blanks": 6,
+        "Lines": 31
+      }
+    },
+    {
+      "Path": "services/user-service/cmd/server/main.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 22,
+        "Comments": 3,
+        "Blanks": 6,
+        "Lines": 31
+      }
+    },
+    {
+      "Path": "services/stock-service/cmd/server/main.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 22,
+        "Comments": 3,
+        "Blanks": 6,
+        "Lines": 31
+      }
+    },
+    {
+      "Path": "services/security-service/internal/db/generated/models.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 21,
+        "Comments": 3,
+        "Blanks": 6,
+        "Lines": 30
+      }
+    },
+    {
+      "Path": "services/user-service/sqlc.yml",
+      "Metrics": {
+        "Language": "YAML",
+        "Files": 1,
+        "Code": 28,
+        "Comments": 0,
+        "Blanks": 1,
+        "Lines": 29
+      }
+    },
+    {
+      "Path": "services/auth-service/sqlc.yml",
+      "Metrics": {
+        "Language": "YAML",
+        "Files": 1,
+        "Code": 28,
+        "Comments": 0,
+        "Blanks": 1,
+        "Lines": 29
+      }
+    },
+    {
+      "Path": "services/stock-service/sqlc.yml",
+      "Metrics": {
+        "Language": "YAML",
+        "Files": 1,
+        "Code": 28,
+        "Comments": 0,
+        "Blanks": 1,
+        "Lines": 29
+      }
+    },
+    {
+      "Path": "services/security-service/sqlc.yml",
+      "Metrics": {
+        "Language": "YAML",
+        "Files": 1,
+        "Code": 28,
+        "Comments": 0,
+        "Blanks": 1,
+        "Lines": 29
+      }
+    },
+    {
+      "Path": "frontend/tsconfig.json",
+      "Metrics": {
+        "Language": "JSON",
+        "Files": 1,
+        "Code": 27,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 27
+      }
+    },
+    {
+      "Path": "services/api-gateway/internal/config/config.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 21,
+        "Comments": 1,
+        "Blanks": 5,
+        "Lines": 27
+      }
+    },
+    {
+      "Path": "README.md",
+      "Metrics": {
+        "Language": "Markdown",
+        "Files": 1,
+        "Code": 16,
+        "Comments": 3,
+        "Blanks": 6,
+        "Lines": 25
+      }
+    },
+    {
+      "Path": "frontend/package.json",
+      "Metrics": {
+        "Language": "JSON",
+        "Files": 1,
+        "Code": 24,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 24
+      }
+    },
+    {
+      "Path": "services/auth-service/internal/db/generated/querier.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 13,
+        "Comments": 4,
+        "Blanks": 5,
+        "Lines": 22
+      }
+    },
+    {
+      "Path": "services/api-gateway/graph/resolvers/user.resolvers.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 13,
+        "Comments": 4,
+        "Blanks": 4,
+        "Lines": 21
+      }
+    },
+    {
+      "Path": "services/stock-service/internal/db/generated/querier.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 14,
+        "Comments": 3,
+        "Blanks": 4,
+        "Lines": 21
+      }
+    },
+    {
+      "Path": "services/api-gateway/graph/resolvers/security.resolvers.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 13,
+        "Comments": 4,
+        "Blanks": 4,
+        "Lines": 21
+      }
+    },
+    {
+      "Path": "docs/authentication.md",
+      "Metrics": {
+        "Language": "Markdown",
+        "Files": 1,
+        "Code": 11,
+        "Comments": 3,
+        "Blanks": 5,
+        "Lines": 19
+      }
+    },
+    {
+      "Path": "services/user-service/internal/db/generated/querier.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 10,
+        "Comments": 4,
+        "Blanks": 5,
+        "Lines": 19
+      }
+    },
+    {
+      "Path": "services/user-service/internal/db/generated/models.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 12,
+        "Comments": 3,
+        "Blanks": 3,
+        "Lines": 18
+      }
+    },
+    {
+      "Path": "services/auth-service/internal/db/generated/models.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 12,
+        "Comments": 3,
+        "Blanks": 3,
+        "Lines": 18
+      }
+    },
+    {
+      "Path": "services/security-service/internal/db/generated/querier.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 9,
+        "Comments": 4,
+        "Blanks": 4,
+        "Lines": 17
+      }
+    },
+    {
+      "Path": "docs/database.md",
+      "Metrics": {
+        "Language": "Markdown",
+        "Files": 1,
+        "Code": 12,
+        "Comments": 3,
+        "Blanks": 2,
+        "Lines": 17
+      }
+    },
+    {
+      "Path": "services/api-gateway/graph/resolvers/resolver.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 7,
+        "Comments": 4,
+        "Blanks": 4,
+        "Lines": 15
+      }
+    },
+    {
+      "Path": "tools/seeder/seed.yml",
+      "Metrics": {
+        "Language": "YAML",
+        "Files": 1,
+        "Code": 13,
+        "Comments": 0,
+        "Blanks": 1,
+        "Lines": 14
+      }
+    },
+    {
+      "Path": "services/api-gateway/graph/resolvers/base.resolvers.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 6,
+        "Comments": 4,
+        "Blanks": 4,
+        "Lines": 14
+      }
+    },
+    {
+      "Path": "services/api-gateway/graph/resolvers/health.resolvers.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 7,
+        "Comments": 4,
+        "Blanks": 3,
+        "Lines": 14
+      }
+    },
+    {
+      "Path": "infra/monitoring/grafana/provisioning/dashboards/dashboard.yml",
+      "Metrics": {
+        "Language": "YAML",
+        "Files": 1,
+        "Code": 11,
+        "Comments": 0,
+        "Blanks": 1,
+        "Lines": 12
+      }
+    },
+    {
+      "Path": "infra/monitoring/grafana/provisioning/datasources/prometheus.yml",
+      "Metrics": {
+        "Language": "YAML",
+        "Files": 1,
+        "Code": 8,
+        "Comments": 0,
+        "Blanks": 1,
+        "Lines": 9
+      }
+    },
+    {
+      "Path": "services/api-gateway/tools.go",
+      "Metrics": {
+        "Language": "Go",
+        "Files": 1,
+        "Code": 4,
+        "Comments": 1,
+        "Blanks": 2,
+        "Lines": 7
+      }
+    },
+    {
+      "Path": "frontend/app/page.tsx",
+      "Metrics": {
+        "Language": "TypeScript",
+        "Files": 1,
+        "Code": 7,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 7
+      }
+    },
+    {
+      "Path": "frontend/next.config.ts",
+      "Metrics": {
+        "Language": "TypeScript",
+        "Files": 1,
+        "Code": 4,
+        "Comments": 1,
+        "Blanks": 2,
+        "Lines": 7
+      }
+    },
+    {
+      "Path": "frontend/next-env.d.ts",
+      "Metrics": {
+        "Language": "TypeScript",
+        "Files": 1,
+        "Code": 0,
+        "Comments": 4,
+        "Blanks": 1,
+        "Lines": 5
+      }
+    },
+    {
+      "Path": "frontend/postcss.config.mjs",
+      "Metrics": {
+        "Language": "JavaScript",
+        "Files": 1,
+        "Code": 4,
+        "Comments": 0,
+        "Blanks": 1,
+        "Lines": 5
+      }
+    },
+    {
+      "Path": "frontend/app/globals.css",
+      "Metrics": {
+        "Language": "CSS",
+        "Files": 1,
+        "Code": 1,
+        "Comments": 0,
+        "Blanks": 0,
+        "Lines": 1
+      }
+    }
+  ],
+  "DirMetrics": [
+    {
+      "Directory": "services",
+      "Percentage": 73.53151010701546,
+      "Lines": 12368
+    },
+    {
+      "Directory": "infra",
+      "Percentage": 20.17241379310345,
+      "Lines": 3393
+    },
+    {
+      "Directory": "docs",
+      "Percentage": 2.366230677764566,
+      "Lines": 398
+    },
+    {
+      "Directory": "tools",
+      "Percentage": 1.5755053507728896,
+      "Lines": 265
+    },
+    {
+      "Directory": "deployments",
+      "Percentage": 1.33769322235434,
+      "Lines": 225
+    },
+    {
+      "Directory": "frontend",
+      "Percentage": 0.8680142687277052,
+      "Lines": 146
+    },
+    {
+      "Directory": ".",
+      "Percentage": 0.14863258026159334,
+      "Lines": 25
+    }
+  ],
+  "CodebaseMetrics": {
+    "TotalFiles": 103,
+    "TotalDirs": 94,
+    "TotalLanguages": 7,
+    "TotalCode": 14686,
+    "TotalComments": 523,
+    "TotalBlanks": 1611,
+    "TotalLines": 16820
+  },
+  "AnnotationMetrics": {
+    "TotalTODO": 1,
+    "TotalFIXME": 0,
+    "TotalHACK": 0,
+    "TotalAnnotations": 1
+  },
+  "DependencyMetrics": {
+    "TotalDependencies": 106,
+    "DependencyFiles": [
+      {
+        "Path": "/home/andre/Downloads/GitHub/fafnir/frontend/package.json",
+        "Type": "npm/yarn",
+        "Dependencies": [
+          "next",
+          "react",
+          "react-dom",
+          "@tailwindcss/postcss",
+          "@types/node",
+          "@types/react",
+          "@types/react-dom",
+          "tailwindcss",
+          "typescript"
+        ]
+      },
+      {
+        "Path": "/home/andre/Downloads/GitHub/fafnir/services/api-gateway/go.mod",
+        "Type": "Go Modules",
+        "Dependencies": [
+          "fafnir/shared",
+          "github.com/99designs/gqlgen",
+          "github.com/go-chi/chi/v5",
+          "github.com/vektah/gqlparser/v2",
+          "google.golang.org/grpc",
+          "resty.dev/v3",
+          "github.com/agnivade/levenshtein",
+          "github.com/cpuguy83/go-md2man/v2",
+          "github.com/go-viper/mapstructure/v2",
+          "github.com/google/uuid",
+          "github.com/gorilla/websocket",
+          "github.com/hashicorp/golang-lru/v2",
+          "github.com/russross/blackfriday/v2",
+          "github.com/sosodev/duration",
+          "github.com/urfave/cli/v2",
+          "github.com/xrash/smetrics",
+          "golang.org/x/mod",
+          "golang.org/x/net",
+          "golang.org/x/sync",
+          "golang.org/x/sys",
+          "golang.org/x/text",
+          "golang.org/x/tools",
+          "google.golang.org/genproto/googleapis/rpc",
+          "google.golang.org/protobuf",
+          "gopkg.in/yaml.v3"
+        ]
+      },
+      {
+        "Path": "/home/andre/Downloads/GitHub/fafnir/services/security-service/go.mod",
+        "Type": "Go Modules",
+        "Dependencies": [
+          "fafnir/shared",
+          "github.com/google/uuid",
+          "github.com/jackc/pgx/v5",
+          "google.golang.org/grpc",
+          "github.com/jackc/pgpassfile",
+          "github.com/jackc/pgservicefile",
+          "github.com/jackc/puddle/v2",
+          "golang.org/x/crypto",
+          "golang.org/x/net",
+          "golang.org/x/sync",
+          "golang.org/x/sys",
+          "golang.org/x/text",
+          "google.golang.org/genproto/googleapis/rpc",
+          "google.golang.org/protobuf"
+        ]
+      },
+      {
+        "Path": "/home/andre/Downloads/GitHub/fafnir/services/auth-service/go.mod",
+        "Type": "Go Modules",
+        "Dependencies": [
+          "fafnir/shared",
+          "github.com/go-chi/chi/v5",
+          "github.com/go-chi/cors",
+          "github.com/golang-jwt/jwt/v5",
+          "github.com/google/uuid",
+          "github.com/jackc/pgx/v5",
+          "golang.org/x/crypto",
+          "github.com/jackc/pgpassfile",
+          "github.com/jackc/pgservicefile",
+          "github.com/jackc/puddle/v2",
+          "golang.org/x/sync",
+          "golang.org/x/text"
+        ]
+      },
+      {
+        "Path": "/home/andre/Downloads/GitHub/fafnir/services/shared/go.mod",
+        "Type": "Go Modules",
+        "Dependencies": [
+          "github.com/golang-jwt/jwt/v5",
+          "github.com/google/uuid",
+          "github.com/golang-jwt/jwt/v5",
+          "github.com/google/uuid",
+          "google.golang.org/grpc",
+          "google.golang.org/protobuf",
+          "golang.org/x/net",
+          "golang.org/x/sys",
+          "golang.org/x/text",
+          "google.golang.org/genproto/googleapis/rpc"
+        ]
+      },
+      {
+        "Path": "/home/andre/Downloads/GitHub/fafnir/services/stock-service/go.mod",
+        "Type": "Go Modules",
+        "Dependencies": [
+          "fafnir/shared",
+          "github.com/go-chi/chi/v5",
+          "github.com/go-chi/cors",
+          "github.com/jackc/pgx/v5",
+          "github.com/redis/go-redis/v9",
+          "resty.dev/v3",
+          "github.com/cespare/xxhash/v2",
+          "github.com/dgryski/go-rendezvous",
+          "github.com/golang-jwt/jwt/v5",
+          "github.com/google/uuid",
+          "github.com/jackc/pgpassfile",
+          "github.com/jackc/pgservicefile",
+          "github.com/jackc/puddle/v2",
+          "golang.org/x/crypto",
+          "golang.org/x/net",
+          "golang.org/x/sync",
+          "golang.org/x/text"
+        ]
+      },
+      {
+        "Path": "/home/andre/Downloads/GitHub/fafnir/services/user-service/go.mod",
+        "Type": "Go Modules",
+        "Dependencies": [
+          "fafnir/shared",
+          "github.com/google/uuid",
+          "github.com/jackc/pgx/v5",
+          "google.golang.org/grpc",
+          "github.com/jackc/pgpassfile",
+          "github.com/jackc/pgservicefile",
+          "github.com/jackc/puddle/v2",
+          "golang.org/x/crypto",
+          "golang.org/x/net",
+          "golang.org/x/sync",
+          "golang.org/x/sys",
+          "golang.org/x/text",
+          "google.golang.org/genproto/googleapis/rpc",
+          "google.golang.org/protobuf"
+        ]
+      },
+      {
+        "Path": "/home/andre/Downloads/GitHub/fafnir/tools/seeder/go.mod",
+        "Type": "Go Modules",
+        "Dependencies": [
+          "github.com/google/uuid",
+          "github.com/joho/godotenv",
+          "github.com/lib/pq",
+          "golang.org/x/crypto",
+          "gopkg.in/yaml.v3"
+        ]
+      }
+    ]
+  }
+}

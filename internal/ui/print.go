@@ -5,6 +5,7 @@ import (
 	"strings"
 
 	"github.com/andrearcaina/pathfinder/internal/metrics"
+	"github.com/charmbracelet/lipgloss"
 )
 
 const maxBarWidth = 40
@@ -78,4 +79,63 @@ func PrintReport(report metrics.CodebaseReport) {
 		FormatIntBritishEnglish(report.AnnotationMetrics.TotalHACK),
 		FormatIntBritishEnglish(report.AnnotationMetrics.TotalAnnotations),
 	)
+
+	// Display dependency metrics if available
+	if len(report.DependencyMetrics.DependencyFiles) > 0 {
+		fmt.Println(SectionStyle().Render("📦 Dependencies"))
+
+		totalDepsText := fmt.Sprintf("Total Dependencies: %s", FormatIntBritishEnglish(report.DependencyMetrics.TotalDependencies))
+		fmt.Println("  " + BadgeStyle().Render(totalDepsText))
+
+		// Group dependency files by type
+		depByType := make(map[string][]metrics.DependencyFile)
+		for _, depFile := range report.DependencyMetrics.DependencyFiles {
+			depByType[depFile.Type] = append(depByType[depFile.Type], depFile)
+		}
+
+		// Display each dependency type with styling
+		for depType, files := range depByType {
+			totalDepsForType := 0
+			for _, file := range files {
+				totalDepsForType += len(file.Dependencies)
+			}
+
+			// Style the dependency type header
+			typeHeader := fmt.Sprintf("%s: %s dependencies (%d files)",
+				depType,
+				FormatIntBritishEnglish(totalDepsForType),
+				len(files),
+			)
+
+			depTypeStyle := lipgloss.NewStyle().
+				Foreground(lipgloss.Color("#FFD700")).
+				Bold(true).
+				MarginLeft(2)
+
+			fmt.Println(depTypeStyle.Render(typeHeader))
+
+			// Style individual dependency files
+			fileStyle := lipgloss.NewStyle().
+				Foreground(lipgloss.Color("#B0B0B0")).
+				MarginLeft(4)
+
+			// Show dependency files (limit to avoid clutter)
+			for i, file := range files {
+				if i >= 3 { // Show max 3 files per type
+					if len(files) > 3 {
+						moreFilesText := fmt.Sprintf("... and %d more files", len(files)-3)
+						moreStyle := lipgloss.NewStyle().
+							Foreground(lipgloss.Color("#808080")).
+							Italic(true).
+							MarginLeft(4)
+						fmt.Println(moreStyle.Render(moreFilesText))
+					}
+					break
+				}
+
+				fileText := fmt.Sprintf("%s (%d deps)", file.Path, len(file.Dependencies))
+				fmt.Println(fileStyle.Render(fileText))
+			}
+		}
+	}
 }

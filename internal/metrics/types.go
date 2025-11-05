@@ -86,13 +86,18 @@ type LanguageMetricsReport struct {
 	Metrics    LanguageMetrics // Metrics for the language
 }
 
+type PerformanceMetrics struct {
+	ElapsedTime string // Total elapsed time for the scan
+	// TODO: add other performance metrics if needed
+}
+
 type CodebaseReport struct {
-	LanguageMetrics   []LanguageMetricsReport
-	FileMetrics       []FileMetricsReport
-	DirMetrics        []DirMetricsReport
-	CodebaseMetrics   CodebaseMetrics
-	AnnotationMetrics AnnotationMetrics
-	DependencyMetrics DependencyMetrics
+	LanguageMetrics    []LanguageMetricsReport
+	FileMetrics        []FileMetricsReport
+	DirMetrics         []DirMetricsReport
+	CodebaseMetrics    CodebaseMetrics
+	AnnotationMetrics  AnnotationMetrics
+	DependencyMetrics  DependencyMetrics
+	PerformanceMetrics PerformanceMetrics
 	// TODO: add git metrics
-	// TODO: add time taken to analyze the codebase
 }

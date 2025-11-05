@@ -7,9 +7,12 @@ import (
 	"sort"
 	"strings"
 	"sync"
+	"time"
 )
 
 func ScanCodebase(flags Flags) (CodebaseReport, error) {
+	startTime := time.Now()
+
 	if flags.PathFlag == "" { // won't ever happen since default is "." set by cobra
 		return CodebaseReport{}, errors.New("path is required")
 	}
@@ -203,12 +206,20 @@ func ScanCodebase(flags Flags) (CodebaseReport, error) {
 		return dirStats[i].Percentage > dirStats[j].Percentage
 	})
 
+	// honestly not actually the best way to benchmark performance (linux time is better)
+	elapsedTime := time.Since(startTime)
+
+	performanceStats := PerformanceMetrics{
+		ElapsedTime: formatDuration(elapsedTime),
+	}
+
 	return CodebaseReport{
-		LanguageMetrics:   languageStats,
-		FileMetrics:       topFilesList,
-		DirMetrics:        dirStats,
-		CodebaseMetrics:   codebaseStats,
-		AnnotationMetrics: annotationStats,
-		DependencyMetrics: dependencyStats,
+		LanguageMetrics:    languageStats,
+		FileMetrics:        topFilesList,
+		DirMetrics:         dirStats,
+		CodebaseMetrics:    codebaseStats,
+		AnnotationMetrics:  annotationStats,
+		DependencyMetrics:  dependencyStats,
+		PerformanceMetrics: performanceStats,
 	}, nil
 }

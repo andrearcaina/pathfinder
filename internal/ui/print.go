@@ -26,6 +26,7 @@ func PrintReport(report metrics.CodebaseReport) {
 		BadgeDisplay("🖥️ Lines of Code", FormatIntBritishEnglish(report.CodebaseMetrics.TotalCode)),
 		BadgeDisplay("💬 Comments", FormatIntBritishEnglish(report.CodebaseMetrics.TotalComments)),
 		BadgeDisplay("🗑️ Blanks", FormatIntBritishEnglish(report.CodebaseMetrics.TotalBlanks)),
+		BadgeDisplay("⏱️ Scan Time", report.PerformanceMetrics.ElapsedTime),
 	}, " "))
 
 	fmt.Println(SectionStyle().Render("📋 Languages"))

@@ -1,8 +1,10 @@
 package metrics
 
 import (
+	"fmt"
 	"path/filepath"
 	"strings"
+	"time"
 )
 
 func IsBinary(name string) bool {
@@ -58,4 +60,12 @@ func TopLevelDir(rel string) string {
 		return rel[:i]
 	}
 	return "."
+}
+
+func formatDuration(d time.Duration) string {
+	if d < time.Second {
+		return fmt.Sprintf("%dms", d.Milliseconds())
+	} else {
+		return fmt.Sprintf("%.3fs", d.Seconds())
+	}
 }

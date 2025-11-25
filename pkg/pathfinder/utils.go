@@ -1,4 +1,4 @@
-package metrics
+package pathfinder
 
 import (
 	"fmt"
@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-func IsBinary(name string) bool {
+func isBinary(name string) bool {
 	ext := strings.ToLower(filepath.Ext(name))
 	switch ext {
 	case ".jpg", ".jpeg", ".png", ".gif", ".class", ".o", ".obj", ".pdf", ".exe":
@@ -17,7 +17,7 @@ func IsBinary(name string) bool {
 	}
 }
 
-func ExcludeDir(name string) bool {
+func excludeDir(name string) bool {
 	// using a map for O(1) lookups (instead of a slice with O(n) lookups)
 	var excludedDirsFromScan = map[string]struct{}{
 		".git":         {},
@@ -36,7 +36,7 @@ func ExcludeDir(name string) bool {
 	return ok
 }
 
-func ExcludeFile(name string) bool {
+func excludeFile(name string) bool {
 	var excludedFilesFromScan = map[string]struct{}{
 		".DS_Store":         {},
 		"desktop.ini":       {},
@@ -50,7 +50,7 @@ func ExcludeFile(name string) bool {
 	return ok
 }
 
-func HasNoExt(name string) string {
+func hasNoExt(name string) string {
 	return strings.ToLower(filepath.Ext(name))
 }
 

@@ -1,4 +1,4 @@
-package metrics
+package pathfinder
 
 import (
 	"bufio"
@@ -11,7 +11,7 @@ import (
 	"sync"
 )
 
-func ScanDependencies(rootPath string, flags Flags) ([]DependencyFile, error) {
+func ScanDependencies(rootPath string, flags Config) ([]DependencyFile, error) {
 	var depFiles []DependencyFile
 	var mu sync.Mutex
 	var wg sync.WaitGroup
@@ -48,17 +48,17 @@ func ScanDependencies(rootPath string, flags Flags) ([]DependencyFile, error) {
 		}
 
 		if d.IsDir() {
-			if ExcludeDir(name) {
+			if excludeDir(name) {
 				return filepath.SkipDir
 			}
 			return nil
 		}
 
-		if IsBinary(name) {
+		if isBinary(name) {
 			return nil
 		}
 
-		ext := HasNoExt(name)
+		ext := hasNoExt(name)
 		if ext == "" {
 			return nil
 		}

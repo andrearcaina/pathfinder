@@ -4,13 +4,13 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/andrearcaina/pathfinder/internal/metrics"
+	"github.com/andrearcaina/pathfinder/pkg/pathfinder"
 	"github.com/charmbracelet/lipgloss"
 )
 
 const maxBarWidth = 40
 
-func PrintReport(report metrics.CodebaseReport) {
+func PrintReport(report pathfinder.CodebaseReport) {
 	if report.CodebaseMetrics.TotalFiles == 0 {
 		fmt.Println("No files analyzed. Please check the path and try again.")
 		return // exit program
@@ -89,7 +89,7 @@ func PrintReport(report metrics.CodebaseReport) {
 		fmt.Println("  " + BadgeStyle().Render(totalDepsText))
 
 		// Group dependency files by type
-		depByType := make(map[string][]metrics.DependencyFile)
+		depByType := make(map[string][]pathfinder.DependencyFile)
 		for _, depFile := range report.DependencyMetrics.DependencyFiles {
 			depByType[depFile.Type] = append(depByType[depFile.Type], depFile)
 		}

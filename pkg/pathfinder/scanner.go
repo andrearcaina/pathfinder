@@ -1,4 +1,4 @@
-package metrics
+package pathfinder
 
 import (
 	"errors"
@@ -10,7 +10,17 @@ import (
 	"time"
 )
 
-func ScanCodebase(flags Flags) (CodebaseReport, error) {
+// ScanCodebase scans a directory based on the provided configuration flags.
+// It returns a comprehensive CodebaseReport containing metrics on languages, files,
+// directories, and dependencies.
+//
+// Example:
+//
+//	report, err := pathfinder.ScanCodebase(pathfinder.Flags{
+//	    PathFlag: ".",
+//	    RecursiveFlag: true,
+//	})
+func ScanCodebase(flags Config) (CodebaseReport, error) {
 	startTime := time.Now()
 
 	if flags.PathFlag == "" { // won't ever happen since default is "." set by cobra
@@ -54,7 +64,7 @@ func ScanCodebase(flags Flags) (CodebaseReport, error) {
 		name := d.Name()
 
 		// skips files like .DS_Store, package-lock.json, etc.
-		if ExcludeFile(name) {
+		if excludeFile(name) {
 			return nil
 		}
 
@@ -66,7 +76,7 @@ func ScanCodebase(flags Flags) (CodebaseReport, error) {
 		}
 
 		if d.IsDir() {
-			if ExcludeDir(name) {
+			if excludeDir(name) {
 				return filepath.SkipDir
 			}
 
@@ -76,16 +86,16 @@ func ScanCodebase(flags Flags) (CodebaseReport, error) {
 			return nil
 		}
 
-		if IsBinary(name) {
+		if isBinary(name) {
 			return nil
 		}
 
-		ext := HasNoExt(name)
+		ext := hasNoExt(name)
 		if ext == "" {
 			return nil
 		}
 
-		langDefinition := DetermineLangByExt(ext)
+		langDefinition := determineLangByExt(ext)
 		if langDefinition == nil {
 			return nil
 		}

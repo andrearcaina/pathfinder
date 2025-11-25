@@ -51,7 +51,7 @@ pf scan -p /path/to/codebase -R -m 3 -f json -o report.json,
 			return errors.New("invalid Buffer Size. Allowed values are 4, 8, 16, 32, 64 (in KB)")
 		}
 
-		flags := pathfinder.Config{
+		flags := &pathfinder.Config{
 			PathFlag:       pathFlag,
 			HiddenFlag:     hiddenFlag,
 			BufferSizeFlag: bufferSizeFlag * 1024, // convert KB to bytes for internal use
@@ -61,7 +61,7 @@ pf scan -p /path/to/codebase -R -m 3 -f json -o report.json,
 			GitFlag:        gitFlag,
 		}
 
-		report, err := pathfinder.ScanCodebase(flags)
+		report, err := pathfinder.Scan(flags)
 		if err != nil {
 			return err
 		}

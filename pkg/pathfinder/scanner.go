@@ -11,8 +11,7 @@ import (
 )
 
 // ScanCodebase scans a directory based on the provided configuration flags.
-// It returns a comprehensive CodebaseReport containing metrics on languages, files,
-// directories, and dependencies.
+// It returns a comprehensive CodebaseReport containing metrics on languages, files, directories, and dependencies.
 //
 // Example:
 //
@@ -20,7 +19,7 @@ import (
 //	    PathFlag: ".",
 //	    RecursiveFlag: true,
 //	})
-func ScanCodebase(flags Config) (CodebaseReport, error) {
+func scanCodebase(flags *Config) (CodebaseReport, error) {
 	startTime := time.Now()
 
 	if flags.PathFlag == "" { // won't ever happen since default is "." set by cobra
@@ -104,7 +103,7 @@ func ScanCodebase(flags Config) (CodebaseReport, error) {
 		go func(filePath string, langDef *LanguageDefinition, bufferSize int) {
 			defer wg.Done()
 
-			fileMetrics, annMetrics, err := FileCounter(filePath, bufferSize, langDef)
+			fileMetrics, annMetrics, err := fileCounter(filePath, bufferSize, langDef)
 			if err != nil {
 				return
 			}
@@ -130,7 +129,7 @@ func ScanCodebase(flags Config) (CodebaseReport, error) {
 
 			// aggregate directory stats (this is for the entire codebase)
 			relativePath, _ := filepath.Rel(flags.PathFlag, filePath)
-			topDir := TopLevelDir(relativePath)
+			topDir := topLevelDir(relativePath)
 			dirStatsMap[topDir] += fileMetrics.Lines
 
 			// this key sorta matters because we want to group by the language being used, but it won't be used in the final report

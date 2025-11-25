@@ -54,7 +54,7 @@ func hasNoExt(name string) string {
 	return strings.ToLower(filepath.Ext(name))
 }
 
-func TopLevelDir(rel string) string {
+func topLevelDir(rel string) string {
 	rel = filepath.ToSlash(rel)
 	if i := strings.Index(rel, "/"); i != -1 {
 		return rel[:i]

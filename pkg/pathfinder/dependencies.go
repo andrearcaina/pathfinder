@@ -11,7 +11,7 @@ import (
 	"sync"
 )
 
-func ScanDependencies(rootPath string, flags Config) ([]DependencyFile, error) {
+func ScanDependencies(rootPath string, flags *Config) ([]DependencyFile, error) {
 	var depFiles []DependencyFile
 	var mu sync.Mutex
 	var wg sync.WaitGroup

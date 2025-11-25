@@ -7,7 +7,7 @@ import (
 	"os"
 )
 
-func FileCounter(path string, bufferSize int, langDef *LanguageDefinition) (LanguageMetrics, AnnotationMetrics, error) {
+func fileCounter(path string, bufferSize int, langDef *LanguageDefinition) (LanguageMetrics, AnnotationMetrics, error) {
 	f, err := os.Open(path)
 	if err != nil {
 		return LanguageMetrics{}, AnnotationMetrics{}, err

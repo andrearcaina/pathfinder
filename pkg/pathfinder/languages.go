@@ -1,4 +1,4 @@
-package metrics
+package pathfinder
 
 var (
 	languageDefinitions = []LanguageDefinition{
@@ -100,7 +100,7 @@ func init() { // this function initializes the languageByExt map by iterating ov
 	}
 }
 
-func DetermineLangByExt(ext string) *LanguageDefinition {
+func determineLangByExt(ext string) *LanguageDefinition {
 	if lang, ok := languageByExt[ext]; ok {
 		return lang
 	}

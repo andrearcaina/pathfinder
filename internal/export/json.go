@@ -5,10 +5,10 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/andrearcaina/pathfinder/internal/metrics"
+	"github.com/andrearcaina/pathfinder/pkg/pathfinder"
 )
 
-func CreateJSON(report metrics.CodebaseReport, outputPath string) error {
+func CreateJSON(report pathfinder.CodebaseReport, outputPath string) error {
 	jsonData, err := json.MarshalIndent(report, "", "  ")
 	if err != nil {
 		return fmt.Errorf("failed to marshal report to JSON: %w", err)

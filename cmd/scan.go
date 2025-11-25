@@ -7,8 +7,8 @@ import (
 	"strings"
 
 	"github.com/andrearcaina/pathfinder/internal/export"
-	"github.com/andrearcaina/pathfinder/internal/metrics"
 	"github.com/andrearcaina/pathfinder/internal/ui"
+	"github.com/andrearcaina/pathfinder/pkg/pathfinder"
 	"github.com/spf13/cobra"
 )
 
@@ -51,7 +51,7 @@ pf scan -p /path/to/codebase -R -m 3 -f json -o report.json,
 			return errors.New("invalid Buffer Size. Allowed values are 4, 8, 16, 32, 64 (in KB)")
 		}
 
-		flags := metrics.Flags{
+		flags := pathfinder.Config{
 			PathFlag:       pathFlag,
 			HiddenFlag:     hiddenFlag,
 			BufferSizeFlag: bufferSizeFlag * 1024, // convert KB to bytes for internal use
@@ -61,7 +61,7 @@ pf scan -p /path/to/codebase -R -m 3 -f json -o report.json,
 			GitFlag:        gitFlag,
 		}
 
-		report, err := metrics.ScanCodebase(flags)
+		report, err := pathfinder.ScanCodebase(flags)
 		if err != nil {
 			return err
 		}
@@ -78,7 +78,7 @@ pf scan -p /path/to/codebase -R -m 3 -f json -o report.json,
 
 		// handle export if output and format flags are set
 		if outputFlag != "" && formatFlag != "" {
-			if metrics.HasNoExt(outputFlag) == "" {
+			if strings.ToLower(filepath.Ext(outputFlag)) == "" {
 				return errors.New("output file must have an extension (e.g. .json)")
 			}
 

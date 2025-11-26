@@ -38,7 +38,7 @@ pathfinder scan -p /path/to/codebase -R -m 3 -i -b 16
 pathfinder scan -p /path/to/codebase -R -m 3 -f json -o report.json,
 `,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		report, err := pathfinder.Scan(&pathfinder.Config{
+		report, err := pathfinder.Scan(pathfinder.Config{
 			PathFlag:       pathFlag,
 			HiddenFlag:     hiddenFlag,
 			BufferSizeFlag: bufferSizeFlag,

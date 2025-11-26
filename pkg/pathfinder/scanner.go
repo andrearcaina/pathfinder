@@ -10,16 +10,7 @@ import (
 	"time"
 )
 
-// ScanCodebase scans a directory based on the provided configuration flags.
-// It returns a comprehensive CodebaseReport containing metrics on languages, files, directories, and dependencies.
-//
-// Example:
-//
-//	report, err := pathfinder.ScanCodebase(pathfinder.Flags{
-//	    PathFlag: ".",
-//	    RecursiveFlag: true,
-//	})
-func scanCodebase(flags *Config) (CodebaseReport, error) {
+func scanCodebase(flags Config) (CodebaseReport, error) {
 	startTime := time.Now()
 
 	if flags.PathFlag == "" { // won't ever happen since default is "." set by cobra
@@ -165,7 +156,7 @@ func scanCodebase(flags *Config) (CodebaseReport, error) {
 
 	// scan for dependencies if flag is enabled
 	if flags.DependencyFlag {
-		depFiles, err := ScanDependencies(flags.PathFlag, flags)
+		depFiles, err := scanDependencies(flags.PathFlag, flags)
 		if err == nil {
 			dependencyStats.DependencyFiles = depFiles
 			// count total dependencies across all files

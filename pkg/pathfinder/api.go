@@ -1,8 +1,14 @@
 package pathfinder
 
+import (
+	"errors"
+	"fmt"
+	"path/filepath"
+)
+
 // Version returns the current version of the library.
 func Version() string {
-	return "v0.1.1"
+	return "v0.1.2"
 }
 
 // Scan is the main entry point for the library.
@@ -13,12 +19,36 @@ func Scan(config *Config) (CodebaseReport, error) {
 		config = &Config{
 			PathFlag:       ".",
 			HiddenFlag:     false,
-			BufferSizeFlag: 16 * 1024, // 16 KB
+			BufferSizeFlag: 4 * 1024, // 16 KB
 			RecursiveFlag:  false,
 			MaxDepthFlag:   -1,
-			DependencyFlag: false,
+			DependencyFlag: true,
 			GitFlag:        false,
 		}
+		fmt.Println("Using default configuration.")
+	}
+
+	if !config.RecursiveFlag && config.MaxDepthFlag != -1 {
+		return CodebaseReport{}, errors.New("--max-depth flag is ignored when --recursive is false")
+	}
+
+	pathFlag, err := filepath.Abs(config.PathFlag)
+	if err != nil {
+		return CodebaseReport{}, err
+	}
+
+	if config.BufferSizeFlag != 4 && config.BufferSizeFlag != 8 && config.BufferSizeFlag != 16 && config.BufferSizeFlag != 32 && config.BufferSizeFlag != 64 {
+		return CodebaseReport{}, errors.New("invalid Buffer Size. Allowed values are 4, 8, 16, 32, 64 (in KB)")
+	}
+
+	config = &Config{
+		PathFlag:       pathFlag,
+		HiddenFlag:     config.HiddenFlag,
+		BufferSizeFlag: config.BufferSizeFlag * 1024, // convert KB to bytes for internal use
+		RecursiveFlag:  config.RecursiveFlag,
+		MaxDepthFlag:   config.MaxDepthFlag,
+		DependencyFlag: config.DependencyFlag,
+		GitFlag:        config.GitFlag,
 	}
 
 	return scanCodebase(config)

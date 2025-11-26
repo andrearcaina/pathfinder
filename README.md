@@ -1,7 +1,69 @@
 # pathfinder
 Blazingly fast, lightweight CLI to map & track your codebase.
 
-### Examples
+### Overview
+
+`pathfinder` is a command-line tool written in Go that scans a specified directory (and its subdirectories) to count the number of files, directories, and total lines of code.
+
+It is designed to be fast and efficient, leveraging Go's concurrency features to process files in parallel.
+
+It also has a library API that you can use to integrate its functionality into your own Go applications.
+
+### Installation
+
+**As a CLI Tool:**
+```bash
+go install github.com/andrearcaina/pathfinder@latest
+```
+
+**As a Go Library:**
+```bash
+go get github.com/andrearcaina/pathfinder
+````
+
+### Go Example Usage
+Here is a simple example of how to use pathfinder as a library in your Go code:
+```go
+package main
+
+import (
+	"fmt"
+	"log"
+
+	// Import the pathfinder package
+	"github.com/andrearcaina/pathfinder/pkg/pathfinder"
+)
+
+func main() {
+	config := pathfinder.Config{
+		PathFlag:       ".",   // Scan the current directory
+		RecursiveFlag:  true,  // Scan subdirectories recursively
+		HiddenFlag:     false, // Skip hidden files/directories (like .git)
+		DependencyFlag: true,  // Analyze dependency files (go.mod, package.json, etc.)
+		BufferSizeFlag: 4096,  // Set read buffer size (4KB is usually optimal)
+	}
+	
+	report, err := pathfinder.Scan(config)
+	if err != nil {
+		log.Fatalf("Failed to scan codebase: %v", err)
+	}
+
+	fmt.Printf("Found %d files across %d languages.\n\n",
+		report.CodebaseMetrics.TotalFiles,
+		report.CodebaseMetrics.TotalLanguages)
+
+	fmt.Println("Language Breakdown:")
+	for _, lang := range report.LanguageMetrics {
+		fmt.Printf("• %s: %d lines (%.2f%%)\n",
+			lang.Metrics.Language,
+			lang.Metrics.Lines,
+			lang.Percentage,
+		)
+	}
+}
+```
+
+### CLI Usage
 
 Below I ran `pathfinder` on this codebase with the `-R` flag to recursively scan all subdirectories. Image was taken at 2025-08-30 3:08 PM EST.
 ![example1.png](images/example1.png)

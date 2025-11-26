@@ -7,14 +7,14 @@ import (
 )
 
 var rootCmd = &cobra.Command{
-	Use:   "pf",
+	Use:   "pathfinder",
 	Short: "a CLI tool to track and map codebases for metrics",
 	Long: `Pathfinder is a CLI tool designed to help developers track and map their codebases.
 It scans a directory and reports per-language lines of code with percentages, plus extra codebase metrics (TODO).
 
 Examples:
-  pf scan
-  pf scan -p /path/to/codebase`,
+  pathfinder scan
+  pathfinder scan -p /path/to/codebase`,
 }
 
 func Execute() {

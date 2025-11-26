@@ -31,37 +31,22 @@ var scanCmd = &cobra.Command{
 	Short: "scan is a subcommand to scan a codebase and report metrics",
 	Long: `scan is a subcommand to scan a codebase and report metrics. Examples are:
 
-pf scan
-pf scan -R
-pf scan -p /path/to/codebase
-pf scan -p /path/to/codebase -R -m 3 -i -b 16
-pf scan -p /path/to/codebase -R -m 3 -f json -o report.json,
+pathfinder scan
+pathfinder scan -R
+pathfinder scan -p /path/to/codebase
+pathfinder scan -p /path/to/codebase -R -m 3 -i -b 16
+pathfinder scan -p /path/to/codebase -R -m 3 -f json -o report.json,
 `,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		if !recursiveFlag && maxDepthFlag != -1 {
-			return errors.New("--max-depth flag is ignored when --recursive is false")
-		}
-
-		pathFlag, err := filepath.Abs(pathFlag)
-		if err != nil {
-			return err
-		}
-
-		if bufferSizeFlag != 4 && bufferSizeFlag != 8 && bufferSizeFlag != 16 && bufferSizeFlag != 32 && bufferSizeFlag != 64 {
-			return errors.New("invalid Buffer Size. Allowed values are 4, 8, 16, 32, 64 (in KB)")
-		}
-
-		flags := &pathfinder.Config{
+		report, err := pathfinder.Scan(&pathfinder.Config{
 			PathFlag:       pathFlag,
 			HiddenFlag:     hiddenFlag,
-			BufferSizeFlag: bufferSizeFlag * 1024, // convert KB to bytes for internal use
+			BufferSizeFlag: bufferSizeFlag,
 			RecursiveFlag:  recursiveFlag,
 			MaxDepthFlag:   maxDepthFlag,
 			DependencyFlag: dependencyFlag,
 			GitFlag:        gitFlag,
-		}
-
-		report, err := pathfinder.Scan(flags)
+		})
 		if err != nil {
 			return err
 		}

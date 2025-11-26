@@ -4,18 +4,25 @@ import (
 	"fmt"
 	"log"
 
-	// Import the pathfinder package
 	"github.com/andrearcaina/pathfinder/pkg/pathfinder"
 )
 
 func main() {
+	fmt.Printf("Supported PathFinder version: %s\n\n", pathfinder.Version())
+	fmt.Printf("Supported Languages: %v\n\n", pathfinder.GetSupportedLanguages())
+
+	scanWithConfig()
+	scanNoConfig()
+}
+
+func scanWithConfig() {
 	config := pathfinder.Config{
-		PathFlag:       ".",   // Scan the current directory
-		RecursiveFlag:  true,  // Scan subdirectories recursively
-		HiddenFlag:     false, // Skip hidden files/directories (like .git)
-		DependencyFlag: true,  // Analyze dependency files (go.mod, package.json, etc.)
-		BufferSizeFlag: 4096,  // Set read buffer size (4KB is usually optimal)
-		MaxDepthFlag:   -1,    // No limit on recursion depth
+		PathFlag:       "..",
+		RecursiveFlag:  true,
+		HiddenFlag:     false,
+		DependencyFlag: true,
+		BufferSizeFlag: 4,
+		MaxDepthFlag:   -1,
 	}
 
 	report, err := pathfinder.Scan(&config)
@@ -23,10 +30,19 @@ func main() {
 		log.Fatalf("Failed to scan codebase: %v", err)
 	}
 
-	fmt.Printf("Supported PathFinder version: %s\n\n", pathfinder.Version())
+	printReport(report)
+}
 
-	fmt.Printf("Supported Languages: %v\n\n", pathfinder.GetSupportedLanguages())
+func scanNoConfig() {
+	report, err := pathfinder.Scan(nil)
+	if err != nil {
+		log.Fatalf("Failed to scan codebase: %v", err)
+	}
 
+	printReport(report)
+}
+
+func printReport(report pathfinder.CodebaseReport) {
 	fmt.Printf("Found %d files across %d languages.\n\n",
 		report.CodebaseMetrics.TotalFiles,
 		report.CodebaseMetrics.TotalLanguages)

@@ -8,7 +8,7 @@ import (
 
 // Version returns the current version of the library.
 func Version() string {
-	return "v0.1.2"
+	return "v0.1.3"
 }
 
 // Scan is the main entry point for the library.
@@ -19,7 +19,7 @@ func Scan(config *Config) (CodebaseReport, error) {
 		config = &Config{
 			PathFlag:       ".",
 			HiddenFlag:     false,
-			BufferSizeFlag: 4 * 1024, // 16 KB
+			BufferSizeFlag: 4,
 			RecursiveFlag:  false,
 			MaxDepthFlag:   -1,
 			DependencyFlag: true,

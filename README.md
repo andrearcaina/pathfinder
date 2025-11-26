@@ -34,9 +34,10 @@ import (
 )
 
 func main() {
-	fmt.Printf("Supported PathFinder version: %s\n\n", pathfinder.Version())
-	fmt.Printf("Supported Languages: %v\n\n", pathfinder.GetSupportedLanguages())
+	fmt.Printf("Supported Pathfinder version: %s\n\n", pathfinder.Version())
+	fmt.Printf("Supported Languages: %v\n\n", pathfinder.SupportedLanguages())
 
+	fmt.Println("-------------------------------")
 	scanWithConfig()
 	scanNoConfig()
 }
@@ -51,27 +52,49 @@ func scanWithConfig() {
 		MaxDepthFlag:   -1,
 	}
 
-	report, err := pathfinder.Scan(&config)
+	report, err := pathfinder.Scan(config)
 	if err != nil {
 		log.Fatalf("Failed to scan codebase: %v", err)
 	}
 
+	fmt.Println("Scan with custom configuration:")
 	printReport(report)
+	fmt.Println("-------------------------------")
 }
 
 func scanNoConfig() {
-	report, err := pathfinder.Scan(nil)
+	report, err := pathfinder.Scan(pathfinder.Config{})
 	if err != nil {
 		log.Fatalf("Failed to scan codebase: %v", err)
 	}
 
+	fmt.Println("Scan with default configuration:")
 	printReport(report)
+	fmt.Println("-------------------------------")
 }
 
 func printReport(report pathfinder.CodebaseReport) {
 	fmt.Printf("Found %d files across %d languages.\n\n",
 		report.CodebaseMetrics.TotalFiles,
 		report.CodebaseMetrics.TotalLanguages)
+
+	fmt.Println("Scanned Files:")
+	for _, file := range report.ScannedFiles() {
+		fmt.Printf("• %s\n", file)
+	}
+	fmt.Println()
+
+	fmt.Println("Scanned Directories:")
+	for _, dir := range report.ScannedDirectories() {
+		fmt.Printf("• %s\n", dir)
+	}
+	fmt.Println()
+
+	fmt.Println("Scanned Languages:")
+	for _, lang := range report.ScannedLanguages() {
+		fmt.Printf("• %s\n", lang)
+	}
+	fmt.Println()
 
 	fmt.Println("Language Breakdown:")
 	for _, lang := range report.LanguageMetrics {
@@ -82,24 +105,74 @@ func printReport(report pathfinder.CodebaseReport) {
 		)
 	}
 }
+
 ```
 Output:
 ```plaintext
-Supported PathFinder version: v0.1.3
+Supported Pathfinder version: v0.1.4
 
 Supported Languages: [Go JavaScript TypeScript PHP HTML CSS XML Python Java Kotlin C C++ C# Swift JSON YAML Markdown]
 
+-------------------------------
+Scan with custom configuration:
 Found 21 files across 3 languages.
 
-Language Breakdown:
-• JSON: 4859 lines (75.65%)
-• Go: 1443 lines (17.67%)
-• Markdown: 121 lines (1.32%)
-Using default configuration.
-Found 1 files across 1 languages.
+Scanned Files:
+• reports/vivid.json
+• reports/fafnir.json
+• reports/see-sharp.json
+• reports/report.json
+• pkg/pathfinder/dependencies.go
+• pkg/pathfinder/scanner.go
+• reports/maven_test.json
+• README.md
+• internal/ui/print.go
+• pkg/pathfinder/languages.go
+• pkg/pathfinder/types.go
+• pkg/pathfinder/counter.go
+• cmd/scan.go
+• pkg/pathfinder/api.go
+• examples/main.go
+• pkg/pathfinder/utils.go
+• internal/ui/styles.go
+• cmd/root.go
+• internal/ui/utils.go
+• internal/export/json.go
+• main.go
+
+Scanned Directories:
+• reports
+• pkg
+• internal
+• .
+• cmd
+• examples
+
+Scanned Languages:
+• JSON
+• Go
+• Markdown
 
 Language Breakdown:
-• Go: 58 lines (81.03%)
+• JSON: 4859 lines (74.72%)
+• Go: 1485 lines (17.95%)
+• Markdown: 159 lines (1.78%)
+-------------------------------
+Scan with default configuration:
+Found 1 files across 1 languages.
+
+Scanned Files:
+• main.go
+
+Scanned Directories:
+• .
+
+Scanned Languages:
+• Go
+
+Language Breakdown:
+• Go: 81 lines (82.72%)
+-------------------------------
 ```
 
 ### CLI Usage

@@ -22,7 +22,7 @@ go get github.com/andrearcaina/pathfinder
 ````
 
 ### Go Example Usage
-Here is a simple example of how to use pathfinder as a library in your Go code:
+Here is a simple [example](https://github.com/andrearcaina/pathfinder/blob/main/examples/main.go) of how to use pathfinder as a library in your Go code:
 ```go
 package main
 
@@ -30,24 +30,45 @@ import (
 	"fmt"
 	"log"
 
-	// Import the pathfinder package
 	"github.com/andrearcaina/pathfinder/pkg/pathfinder"
 )
 
 func main() {
+	fmt.Printf("Supported PathFinder version: %s\n\n", pathfinder.Version())
+	fmt.Printf("Supported Languages: %v\n\n", pathfinder.GetSupportedLanguages())
+
+	scanWithConfig()
+	scanNoConfig()
+}
+
+func scanWithConfig() {
 	config := pathfinder.Config{
-		PathFlag:       ".",   // Scan the current directory
-		RecursiveFlag:  true,  // Scan subdirectories recursively
-		HiddenFlag:     false, // Skip hidden files/directories (like .git)
-		DependencyFlag: true,  // Analyze dependency files (go.mod, package.json, etc.)
-		BufferSizeFlag: 4096,  // Set read buffer size (4KB is usually optimal)
+		PathFlag:       "..",
+		RecursiveFlag:  true,
+		HiddenFlag:     false,
+		DependencyFlag: true,
+		BufferSizeFlag: 4,
+		MaxDepthFlag:   -1,
 	}
-	
-	report, err := pathfinder.Scan(config)
+
+	report, err := pathfinder.Scan(&config)
 	if err != nil {
 		log.Fatalf("Failed to scan codebase: %v", err)
 	}
 
+	printReport(report)
+}
+
+func scanNoConfig() {
+	report, err := pathfinder.Scan(nil)
+	if err != nil {
+		log.Fatalf("Failed to scan codebase: %v", err)
+	}
+
+	printReport(report)
+}
+
+func printReport(report pathfinder.CodebaseReport) {
 	fmt.Printf("Found %d files across %d languages.\n\n",
 		report.CodebaseMetrics.TotalFiles,
 		report.CodebaseMetrics.TotalLanguages)
@@ -61,6 +82,24 @@ func main() {
 		)
 	}
 }
+```
+Output:
+```plaintext
+Supported PathFinder version: v0.1.3
+
+Supported Languages: [Go JavaScript TypeScript PHP HTML CSS XML Python Java Kotlin C C++ C# Swift JSON YAML Markdown]
+
+Found 21 files across 3 languages.
+
+Language Breakdown:
+• JSON: 4859 lines (75.65%)
+• Go: 1443 lines (17.67%)
+• Markdown: 121 lines (1.32%)
+Using default configuration.
+Found 1 files across 1 languages.
+
+Language Breakdown:
+• Go: 58 lines (81.03%)
 ```
 
 ### CLI Usage

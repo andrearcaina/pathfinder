@@ -7,7 +7,7 @@ import (
 
 // Version returns the current version of the library.
 func Version() string {
-	return "v0.1.4"
+	return "v0.1.5"
 }
 
 // Scan is the main entry point for the library.

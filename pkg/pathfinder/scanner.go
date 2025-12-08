@@ -3,12 +3,22 @@ package pathfinder
 import (
 	"errors"
 	"io/fs"
+	"log"
 	"path/filepath"
+	"runtime"
 	"sort"
 	"strings"
 	"sync"
 	"time"
 )
+
+// pass data from workers back to main goroutine
+type scanResult struct {
+	fileMetrics LanguageMetrics
+	annMetrics  AnnotationMetrics
+	path        string
+	err         error
+}
 
 func scanCodebase(flags Config) (CodebaseReport, error) {
 	startTime := time.Now()
@@ -17,6 +27,36 @@ func scanCodebase(flags Config) (CodebaseReport, error) {
 		return CodebaseReport{}, errors.New("path is required")
 	}
 
+	// channel to send jobs to workers (basically we are sending file paths and language definitions to workers)
+	jobs := make(chan struct {
+		path    string
+		langDef *LanguageDefinition
+	}, 100) // buffered channel to avoid sharing memory through mutexes
+	results := make(chan scanResult, 100)
+
+	// start worker pool
+	var wgWorkers sync.WaitGroup
+	numWorkers := runtime.NumCPU() * 20 // limit number of workers to avoid overwhelming the system
+
+	for _ = range numWorkers {
+		wgWorkers.Add(1)
+		go func() {
+			defer wgWorkers.Done()
+			for job := range jobs {
+				fMetrics, aMetrics, err := fileCounter(job.path, flags.BufferSizeFlag, job.langDef)
+				results <- scanResult{
+					fileMetrics: fMetrics,
+					annMetrics:  aMetrics,
+					path:        job.path,
+					err:         err,
+				}
+			}
+		}()
+	}
+
+	var wgConsumer sync.WaitGroup
+	wgConsumer.Add(1)
+
 	langStatsMap := map[string]*LanguageMetrics{}
 	dirStatsMap := map[string]int{}
 
@@ -24,12 +64,48 @@ func scanCodebase(flags Config) (CodebaseReport, error) {
 	var annotationStats AnnotationMetrics
 	var dependencyStats DependencyMetrics
 	topFilesList := make([]FileMetricsReport, 0)
+	var walkErr error
 
-	// local variables for synchronization
-	var wg sync.WaitGroup
-	var mu sync.Mutex
+	go func() {
+		defer wgConsumer.Done()
+		for res := range results {
+			if res.err != nil {
+				log.Fatal("Error processing file", res.path, ":", res.err)
+			}
 
-	err := filepath.WalkDir(flags.PathFlag, func(path string, d fs.DirEntry, err error) error {
+			codebaseStats.TotalFiles += res.fileMetrics.Files
+			codebaseStats.TotalCode += res.fileMetrics.Code
+			codebaseStats.TotalComments += res.fileMetrics.Comments
+			codebaseStats.TotalBlanks += res.fileMetrics.Blanks
+
+			annotationStats.TotalTODO += res.annMetrics.TotalTODO
+			annotationStats.TotalFIXME += res.annMetrics.TotalFIXME
+			annotationStats.TotalHACK += res.annMetrics.TotalHACK
+			annotationStats.TotalAnnotations += res.annMetrics.TotalAnnotations
+
+			relPath, _ := filepath.Rel(flags.PathFlag, res.path)
+			topDir := topLevelDir(relPath)
+			dirStatsMap[topDir] += res.fileMetrics.Lines
+
+			stats := langStatsMap[res.fileMetrics.Language]
+			if stats == nil {
+				stats = &LanguageMetrics{Language: res.fileMetrics.Language}
+				langStatsMap[res.fileMetrics.Language] = stats
+			}
+			stats.Files++
+			stats.Code += res.fileMetrics.Code
+			stats.Comments += res.fileMetrics.Comments
+			stats.Blanks += res.fileMetrics.Blanks
+			stats.Lines += res.fileMetrics.Lines
+
+			topFilesList = append(topFilesList, FileMetricsReport{
+				Metrics: res.fileMetrics,
+				Path:    relPath,
+			})
+		}
+	}()
+
+	walkErr = filepath.WalkDir(flags.PathFlag, func(path string, d fs.DirEntry, err error) error {
 		if err != nil {
 			return nil
 		}
@@ -69,10 +145,7 @@ func scanCodebase(flags Config) (CodebaseReport, error) {
 			if excludeDir(name) {
 				return filepath.SkipDir
 			}
-
-			mu.Lock()
 			codebaseStats.TotalDirs++
-			mu.Unlock()
 			return nil
 		}
 
@@ -90,69 +163,24 @@ func scanCodebase(flags Config) (CodebaseReport, error) {
 			return nil
 		}
 
-		wg.Add(1)
-		go func(filePath string, langDef *LanguageDefinition, bufferSize int) {
-			defer wg.Done()
-
-			fileMetrics, annMetrics, err := fileCounter(filePath, bufferSize, langDef)
-			if err != nil {
-				return
-			}
-
-			mu.Lock()
-			defer mu.Unlock()
-
-			// aggregate codebase stats (this is generic stats for the entire codebase)
-			// the difference between codebaseStats and langStatsMap is that codebaseStats is for the entire codebase
-			// while langStatsMap is per language
-			// so codebaseStats.TotalFiles is the total number of files in the entire code
-			// while langStatsMap[fileMetrics.Language].Files is the total number of files for that specific language
-			codebaseStats.TotalFiles += fileMetrics.Files
-			codebaseStats.TotalCode += fileMetrics.Code
-			codebaseStats.TotalComments += fileMetrics.Comments
-			codebaseStats.TotalBlanks += fileMetrics.Blanks
-
-			// aggregate annotation metrics (this is for the entire codebase)
-			annotationStats.TotalTODO += annMetrics.TotalTODO
-			annotationStats.TotalFIXME += annMetrics.TotalFIXME
-			annotationStats.TotalHACK += annMetrics.TotalHACK
-			annotationStats.TotalAnnotations += annMetrics.TotalAnnotations
-
-			// aggregate directory stats (this is for the entire codebase)
-			relativePath, _ := filepath.Rel(flags.PathFlag, filePath)
-			topDir := topLevelDir(relativePath)
-			dirStatsMap[topDir] += fileMetrics.Lines
-
-			// this key sorta matters because we want to group by the language being used, but it won't be used in the final report
-			stats := langStatsMap[fileMetrics.Language]
-			if stats == nil {
-				stats = &LanguageMetrics{}
-				langStatsMap[fileMetrics.Language] = stats
-			}
-
-			stats.Language = fileMetrics.Language // we write fileMetrics.Language here because this is what's actually being used (not the map key)
-			stats.Files += fileMetrics.Files      // always being incremented by 1
-			stats.Code += fileMetrics.Code
-			stats.Comments += fileMetrics.Comments
-			stats.Blanks += fileMetrics.Blanks
-			stats.Lines += fileMetrics.Lines
-
-			// append the file metrics to the top files list
-			// we'll sort and pick the top 10 later in the final report
-			topFilesList = append(topFilesList, FileMetricsReport{
-				Metrics: fileMetrics,
-				Path:    relativePath,
-			})
-		}(path, langDefinition, flags.BufferSizeFlag)
+		// send job to workers)
+		jobs <- struct {
+			path    string
+			langDef *LanguageDefinition
+		}{path, langDefinition}
 
 		return nil
 	})
 
-	if err != nil {
-		return CodebaseReport{}, err
-	}
+	// cleanup and wait for final aggregation (consuming results)
+	close(jobs)
+	wgWorkers.Wait()
+	close(results)
+	wgConsumer.Wait()
 
-	wg.Wait()
+	if walkErr != nil {
+		return CodebaseReport{}, walkErr
+	}
 
 	// scan for dependencies if flag is enabled
 	if flags.DependencyFlag {

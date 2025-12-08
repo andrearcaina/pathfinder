@@ -7,14 +7,58 @@ import (
 	"os"
 	"path/filepath"
 	"regexp"
+	"runtime"
 	"strings"
 	"sync"
 )
 
 func scanDependencies(rootPath string, flags Config) ([]DependencyFile, error) {
+	jobs := make(chan DependencyFile, 100)
+	results := make(chan DependencyFile, 100)
+
+	// workers (producers)
+	var wgWorkers sync.WaitGroup
+	numWorkers := runtime.NumCPU() * 2
+
+	for _ = range numWorkers {
+		wgWorkers.Add(1)
+		go func() {
+			defer wgWorkers.Done()
+			for job := range jobs {
+				var deps []string
+				var err error
+
+				switch {
+				case strings.HasSuffix(job.Path, "go.mod"):
+					deps, err = scanGoMod(job.Path)
+				case strings.HasSuffix(job.Path, "package.json"):
+					deps, err = scanPackageJSON(job.Path)
+				case strings.HasSuffix(job.Path, "requirements.txt"):
+					deps, err = scanRequirementsTxt(job.Path)
+				case strings.HasSuffix(job.Path, "pom.xml"):
+					deps, err = scanPomXML(job.Path)
+				case strings.HasSuffix(job.Path, ".csproj"):
+					deps, err = scanCsproj(job.Path)
+				}
+
+				if err == nil && len(deps) > 0 {
+					job.Dependencies = deps
+					results <- job
+				}
+			}
+		}()
+	}
+
 	var depFiles []DependencyFile
-	var mu sync.Mutex
-	var wg sync.WaitGroup
+	var wgConsumer sync.WaitGroup
+	wgConsumer.Add(1)
+
+	go func() {
+		defer wgConsumer.Done()
+		for res := range results {
+			depFiles = append(depFiles, res)
+		}
+	}()
 
 	err := filepath.WalkDir(rootPath, func(path string, d os.DirEntry, err error) error {
 		if err != nil {
@@ -58,81 +102,37 @@ func scanDependencies(rootPath string, flags Config) ([]DependencyFile, error) {
 			return nil
 		}
 
-		ext := hasNoExt(name)
-		if ext == "" {
-			return nil
-		}
-
 		var depType string
-		var shouldProcess bool
-
 		switch {
 		case name == "go.mod":
 			depType = "Go Modules"
-			shouldProcess = true
-		case name == "go.sum":
-			return nil
-
 		case name == "package.json":
 			depType = "npm/yarn"
-			shouldProcess = true
-
 		case name == "requirements.txt":
 			depType = "pip"
-			shouldProcess = true
-
 		case name == "pom.xml":
 			depType = "Maven"
-			shouldProcess = true
-
 		case strings.HasSuffix(name, ".csproj"):
 			depType = ".NET/NuGet"
-			shouldProcess = true
-		default:
-			return nil
 		}
 
-		if shouldProcess {
-			wg.Add(1)
-			go func(filePath, fileType string) {
-				defer wg.Done()
-
-				var deps []string
-				var err error
-
-				switch {
-				case strings.HasSuffix(filePath, "go.mod"):
-					deps, err = scanGoMod(filePath)
-				case strings.HasSuffix(filePath, "package.json"):
-					deps, err = scanPackageJSON(filePath)
-				case strings.HasSuffix(filePath, "requirements.txt"):
-					deps, err = scanRequirementsTxt(filePath)
-				case strings.HasSuffix(filePath, "pom.xml"):
-					deps, err = scanPomXML(filePath)
-				case strings.HasSuffix(filePath, ".csproj"):
-					deps, err = scanCsproj(filePath)
-				}
-
-				if err != nil {
-					return // continue on error
-				}
-
-				if len(deps) > 0 {
-					mu.Lock()
-					depFiles = append(depFiles, DependencyFile{
-						Path:         filePath,
-						Type:         fileType,
-						Dependencies: deps,
-					})
-					mu.Unlock()
-				}
-			}(path, depType)
+		// if it's a known dependency file, send to workers
+		if depType != "" {
+			jobs <- DependencyFile{
+				Path: path,
+				Type: depType,
+			}
 		}
 
 		return nil
 	})
 
-	wg.Wait()
+	// cleanup and wait for final aggregation (consuming results)
+	close(jobs)
+	wgWorkers.Wait()
+	close(results)
+	wgConsumer.Wait()
+
 	return depFiles, err
 }
 

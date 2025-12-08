@@ -9,7 +9,6 @@ import (
 	"sort"
 	"strings"
 	"sync"
-	"time"
 )
 
 // pass data from workers back to main goroutine
@@ -21,30 +20,32 @@ type scanResult struct {
 }
 
 func scanCodebase(flags Config) (CodebaseReport, error) {
-	startTime := time.Now()
-
 	if flags.PathFlag == "" { // won't ever happen since default is "." set by cobra
 		return CodebaseReport{}, errors.New("path is required")
 	}
 
+	// limit number of workers to avoid overwhelming the system (TODO: will make a flag later)
+	numWorkers := runtime.NumCPU() * 20
+
 	// channel to send jobs to workers (basically we are sending file paths and language definitions to workers)
-	jobs := make(chan struct {
+	locJobs := make(chan struct {
 		path    string
 		langDef *LanguageDefinition
 	}, 100) // buffered channel to avoid sharing memory through mutexes
-	results := make(chan scanResult, 100)
+	locResults := make(chan scanResult, 100)
 
-	// start worker pool
-	var wgWorkers sync.WaitGroup
-	numWorkers := runtime.NumCPU() * 20 // limit number of workers to avoid overwhelming the system
+	// start worker pool for counting lines of code
+	var wgLocWorkers sync.WaitGroup
 
+	// start loc workers (separate goroutines that process files concurrently by the go scheduler)
+	// and send loc worker results back to the loc results channel which is consumed by the main goroutine
 	for _ = range numWorkers {
-		wgWorkers.Add(1)
+		wgLocWorkers.Add(1)
 		go func() {
-			defer wgWorkers.Done()
-			for job := range jobs {
+			defer wgLocWorkers.Done()
+			for job := range locJobs {
 				fMetrics, aMetrics, err := fileCounter(job.path, flags.BufferSizeFlag, job.langDef)
-				results <- scanResult{
+				locResults <- scanResult{
 					fileMetrics: fMetrics,
 					annMetrics:  aMetrics,
 					path:        job.path,
@@ -54,9 +55,45 @@ func scanCodebase(flags Config) (CodebaseReport, error) {
 		}()
 	}
 
-	var wgConsumer sync.WaitGroup
-	wgConsumer.Add(1)
+	// channel to send dependency scan jobs and receive results
+	depJobs := make(chan DependencyFile, 100)
+	depResults := make(chan DependencyFile, 100)
 
+	// start worker pool for scanning dependencies if flag is enabled
+	var wgDepWorkers sync.WaitGroup
+
+	if flags.DependencyFlag {
+		for _ = range numWorkers {
+			wgDepWorkers.Add(1)
+			go func() {
+				defer wgDepWorkers.Done()
+				for job := range depJobs {
+					var deps []string
+					var err error
+
+					switch {
+					case strings.HasSuffix(job.Path, "go.mod"):
+						deps, err = scanGoMod(job.Path)
+					case strings.HasSuffix(job.Path, "package.json"):
+						deps, err = scanPackageJSON(job.Path)
+					case strings.HasSuffix(job.Path, "requirements.txt"):
+						deps, err = scanRequirementsTxt(job.Path)
+					case strings.HasSuffix(job.Path, "pom.xml"):
+						deps, err = scanPomXML(job.Path)
+					case strings.HasSuffix(job.Path, ".csproj"):
+						deps, err = scanCsproj(job.Path)
+					}
+
+					if err == nil && len(deps) > 0 {
+						job.Dependencies = deps
+						depResults <- job
+					}
+				}
+			}()
+		}
+	}
+
+	// structs and data structures to hold aggregated results (readable data for user)
 	langStatsMap := map[string]*LanguageMetrics{}
 	dirStatsMap := map[string]int{}
 
@@ -66,9 +103,15 @@ func scanCodebase(flags Config) (CodebaseReport, error) {
 	topFilesList := make([]FileMetricsReport, 0)
 	var walkErr error
 
+	// start consumer goroutine to aggregate results channel data (from workers)
+	var wgFinalResults sync.WaitGroup
+	wgFinalResults.Add(1)
+
+	// the actual logic for aggregating results from workers (this is what the main goroutine waits for)
+	// this doesn't run until we start sending jobs to the workers below, and continues until the results channel is closed
 	go func() {
-		defer wgConsumer.Done()
-		for res := range results {
+		defer wgFinalResults.Done()
+		for res := range locResults {
 			if res.err != nil {
 				log.Fatal("Error processing file", res.path, ":", res.err)
 			}
@@ -105,6 +148,19 @@ func scanCodebase(flags Config) (CodebaseReport, error) {
 		}
 	}()
 
+	if flags.DependencyFlag {
+		wgFinalResults.Add(1)
+		go func() {
+			defer wgFinalResults.Done()
+			for res := range depResults {
+				dependencyStats.DependencyFiles = append(dependencyStats.DependencyFiles, res)
+				dependencyStats.TotalDependencies += len(res.Dependencies)
+			}
+		}()
+	}
+
+	// this traverses the directory tree and sends jobs to the workers (via the jobs channel)
+	// this actually runs in the main goroutine
 	walkErr = filepath.WalkDir(flags.PathFlag, func(path string, d fs.DirEntry, err error) error {
 		if err != nil {
 			return nil
@@ -153,46 +209,65 @@ func scanCodebase(flags Config) (CodebaseReport, error) {
 			return nil
 		}
 
+		// send job to loc workers to process file if we can determine its language by extension
 		ext := hasNoExt(name)
-		if ext == "" {
-			return nil
+		if ext != "" {
+			if langDefinition := determineLangByExt(ext); langDefinition != nil {
+				locJobs <- struct {
+					path    string
+					langDef *LanguageDefinition
+				}{path, langDefinition}
+			}
 		}
 
-		langDefinition := determineLangByExt(ext)
-		if langDefinition == nil {
-			return nil
-		}
+		// send job to dependency scanner workers if file is a known dependency file
+		if flags.DependencyFlag {
+			var depType string
+			switch {
+			case name == "go.mod":
+				depType = "Go Modules"
+			case name == "package.json":
+				depType = "npm/yarn"
+			case name == "requirements.txt":
+				depType = "pip"
+			case name == "pom.xml":
+				depType = "Maven"
+			case strings.HasSuffix(name, ".csproj"):
+				depType = ".NET/NuGet"
+			}
 
-		// send job to workers)
-		jobs <- struct {
-			path    string
-			langDef *LanguageDefinition
-		}{path, langDefinition}
+			if depType != "" {
+				depJobs <- DependencyFile{
+					Path: path,
+					Type: depType,
+				}
+			}
+		}
 
 		return nil
 	})
 
 	// cleanup and wait for final aggregation (consuming results)
-	close(jobs)
-	wgWorkers.Wait()
-	close(results)
-	wgConsumer.Wait()
+	close(locJobs)
+	if flags.DependencyFlag {
+		close(depJobs)
+	}
+
+	wgLocWorkers.Wait()
+	wgDepWorkers.Wait()
+
+	close(locResults)
+	if flags.DependencyFlag {
+		close(depResults)
+	}
+
+	wgFinalResults.Wait()
 
 	if walkErr != nil {
 		return CodebaseReport{}, walkErr
 	}
 
-	// scan for dependencies if flag is enabled
-	if flags.DependencyFlag {
-		depFiles, err := scanDependencies(flags.PathFlag, flags)
-		if err == nil {
-			dependencyStats.DependencyFiles = depFiles
-			// count total dependencies across all files
-			for _, depFile := range depFiles {
-				dependencyStats.TotalDependencies += len(depFile.Dependencies)
-			}
-		}
-	}
+	// the final aggregation and more calculations are done below
 
 	// this is done after the walk is complete and all goroutines have finished
 	// because we need the final aggregated stats to calculate percentages
@@ -234,20 +309,12 @@ func scanCodebase(flags Config) (CodebaseReport, error) {
 		return dirStats[i].Percentage > dirStats[j].Percentage
 	})
 
-	// honestly not actually the best way to benchmark performance (linux time is better)
-	elapsedTime := time.Since(startTime)
-
-	performanceStats := PerformanceMetrics{
-		ElapsedTime: formatDuration(elapsedTime),
-	}
-
 	return CodebaseReport{
-		LanguageMetrics:    languageStats,
-		FileMetrics:        topFilesList,
-		DirMetrics:         dirStats,
-		CodebaseMetrics:    codebaseStats,
-		AnnotationMetrics:  annotationStats,
-		DependencyMetrics:  dependencyStats,
-		PerformanceMetrics: performanceStats,
+		LanguageMetrics:   languageStats,
+		FileMetrics:       topFilesList,
+		DirMetrics:        dirStats,
+		CodebaseMetrics:   codebaseStats,
+		AnnotationMetrics: annotationStats,
+		DependencyMetrics: dependencyStats,
 	}, nil
 }

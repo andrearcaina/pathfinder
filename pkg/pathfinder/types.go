@@ -82,11 +82,6 @@ type DependencyMetrics struct {
 	DependencyFiles   []DependencyFile // List of files that were parsed for dependencies
 }
 
-// PerformanceMetrics tracks the runtime performance of the scanner itself.
-type PerformanceMetrics struct {
-	ElapsedTime string // Formatted string representing the total scan duration
-}
-
 // FileMetricsReport contains metrics for a single file.
 type FileMetricsReport struct {
 	Path    string          // Relative path to the file
@@ -108,11 +103,10 @@ type LanguageMetricsReport struct {
 
 // CodebaseReport is the final output structure containing all analysis results.
 type CodebaseReport struct {
-	LanguageMetrics    []LanguageMetricsReport
-	FileMetrics        []FileMetricsReport
-	DirMetrics         []DirMetricsReport
-	CodebaseMetrics    CodebaseMetrics
-	AnnotationMetrics  AnnotationMetrics
-	DependencyMetrics  DependencyMetrics
-	PerformanceMetrics PerformanceMetrics
+	LanguageMetrics   []LanguageMetricsReport
+	FileMetrics       []FileMetricsReport
+	DirMetrics        []DirMetricsReport
+	CodebaseMetrics   CodebaseMetrics
+	AnnotationMetrics AnnotationMetrics
+	DependencyMetrics DependencyMetrics
 }

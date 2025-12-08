@@ -26,7 +26,6 @@ func PrintReport(report pathfinder.CodebaseReport) {
 		BadgeDisplay("🖥️ Lines of Code", FormatIntBritishEnglish(report.CodebaseMetrics.TotalCode)),
 		BadgeDisplay("💬 Comments", FormatIntBritishEnglish(report.CodebaseMetrics.TotalComments)),
 		BadgeDisplay("🗑️ Blanks", FormatIntBritishEnglish(report.CodebaseMetrics.TotalBlanks)),
-		BadgeDisplay("⏱️ Scan Time", report.PerformanceMetrics.ElapsedTime),
 	}, " "))
 
 	fmt.Println(SectionStyle().Render("📋 Languages"))
@@ -45,7 +44,7 @@ func PrintReport(report pathfinder.CodebaseReport) {
 	}
 
 	// TODO: handle a flag to show all files (not recommended for large codebases)
-	// Only show top 10 files
+	// only show top 10 files
 	for i := 0; i < len(report.FileMetrics) && i < 10; i++ {
 		f := report.FileMetrics[i]
 
@@ -57,7 +56,7 @@ func PrintReport(report pathfinder.CodebaseReport) {
 	}
 
 	// TODO: handle a flag to show all dirs (not recommended for large codebases)
-	// Only show top 10 directories
+	// only show top 10 directories
 	fmt.Println(SectionStyle().Render("📂 Directories"))
 	for i := 0; i < len(report.DirMetrics) && i < 10; i++ {
 		d := report.DirMetrics[i]
@@ -81,27 +80,27 @@ func PrintReport(report pathfinder.CodebaseReport) {
 		FormatIntBritishEnglish(report.AnnotationMetrics.TotalAnnotations),
 	)
 
-	// Display dependency metrics if available
+	// display dependency metrics if available
 	if len(report.DependencyMetrics.DependencyFiles) > 0 {
 		fmt.Println(SectionStyle().Render("📦 Dependencies"))
 
 		totalDepsText := fmt.Sprintf("Total Dependencies: %s", FormatIntBritishEnglish(report.DependencyMetrics.TotalDependencies))
 		fmt.Println("  " + BadgeStyle().Render(totalDepsText))
 
-		// Group dependency files by type
+		// group dependency files by type
 		depByType := make(map[string][]pathfinder.DependencyFile)
 		for _, depFile := range report.DependencyMetrics.DependencyFiles {
 			depByType[depFile.Type] = append(depByType[depFile.Type], depFile)
 		}
 
-		// Display each dependency type with styling
+		// display each dependency type with styling
 		for depType, files := range depByType {
 			totalDepsForType := 0
 			for _, file := range files {
 				totalDepsForType += len(file.Dependencies)
 			}
 
-			// Style the dependency type header
+			// style the dependency type header
 			typeHeader := fmt.Sprintf("%s: %s dependencies (%d files)",
 				depType,
 				FormatIntBritishEnglish(totalDepsForType),
@@ -115,14 +114,14 @@ func PrintReport(report pathfinder.CodebaseReport) {
 
 			fmt.Println(depTypeStyle.Render(typeHeader))
 
-			// Style individual dependency files
+			// style individual dependency files
 			fileStyle := lipgloss.NewStyle().
 				Foreground(lipgloss.Color("#B0B0B0")).
 				MarginLeft(4)
 
-			// Show dependency files (limit to avoid clutter)
+			// show dependency files (limit to avoid clutter)
 			for i, file := range files {
-				if i >= 3 { // Show max 3 files per type
+				if i >= 3 { // show max 3 files per type
 					if len(files) > 3 {
 						moreFilesText := fmt.Sprintf("... and %d more files", len(files)-3)
 						moreStyle := lipgloss.NewStyle().

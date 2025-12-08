@@ -43,8 +43,10 @@ func scanCodebase(flags Config) (CodebaseReport, error) {
 		wgLocWorkers.Add(1)
 		go func() {
 			defer wgLocWorkers.Done()
+
 			for job := range locJobs {
 				fMetrics, aMetrics, err := fileCounter(job.path, flags.BufferSizeFlag, job.langDef)
+
 				locResults <- scanResult{
 					fileMetrics: fMetrics,
 					annMetrics:  aMetrics,
@@ -59,14 +61,17 @@ func scanCodebase(flags Config) (CodebaseReport, error) {
 	depJobs := make(chan DependencyFile, 100)
 	depResults := make(chan DependencyFile, 100)
 
-	// start worker pool for scanning dependencies if flag is enabled
 	var wgDepWorkers sync.WaitGroup
 
+	// start worker pool for scanning dependencies if flag is enabled
+	// if not then these goroutines won't be started at all and wgDepWorkers will remain unused
 	if flags.DependencyFlag {
 		for _ = range numWorkers {
 			wgDepWorkers.Add(1)
+
 			go func() {
 				defer wgDepWorkers.Done()
+
 				for job := range depJobs {
 					var deps []string
 					var err error
@@ -103,14 +108,15 @@ func scanCodebase(flags Config) (CodebaseReport, error) {
 	topFilesList := make([]FileMetricsReport, 0)
 	var walkErr error
 
-	// start consumer goroutine to aggregate results channel data (from workers)
+	// waitgroup to wait for final aggregation of results from workers
 	var wgFinalResults sync.WaitGroup
 	wgFinalResults.Add(1)
 
-	// the actual logic for aggregating results from workers (this is what the main goroutine waits for)
-	// this doesn't run until we start sending jobs to the workers below, and continues until the results channel is closed
+	// this is the 1st consumer goroutine that handles the actual logic for aggregating results from workers
+	// this is what the main goroutine waits for at the end
 	go func() {
 		defer wgFinalResults.Done()
+
 		for res := range locResults {
 			if res.err != nil {
 				log.Fatal("Error processing file", res.path, ":", res.err)
@@ -148,10 +154,14 @@ func scanCodebase(flags Config) (CodebaseReport, error) {
 		}
 	}()
 
+	// this is the 2nd consumer goroutine that handles aggregating dependency scan results if the flag is enabled
+	// similar to the above goroutine but for dependencies
 	if flags.DependencyFlag {
 		wgFinalResults.Add(1)
+
 		go func() {
 			defer wgFinalResults.Done()
+
 			for res := range depResults {
 				dependencyStats.DependencyFiles = append(dependencyStats.DependencyFiles, res)
 				dependencyStats.TotalDependencies += len(res.Dependencies)

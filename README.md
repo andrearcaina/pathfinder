@@ -18,191 +18,41 @@ go install github.com/andrearcaina/pathfinder@latest
 
 **As a Go Library:**
 ```bash
-go get github.com/andrearcaina/pathfinder
+go get github.com/andrearcaina/pathfinder/pkg/pathfinder
 ````
 
-### Go Example Usage
-Here is a simple [example](https://github.com/andrearcaina/pathfinder/blob/main/examples/main.go) of how to use pathfinder as a library in your Go code:
-```go
-package main
+### Go Example Usage using API
+Here is a simple [example](https://github.com/andrearcaina/pathfinder/blob/main/examples/main.go) of how to use pathfinder as a library in your Go code. For more information, check out the [examples](examples/) folder or the [documentation](docs/) folder.
 
-import (
-	"fmt"
-	"log"
-
-	"github.com/andrearcaina/pathfinder/pkg/pathfinder"
-)
-
-func main() {
-	fmt.Printf("Supported Pathfinder version: %s\n\n", pathfinder.Version())
-	fmt.Printf("Supported Languages: %v\n\n", pathfinder.SupportedLanguages())
-
-	fmt.Println("-------------------------------")
-	scanWithConfig()
-	scanNoConfig()
-}
-
-func scanWithConfig() {
-	config := pathfinder.Config{
-		PathFlag:       "..",
-		RecursiveFlag:  true,
-		HiddenFlag:     false,
-		DependencyFlag: true,
-		BufferSizeFlag: 4,
-		MaxDepthFlag:   -1,
-	}
-
-	report, err := pathfinder.Scan(config)
-	if err != nil {
-		log.Fatalf("Failed to scan codebase: %v", err)
-	}
-
-	fmt.Println("Scan with custom configuration:")
-	printReport(report)
-	fmt.Println("-------------------------------")
-}
-
-func scanNoConfig() {
-	report, err := pathfinder.Scan(pathfinder.Config{})
-	if err != nil {
-		log.Fatalf("Failed to scan codebase: %v", err)
-	}
-
-	fmt.Println("Scan with default configuration:")
-	printReport(report)
-	fmt.Println("-------------------------------")
-}
-
-func printReport(report pathfinder.CodebaseReport) {
-	fmt.Printf("Found %d files across %d languages.\n\n",
-		report.CodebaseMetrics.TotalFiles,
-		report.CodebaseMetrics.TotalLanguages)
-
-	fmt.Println("Scanned Files:")
-	for _, file := range report.ScannedFiles() {
-		fmt.Printf("• %s\n", file)
-	}
-	fmt.Println()
-
-	fmt.Println("Scanned Directories:")
-	for _, dir := range report.ScannedDirectories() {
-		fmt.Printf("• %s\n", dir)
-	}
-	fmt.Println()
-
-	fmt.Println("Scanned Languages:")
-	for _, lang := range report.ScannedLanguages() {
-		fmt.Printf("• %s\n", lang)
-	}
-	fmt.Println()
-
-	fmt.Println("Language Breakdown:")
-	for _, lang := range report.LanguageMetrics {
-		fmt.Printf("• %s: %d lines (%.2f%%)\n",
-			lang.Metrics.Language,
-			lang.Metrics.Lines,
-			lang.Percentage,
-		)
-	}
-}
-
-```
-Output:
-```plaintext
-Supported Pathfinder version: v0.1.4
-
-Supported Languages: [Go JavaScript TypeScript PHP HTML CSS XML Python Java Kotlin C C++ C# Swift JSON YAML Markdown]
-
--------------------------------
-Scan with custom configuration:
-Found 21 files across 3 languages.
-
-Scanned Files:
-• reports/vivid.json
-• reports/fafnir.json
-• reports/see-sharp.json
-• reports/report.json
-• pkg/pathfinder/dependencies.go
-• pkg/pathfinder/scanner.go
-• reports/maven_test.json
-• README.md
-• internal/ui/print.go
-• pkg/pathfinder/languages.go
-• pkg/pathfinder/types.go
-• pkg/pathfinder/counter.go
-• cmd/scan.go
-• pkg/pathfinder/api.go
-• examples/main.go
-• pkg/pathfinder/utils.go
-• internal/ui/styles.go
-• cmd/root.go
-• internal/ui/utils.go
-• internal/export/json.go
-• main.go
-
-Scanned Directories:
-• reports
-• pkg
-• internal
-• .
-• cmd
-• examples
-
-Scanned Languages:
-• JSON
-• Go
-• Markdown
-
-Language Breakdown:
-• JSON: 4859 lines (74.72%)
-• Go: 1485 lines (17.95%)
-• Markdown: 159 lines (1.78%)
--------------------------------
-Scan with default configuration:
-Found 1 files across 1 languages.
-
-Scanned Files:
-• main.go
-
-Scanned Directories:
-• .
-
-Scanned Languages:
-• Go
-
-Language Breakdown:
-• Go: 81 lines (82.72%)
--------------------------------
-```
 
 ### CLI Usage
 
-Below I ran `pathfinder` on this codebase with the `-R` flag to recursively scan all subdirectories. Image was taken at 2025-08-30 3:08 PM EST.
-![example1.png](images/example1.png)
+Below I ran `pathfinder` on this codebase with the `-R` flag to recursively scan all subdirectories, as well as the `-d` flag to scan dependencies. Image was taken at 2025-12-08 7:25 PM EST.
+![example4.png](images/example4.png)
 
-Then I ran the same command, but instead on my installed Go libraries and packages in WSL to benchmark performance.  Image was taken at 2025-08-30 3:08 PM EST.
-![example2.png](images/example2.png)
+Then I ran the same command, but instead on my installed Go libraries and packages in WSL to benchmark performance. Image was taken at 2025-12-08 7:23 PM EST.
+![example3.png](images/example3.png)
 
-You can see that it found **73,103** files, **18,219** directories, and **44,858,625** total lines.
+You can see that it found **62,673** files, **16,614** directories, and **30,230,851** total lines.
 
 ```bash
-> time ./bin/pathfinder ../../../go/ -R
+> time pathfinder -p ../../../go/ -R -d
 
-# time output (as of 2025-08-30 3:08 PM EST)
-./bin/pathfinder -p ../../../go/ -R  5.88s user 8.15s system 281% cpu 4.995 total
+# time output (as of 2025-12-08 7:23 PM EST)
+pathfinder scan -p ../../../go -R -d  4.23s user 6.04s system 228% cpu 4.504 total
 ``` 
-This only took 4.995 seconds (on my machine), utilizing 281% of the CPU. 
-This is because `pathfinder` uses goroutines for concurrent file reading and processing.
+This only took 4.504 seconds (on my machine), utilizing 228% of the CPU. 
+This is because `pathfinder` uses goroutines for both concurrent file reading and line counting, and parallelizes work across multiple CPU cores.
 
 I then ran it again on the same directory:
 ```bash
-> time ./bin/pathfinder ../../../go/ -R
+> time pathfinder ../../../go/ -R -d
 
 ...
 
-# time output (as of 2025-08-30 3:08 PM EST)
-./bin/pathfinder -p ../../../go/ -R  4.69s user 2.97s system 686% cpu 1.117 total
+# time output (as of 2025-12-08 7:23 PM EST)
+pathfinder scan -p ../../../go -R -d  3.19s user 2.08s system 553% cpu 0.952 total
 ```
-This time it took only 1.117 seconds to run, utilizing 665% of the CPU.
+This time it took only 0.952 seconds to run, utilizing 553% of the CPU.
 The second run is much faster because the OS caches file data in memory, 
 reducing I/O overhead and allowing goroutines to utilize more cores efficiently.

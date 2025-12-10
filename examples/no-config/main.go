@@ -12,28 +12,7 @@ func main() {
 	fmt.Printf("Supported Languages: %v\n\n", pathfinder.SupportedLanguages())
 
 	fmt.Println("-------------------------------")
-	scanWithConfig()
 	scanNoConfig()
-}
-
-func scanWithConfig() {
-	config := pathfinder.Config{
-		PathFlag:       "..",
-		RecursiveFlag:  true,
-		HiddenFlag:     false,
-		DependencyFlag: true,
-		BufferSizeFlag: 4,
-		MaxDepthFlag:   -1,
-	}
-
-	report, err := pathfinder.Scan(config)
-	if err != nil {
-		log.Fatalf("Failed to scan codebase: %v", err)
-	}
-
-	fmt.Println("Scan with custom configuration:")
-	printReport(report)
-	fmt.Println("-------------------------------")
 }
 
 func scanNoConfig() {

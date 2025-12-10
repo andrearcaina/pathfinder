@@ -62,7 +62,7 @@ Pathfinder • Throughput Mode
 Total workers: 16
 Total scanned files: 46,221
 Total scanned dirs: 11,165
-Total lines 24,873,896
+Total lines: 24,873,896
 Total time taken: 3.03s
 Overall throughput: 15229.7 files/sec
 ``` 
@@ -107,7 +107,7 @@ Pathfinder • Throughput Mode
 Total workers: 16
 Total scanned files: 46,221
 Total scanned dirs: 11,165
-Total lines 24,873,896
+Total lines: 24,873,896
 Total time taken: 0.63s
 Overall throughput: 73029.2 files/sec
 

@@ -32,7 +32,7 @@ func PrintReport(report pathfinder.CodebaseReport, throughputMode bool) {
 		fmt.Printf("Total workers: %d\n", report.PerformanceMetrics.TotalWorkers)
 		fmt.Printf("Total scanned files: %s\n", FormatIntBritishEnglish(report.CodebaseMetrics.TotalFiles))
 		fmt.Printf("Total scanned dirs: %s\n", FormatIntBritishEnglish(report.CodebaseMetrics.TotalDirs))
-		fmt.Printf("Total lines %s\n", FormatIntBritishEnglish(report.CodebaseMetrics.TotalLines))
+		fmt.Printf("Total lines: %s\n", FormatIntBritishEnglish(report.CodebaseMetrics.TotalLines))
 		fmt.Printf("Total time taken: %.2fs\n", report.PerformanceMetrics.TotalTimeSeconds)
 		fmt.Printf("Overall throughput: %.1f files/sec\n", report.PerformanceMetrics.OverallThroughput)
 

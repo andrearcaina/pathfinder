@@ -25,8 +25,32 @@ go get github.com/andrearcaina/pathfinder/pkg/pathfinder
 ````
 
 ### Go Example Usage using API
-Here is a simple [example](https://github.com/andrearcaina/pathfinder/blob/main/examples/main.go) of how to use pathfinder as a library in your Go code. For more information, check out the [examples](examples/) folder or the [documentation](docs/) folder.
+For information on how to use `pathfinder` as a Go library with the API, check out the [examples](examples/) folder or the [documentation](docs/) folder.
+Here's a simple example of how to use the `pathfinder` library in your Go code:
 
+```go
+package main
+
+import (
+	"fmt"
+
+	"github.com/andrearcaina/pathfinder/pkg/pathfinder"
+)
+
+func main() {
+	 // default config (scans current directory and non-recursively)
+	report, err := pathfinder.Scan(pathfinder.Config{})
+	if err != nil {
+		fmt.Printf("Failed to scan codebase: %v", err)
+	}
+
+	fmt.Printf("Scanned %d files in %d directories with a total of %d lines\n",
+		report.CodebaseMetrics.TotalFiles, 
+		report.CodebaseMetrics.TotalDirs, 
+		report.CodebaseMetrics.TotalLines,
+	)
+}
+```
 
 ### CLI Usage
 

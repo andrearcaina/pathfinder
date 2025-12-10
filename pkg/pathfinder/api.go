@@ -18,10 +18,13 @@ func Scan(config Config) (CodebaseReport, error) {
 		config.PathFlag = "."
 	}
 	if config.BufferSizeFlag == 0 {
-		config.BufferSizeFlag = 4 // Default to 4KB
+		config.BufferSizeFlag = 4 // default to 4KB
 	}
 	if config.MaxDepthFlag == 0 {
-		config.MaxDepthFlag = -1 // Default to no limit
+		config.MaxDepthFlag = -1 // default to no limit
+	}
+	if config.WorkerFlag == 0 {
+		config.WorkerFlag = 16 // default to 16 concurrent workers
 	}
 
 	// validation

@@ -11,10 +11,13 @@ It also has a library API that you can use to integrate its functionality into y
 
 ### Installation
 
+Make sure you have [Go](https://go.dev/dl/) installed (haven't tested with older versions, but Go 1.22+ is recommended). This project was built and tested with Go 1.24.5 (check go.mod file).
+
 **As a CLI Tool:**
 ```bash
 go install github.com/andrearcaina/pathfinder@latest
 ```
+For more information, check out **CLI Usage** below or run `pathfinder -h` or `pathfinder scan -h` after installation.
 
 **As a Go Library:**
 ```bash

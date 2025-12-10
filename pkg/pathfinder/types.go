@@ -1,5 +1,7 @@
 package pathfinder
 
+import "time"
+
 // Config configures the behavior of the scanner.
 type Config struct {
 	// PathFlag is the root path to the codebase or repository to scan.
@@ -24,6 +26,12 @@ type Config struct {
 
 	// GitFlag, if true, analyzes git information (commits, history).
 	GitFlag bool
+
+	// WorkerFlag, if set, defines the number of concurrent workers for scanning files. Default is 16
+	WorkerFlag int
+
+	// ThroughputFlag, if true, shows throughput information without the detailed report.
+	ThroughputFlag bool
 }
 
 // CommentType defines the comment syntax markers for a programming language.
@@ -101,12 +109,31 @@ type LanguageMetricsReport struct {
 	Metrics    LanguageMetrics // The raw metrics
 }
 
+// WorkerStats for tracking worker stats if throughput flag is enabled
+type WorkerStats struct {
+	Id         int     // worker ID
+	Processed  int     // number of files processed
+	Throughput float64 // files per second
+	Duration   float64 // total time taken
+	Start      time.Time
+	End        time.Time
+}
+
+// PerformanceMetrics holds the workers throughput and time taken for the scan.
+type PerformanceMetrics struct {
+	TotalWorkers      int            // Number of concurrent workers used
+	WorkerStats       []*WorkerStats // Detailed stats per worker
+	TotalTimeSeconds  float64        // Total time taken for the scan in seconds
+	OverallThroughput float64        // Files processed per second
+}
+
 // CodebaseReport is the final output structure containing all analysis results.
 type CodebaseReport struct {
-	LanguageMetrics   []LanguageMetricsReport
-	FileMetrics       []FileMetricsReport
-	DirMetrics        []DirMetricsReport
-	CodebaseMetrics   CodebaseMetrics
-	AnnotationMetrics AnnotationMetrics
-	DependencyMetrics DependencyMetrics
+	LanguageMetrics    []LanguageMetricsReport
+	FileMetrics        []FileMetricsReport
+	DirMetrics         []DirMetricsReport
+	CodebaseMetrics    CodebaseMetrics
+	AnnotationMetrics  AnnotationMetrics
+	DependencyMetrics  DependencyMetrics
+	PerformanceMetrics PerformanceMetrics
 }

@@ -23,6 +23,8 @@ var (
 	outputFlag     string
 	dependencyFlag bool
 	gitFlag        bool
+	workerFlag     int
+	throughputFlag bool
 )
 
 // scanCmd represents the scan command
@@ -46,6 +48,8 @@ pathfinder scan -p /path/to/codebase -R -m 3 -f json -o report.json,
 			MaxDepthFlag:   maxDepthFlag,
 			DependencyFlag: dependencyFlag,
 			GitFlag:        gitFlag,
+			WorkerFlag:     workerFlag,
+			ThroughputFlag: throughputFlag,
 		})
 		if err != nil {
 			return err
@@ -78,7 +82,7 @@ pathfinder scan -p /path/to/codebase -R -m 3 -f json -o report.json,
 			}
 		}
 
-		ui.PrintReport(report)
+		ui.PrintReport(report, throughputFlag)
 		return nil
 	},
 }
@@ -94,4 +98,6 @@ func init() {
 	scanCmd.Flags().StringVarP(&outputFlag, "output", "o", "", "Sets output file name.")
 	scanCmd.Flags().BoolVarP(&dependencyFlag, "dependencies", "d", false, "Scan for dependencies (supported for some languages)")
 	scanCmd.Flags().BoolVarP(&gitFlag, "git", "g", false, "Scan for git information (e.g. number of commits, git history, etc.)")
+	scanCmd.Flags().IntVarP(&workerFlag, "workers", "w", 16, "The total number of concurrent workers to use for scanning files")
+	scanCmd.Flags().BoolVarP(&throughputFlag, "throughput", "t", false, "Enable throughput mode to see scanning speed for each worker")
 }

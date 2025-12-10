@@ -5,10 +5,10 @@ import (
 	"io/fs"
 	"log"
 	"path/filepath"
-	"runtime"
 	"sort"
 	"strings"
 	"sync"
+	"time"
 )
 
 // pass data from workers back to main goroutine
@@ -24,8 +24,12 @@ func scanCodebase(flags Config) (CodebaseReport, error) {
 		return CodebaseReport{}, errors.New("path is required")
 	}
 
-	// limit number of workers to avoid overwhelming the system (TODO: will make a flag later)
-	numWorkers := runtime.NumCPU() * 20
+	// start timer for overall throughput calculation (if enabled)
+	startTime := time.Now()
+
+	// limit number of workers to avoid overwhelming the system
+	// even if user doesn't set the flag, WorkerFlag defaults to 16
+	numWorkers := flags.WorkerFlag
 
 	// channel to send jobs to workers (basically we are sending file paths and language definitions to workers)
 	locJobs := make(chan struct {
@@ -37,15 +41,22 @@ func scanCodebase(flags Config) (CodebaseReport, error) {
 	// start worker pool for counting lines of code
 	var wgLocWorkers sync.WaitGroup
 
+	// slice to hold worker stats if throughput flag is enabled
+	workers := make([]*WorkerStats, flags.WorkerFlag)
+
 	// start loc workers (separate goroutines that process files concurrently by the go scheduler)
 	// and send loc worker results back to the loc results channel which is consumed by the main goroutine
-	for _ = range numWorkers {
+	for i := range numWorkers {
 		wgLocWorkers.Add(1)
-		go func() {
+		workers[i] = &WorkerStats{Id: i, Start: time.Now()}
+
+		go func(ws *WorkerStats) {
 			defer wgLocWorkers.Done()
 
 			for job := range locJobs {
 				fMetrics, aMetrics, err := fileCounter(job.path, flags.BufferSizeFlag, job.langDef)
+
+				ws.Processed++
 
 				locResults <- scanResult{
 					fileMetrics: fMetrics,
@@ -54,7 +65,11 @@ func scanCodebase(flags Config) (CodebaseReport, error) {
 					err:         err,
 				}
 			}
-		}()
+
+			ws.End = time.Now()
+			ws.Duration = ws.End.Sub(ws.Start).Seconds()
+			ws.Throughput = float64(ws.Processed) / ws.Duration
+		}(workers[i])
 	}
 
 	// channel to send dependency scan jobs and receive results
@@ -319,12 +334,26 @@ func scanCodebase(flags Config) (CodebaseReport, error) {
 		return dirStats[i].Percentage > dirStats[j].Percentage
 	})
 
-	return CodebaseReport{
+	codebaseReport := CodebaseReport{
 		LanguageMetrics:   languageStats,
 		FileMetrics:       topFilesList,
 		DirMetrics:        dirStats,
 		CodebaseMetrics:   codebaseStats,
 		AnnotationMetrics: annotationStats,
 		DependencyMetrics: dependencyStats,
-	}, nil
+	}
+
+	if flags.ThroughputFlag {
+		totalFiles := codebaseStats.TotalFiles
+		totalTime := time.Since(startTime).Seconds()
+
+		codebaseReport.PerformanceMetrics = PerformanceMetrics{
+			TotalWorkers:      flags.WorkerFlag,
+			WorkerStats:       workers,
+			TotalTimeSeconds:  totalTime,
+			OverallThroughput: float64(totalFiles) / totalTime,
+		}
+	}
+
+	return codebaseReport, nil
 }

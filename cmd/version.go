@@ -16,7 +16,3 @@ var versionCmd = &cobra.Command{
 		fmt.Println(pathfinder.Version())
 	},
 }
-
-func init() {
-	rootCmd.AddCommand(versionCmd)
-}

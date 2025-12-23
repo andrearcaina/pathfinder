@@ -85,7 +85,7 @@ func (c CodebaseReport) ScannedFiles() []string {
 	return files
 }
 
-// SupportedLanguages returns a list of all supported programming languages that PathFinder can analyze.
+// SupportedLanguages returns a list of all supported programming languages that Pathfinder can analyze.
 func SupportedLanguages() []string {
 	languages := make([]string, 0, len(languageDefinitions))
 

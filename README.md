@@ -17,7 +17,6 @@ Make sure you have [Go](https://go.dev/dl/) installed (haven't tested with older
 ```bash
 go install github.com/andrearcaina/pathfinder@latest
 ```
-For more information, check out **CLI Usage** below or run `pathfinder -h` or `pathfinder scan -h` after installation.
 
 **As a Go Library:**
 ```bash
@@ -25,7 +24,8 @@ go get github.com/andrearcaina/pathfinder/pkg/pathfinder
 ````
 
 ### Go Example Usage using API
-For information on how to use `pathfinder` as a Go library with the API, check out the [examples](examples/) folder or the [documentation](docs/) folder.
+For information on how to use `pathfinder` as a Go library with the API, check out the [examples](examples/) folder or the `api.md` file in the [documentation](docs/) folder. 
+
 Here's a simple example of how to use the `pathfinder` library in your Go code:
 
 ```go
@@ -53,6 +53,8 @@ func main() {
 ```
 
 ### CLI Usage
+
+For information on how to use `pathfinder` as a CLI, check out the `cli.md` file in the [documentation](docs/) folder or typing `pathfinder -h` or `pathfinder --help` in your terminal after installation.
 
 Below I ran `pathfinder` on this codebase with the `-R` flag to recursively scan all subdirectories, as well as the `-d` flag to scan dependencies. Image was taken at 2025-12-08 7:25 PM EST.
 ![example4.png](images/example4.png)

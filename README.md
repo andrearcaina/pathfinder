@@ -23,9 +23,10 @@ go install github.com/andrearcaina/pathfinder@latest
 go get github.com/andrearcaina/pathfinder/pkg/pathfinder
 ````
 
-### Go Example Usage using API
-For information on how to use `pathfinder` as a Go library with the API, check out the [examples](examples/) folder or the `api.md` file in the [documentation](docs/) folder. 
+### Documentation
+For detailed documentation on how to use `pathfinder`, both as a CLI tool and as a Go library, please refer to the [docs](docs/) folder in the repository and check their respective files (`cli.md` and `api.md`). You can also check out the Godoc page [here](https://pkg.go.dev/github.com/andrearcaina/pathfinder/pkg/pathfinder). The architecture and designs is also documented in the `architecture.md` file and [designs](docs/designs) folder.
 
+### Go Example Usage using API
 Here's a simple example of how to use the `pathfinder` library in your Go code:
 
 ```go
@@ -53,9 +54,6 @@ func main() {
 ```
 
 ### CLI Usage
-
-For information on how to use `pathfinder` as a CLI, check out the `cli.md` file in the [documentation](docs/) folder or typing `pathfinder -h` or `pathfinder --help` in your terminal after installation.
-
 Below I ran `pathfinder` on this codebase with the `-R` flag to recursively scan all subdirectories, as well as the `-d` flag to scan dependencies. Image was taken at 2025-12-08 7:25 PM EST.
 ![example4.png](images/example4.png)
 

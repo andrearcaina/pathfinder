@@ -81,7 +81,7 @@ func scanCodebase(flags Config) (CodebaseReport, error) {
 	// start worker pool for scanning dependencies if flag is enabled
 	// if not then these goroutines won't be started at all and wgDepWorkers will remain unused
 	if flags.DependencyFlag {
-		for _ = range numWorkers {
+		for range numWorkers {
 			wgDepWorkers.Add(1)
 
 			go func() {

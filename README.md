@@ -1,4 +1,8 @@
 # pathfinder
+[![Go Report Card](https://goreportcard.com/badge/github.com/andrearcaina/pathfinder)](https://goreportcard.com/report/github.com/andrearcaina/pathfinder)
+[![CI Status](https://github.com/andrearcaina/pathfinder/actions/workflows/pathfinder-ci.yml/badge.svg)](https://github.com/andrearcaina/pathfinder/actions/workflows/pathfinder-ci.yml)
+[![CD Status](https://github.com/andrearcaina/pathfinder/actions/workflows/pathfinder-cd.yml/badge.svg)](https://github.com/andrearcaina/pathfinder/actions/workflows/pathfinder-cd.yml)
+
 Blazingly fast, lightweight CLI to map & track your codebase.
 
 ### Overview
@@ -10,7 +14,7 @@ It is designed to be fast and efficient, leveraging Go's concurrency features to
 It also has a library API that you can use to integrate its functionality into your own Go applications.
 
 ### Installation
-Pathfinder can be installed and used in two main ways:
+`pathfinder` can be installed and used in two main ways:
 
 **As a CLI Tool**
 

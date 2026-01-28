@@ -18,9 +18,14 @@ It also has a library API that you can use to integrate its functionality into y
 
 **As a CLI Tool**
 
-Install via cURL:
+Install via cURL on Linux, WSL, or Git Bash:
 ```bash
-curl -sfL https://raw.githubusercontent.com/andrearcaina/pathfinder/main/install.sh | sh
+curl -fsSL https://raw.githubusercontent.com/andrearcaina/pathfinder/main/install.sh | sh
+```
+
+Install via Powershell on Windows:
+```bash
+irm https://raw.githubusercontent.com/andrearcaina/pathfinder/main/install.ps1 | iex
 ```
 
 Or via Go (requires Go 1.24.5 or later):

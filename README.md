@@ -11,7 +11,7 @@ Blazingly fast, lightweight CLI to map & track your codebase.
 
 It is designed to be fast and efficient, leveraging Go's concurrency features to process files in parallel.
 
-It also has a library API that you can use to integrate its functionality into your own Go applications.
+It is also implemented as a Go package, so that you can use to integrate its functionality into your own Go applications/programs.
 
 ### Installation
 `pathfinder` can be installed and used in two main ways:
@@ -163,3 +163,5 @@ pathfinder scan -p ../../../go -R -d  2.71s user 1.63s system 634% cpu 0.684 tot
 This time it took only 0.63-0.684 seconds to run, utilizing 634% of the CPU.
 The second run is much faster because the OS caches file data in memory, 
 reducing I/O overhead and allowing goroutines to utilize more cores efficiently.
+
+The `pathfinder` CLI also has a flag that exports the codebase metric data as a JSON file. Check out [examples/json-exports/](examples/json-exports/) directory to see example JSON reports generated.

@@ -21,7 +21,7 @@ esac
 
 # download and extract
 URL="https://github.com/$REPO/releases/download/$TAG/${BIN%.*}_${OS}_${ARCH}.$EXT"
-echo "Downloading $TAG for $OS..."
+echo "Downloading pathfinder $TAG for $OS..."
 
 if [ "$EXT" = "zip" ]; then
     # windows: download zip, unzip, install to ~/bin (no sudo needed)

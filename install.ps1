@@ -43,7 +43,7 @@ $Ext = "zip"
 $DownloadName = "${BinName}_${Os}_${Arch}.${Ext}"
 $DownloadUrl = "https://github.com/$Repo/releases/download/$Tag/$DownloadName"
 
-Write-Host "Downloading $Tag for Windows ($Arch)..."
+Write-Host "Downloading pathfinder $Tag for Windows ($Arch)..."
 $TempZip = Join-Path $env:TEMP "$BinName.zip"
 
 try {

@@ -11,6 +11,11 @@ import (
 	"time"
 )
 
+type scanJob struct {
+	path    string
+	langDef *LanguageDefinition
+}
+
 // pass data from workers back to main goroutine
 type scanResult struct {
 	fileMetrics LanguageMetrics
@@ -19,48 +24,71 @@ type scanResult struct {
 	err         error
 }
 
+type scanAggregation struct {
+	langStatsMap    map[string]*LanguageMetrics
+	dirStatsMap     map[string]int
+	codebaseStats   CodebaseMetrics
+	annotationStats AnnotationMetrics
+	dependencyStats DependencyMetrics
+	topFilesList    []FileMetricsReport
+}
+
 func scanCodebase(flags Config) (CodebaseReport, error) {
 	if flags.PathFlag == "" { // won't ever happen since default is "." set by cobra
 		return CodebaseReport{}, errors.New("path is required")
 	}
 
-	// start timer for overall throughput calculation (if enabled)
 	startTime := time.Now()
-
-	// limit number of workers to avoid overwhelming the system
-	// even if user doesn't set the flag, WorkerFlag defaults to 16
-	numWorkers := flags.WorkerFlag
-
-	// channel to send jobs to workers (basically we are sending file paths and language definitions to workers)
-	locJobs := make(chan struct {
-		path    string
-		langDef *LanguageDefinition
-	}, 100) // buffered channel to avoid sharing memory through mutexes
+	locJobs := make(chan scanJob, 100)
 	locResults := make(chan scanResult, 100)
+	depJobs := make(chan DependencyFile, 100)
+	depResults := make(chan DependencyFile, 100)
 
-	// start worker pool for counting lines of code
-	var wgLocWorkers sync.WaitGroup
+	workers, waitForLocWorkers := startScanWorkers(flags, locJobs, locResults)
+	waitForDepWorkers := startDependencyWorkers(flags, depJobs, depResults)
 
-	// slice to hold worker stats if throughput flag is enabled
+	aggregation := newScanAggregation()
+	waitForResults := startResultConsumers(flags, locResults, depResults, aggregation)
+
+	totalDirs, walkErr := walkCodebase(flags, locJobs, depJobs)
+	close(locJobs)
+	if flags.DependencyFlag {
+		close(depJobs)
+	}
+
+	waitForLocWorkers()
+	waitForDepWorkers()
+	close(locResults)
+	if flags.DependencyFlag {
+		close(depResults)
+	}
+	waitForResults()
+
+	if walkErr != nil {
+		return CodebaseReport{}, walkErr
+	}
+
+	aggregation.codebaseStats.TotalDirs = totalDirs
+	return buildCodebaseReport(flags, startTime, workers, aggregation), nil
+}
+
+func startScanWorkers(flags Config, jobs <-chan scanJob, results chan<- scanResult) ([]*WorkerStats, func()) {
+	var wg sync.WaitGroup
 	workers := make([]*WorkerStats, flags.WorkerFlag)
 
-	// start loc workers (separate goroutines that process files concurrently by the go scheduler)
-	// and send loc worker results back to the loc results channel which is consumed by the main goroutine
-	for i := range numWorkers {
-		wgLocWorkers.Add(1)
+	for i := range flags.WorkerFlag {
+		wg.Add(1)
 		workers[i] = &WorkerStats{Id: i, Start: time.Now()}
 
 		go func(ws *WorkerStats) {
-			defer wgLocWorkers.Done()
+			defer wg.Done()
 
-			for job := range locJobs {
-				fMetrics, aMetrics, err := fileCounter(job.path, flags.BufferSizeFlag, job.langDef)
-
+			for job := range jobs {
+				fileMetrics, annotationMetrics, err := fileCounter(job.path, flags.BufferSizeFlag, job.langDef)
 				ws.Processed++
-
-				locResults <- scanResult{
-					fileMetrics: fMetrics,
-					annMetrics:  aMetrics,
+				results <- scanResult{
+					fileMetrics: fileMetrics,
+					annMetrics:  annotationMetrics,
 					path:        job.path,
 					err:         err,
 				}
@@ -72,288 +100,260 @@ func scanCodebase(flags Config) (CodebaseReport, error) {
 		}(workers[i])
 	}
 
-	// channel to send dependency scan jobs and receive results
-	depJobs := make(chan DependencyFile, 100)
-	depResults := make(chan DependencyFile, 100)
+	return workers, wg.Wait
+}
 
-	var wgDepWorkers sync.WaitGroup
-
-	// start worker pool for scanning dependencies if flag is enabled
-	// if not then these goroutines won't be started at all and wgDepWorkers will remain unused
-	if flags.DependencyFlag {
-		for range numWorkers {
-			wgDepWorkers.Add(1)
-
-			go func() {
-				defer wgDepWorkers.Done()
-
-				for job := range depJobs {
-					var deps []string
-					var err error
-
-					switch {
-					case strings.HasSuffix(job.Path, "go.mod"):
-						deps, err = scanGoMod(job.Path)
-					case strings.HasSuffix(job.Path, "package.json"):
-						deps, err = scanPackageJSON(job.Path)
-					case strings.HasSuffix(job.Path, "requirements.txt"):
-						deps, err = scanRequirementsTxt(job.Path)
-					case strings.HasSuffix(job.Path, "pom.xml"):
-						deps, err = scanPomXML(job.Path)
-					case strings.HasSuffix(job.Path, ".csproj"):
-						deps, err = scanCsproj(job.Path)
-					}
-
-					if err == nil && len(deps) > 0 {
-						job.Dependencies = deps
-						depResults <- job
-					}
-				}
-			}()
-		}
+func startDependencyWorkers(flags Config, jobs <-chan DependencyFile, results chan<- DependencyFile) func() {
+	var wg sync.WaitGroup
+	if !flags.DependencyFlag {
+		return wg.Wait
 	}
 
-	// structs and data structures to hold aggregated results (readable data for user)
-	langStatsMap := map[string]*LanguageMetrics{}
-	dirStatsMap := map[string]int{}
-
-	var codebaseStats CodebaseMetrics
-	var annotationStats AnnotationMetrics
-	var dependencyStats DependencyMetrics
-	topFilesList := make([]FileMetricsReport, 0)
-	var walkErr error
-
-	// waitgroup to wait for final aggregation of results from workers
-	var wgFinalResults sync.WaitGroup
-	wgFinalResults.Add(1)
-
-	// this is the 1st consumer goroutine that handles the actual logic for aggregating results from workers
-	// this is what the main goroutine waits for at the end
-	go func() {
-		defer wgFinalResults.Done()
-
-		for res := range locResults {
-			if res.err != nil {
-				log.Fatal("Error processing file", res.path, ":", res.err)
-			}
-
-			codebaseStats.TotalFiles += res.fileMetrics.Files
-			codebaseStats.TotalCode += res.fileMetrics.Code
-			codebaseStats.TotalComments += res.fileMetrics.Comments
-			codebaseStats.TotalBlanks += res.fileMetrics.Blanks
-
-			annotationStats.TotalTODO += res.annMetrics.TotalTODO
-			annotationStats.TotalFIXME += res.annMetrics.TotalFIXME
-			annotationStats.TotalHACK += res.annMetrics.TotalHACK
-			annotationStats.TotalAnnotations += res.annMetrics.TotalAnnotations
-
-			relPath, _ := filepath.Rel(flags.PathFlag, res.path)
-			topDir := topLevelDir(relPath)
-			dirStatsMap[topDir] += res.fileMetrics.Lines
-
-			stats := langStatsMap[res.fileMetrics.Language]
-			if stats == nil {
-				stats = &LanguageMetrics{Language: res.fileMetrics.Language}
-				langStatsMap[res.fileMetrics.Language] = stats
-			}
-			stats.Files++
-			stats.Code += res.fileMetrics.Code
-			stats.Comments += res.fileMetrics.Comments
-			stats.Blanks += res.fileMetrics.Blanks
-			stats.Lines += res.fileMetrics.Lines
-
-			topFilesList = append(topFilesList, FileMetricsReport{
-				Metrics: res.fileMetrics,
-				Path:    relPath,
-			})
-		}
-	}()
-
-	// this is the 2nd consumer goroutine that handles aggregating dependency scan results if the flag is enabled
-	// similar to the above goroutine but for dependencies
-	if flags.DependencyFlag {
-		wgFinalResults.Add(1)
-
+	for range flags.WorkerFlag {
+		wg.Add(1)
 		go func() {
-			defer wgFinalResults.Done()
-
-			for res := range depResults {
-				dependencyStats.DependencyFiles = append(dependencyStats.DependencyFiles, res)
-				dependencyStats.TotalDependencies += len(res.Dependencies)
+			defer wg.Done()
+			for job := range jobs {
+				dependencies, err := scanDependencyFile(job)
+				if err == nil && len(dependencies) > 0 {
+					job.Dependencies = dependencies
+					results <- job
+				}
 			}
 		}()
 	}
 
-	// this traverses the directory tree and sends jobs to the workers (via the jobs channel)
-	// this actually runs in the main goroutine
-	walkErr = filepath.WalkDir(flags.PathFlag, func(path string, d fs.DirEntry, err error) error {
-		if err != nil {
+	return wg.Wait
+}
+
+func scanDependencyFile(file DependencyFile) ([]string, error) {
+	switch {
+	case strings.HasSuffix(file.Path, "go.mod"):
+		return scanGoMod(file.Path)
+	case strings.HasSuffix(file.Path, "package.json"):
+		return scanPackageJSON(file.Path)
+	case strings.HasSuffix(file.Path, "requirements.txt"):
+		return scanRequirementsTxt(file.Path)
+	case strings.HasSuffix(file.Path, "pom.xml"):
+		return scanPomXML(file.Path)
+	case strings.HasSuffix(file.Path, ".csproj"):
+		return scanCsproj(file.Path)
+	default:
+		return nil, nil
+	}
+}
+
+func newScanAggregation() *scanAggregation {
+	return &scanAggregation{
+		langStatsMap: map[string]*LanguageMetrics{},
+		dirStatsMap:  map[string]int{},
+		topFilesList: make([]FileMetricsReport, 0),
+	}
+}
+
+func startResultConsumers(flags Config, locResults <-chan scanResult, depResults <-chan DependencyFile, aggregation *scanAggregation) func() {
+	var wg sync.WaitGroup
+	wg.Add(1)
+	go func() {
+		defer wg.Done()
+		for result := range locResults {
+			aggregateScanResult(flags.PathFlag, result, aggregation)
+		}
+	}()
+
+	if flags.DependencyFlag {
+		wg.Add(1)
+		go func() {
+			defer wg.Done()
+			for result := range depResults {
+				aggregation.dependencyStats.DependencyFiles = append(aggregation.dependencyStats.DependencyFiles, result)
+				aggregation.dependencyStats.TotalDependencies += len(result.Dependencies)
+			}
+		}()
+	}
+
+	return wg.Wait
+}
+
+func aggregateScanResult(rootPath string, result scanResult, aggregation *scanAggregation) {
+	if result.err != nil {
+		log.Fatal("Error processing file", result.path, ":", result.err)
+	}
+
+	aggregation.codebaseStats.TotalFiles += result.fileMetrics.Files
+	aggregation.codebaseStats.TotalCode += result.fileMetrics.Code
+	aggregation.codebaseStats.TotalComments += result.fileMetrics.Comments
+	aggregation.codebaseStats.TotalBlanks += result.fileMetrics.Blanks
+
+	aggregation.annotationStats.TotalTODO += result.annMetrics.TotalTODO
+	aggregation.annotationStats.TotalFIXME += result.annMetrics.TotalFIXME
+	aggregation.annotationStats.TotalHACK += result.annMetrics.TotalHACK
+	aggregation.annotationStats.TotalAnnotations += result.annMetrics.TotalAnnotations
+
+	relPath, _ := filepath.Rel(rootPath, result.path)
+	aggregation.dirStatsMap[topLevelDir(relPath)] += result.fileMetrics.Lines
+
+	stats := aggregation.langStatsMap[result.fileMetrics.Language]
+	if stats == nil {
+		stats = &LanguageMetrics{Language: result.fileMetrics.Language}
+		aggregation.langStatsMap[result.fileMetrics.Language] = stats
+	}
+	stats.Files++
+	stats.Code += result.fileMetrics.Code
+	stats.Comments += result.fileMetrics.Comments
+	stats.Blanks += result.fileMetrics.Blanks
+	stats.Lines += result.fileMetrics.Lines
+
+	aggregation.topFilesList = append(aggregation.topFilesList, FileMetricsReport{
+		Metrics: result.fileMetrics,
+		Path:    relPath,
+	})
+}
+
+func walkCodebase(flags Config, locJobs chan<- scanJob, depJobs chan<- DependencyFile) (int, error) {
+	totalDirs := 0
+	err := filepath.WalkDir(flags.PathFlag, func(path string, entry fs.DirEntry, walkErr error) error {
+		if walkErr != nil {
 			return nil
 		}
 
-		// if the user didn't set recursive flag, skip subdirectories
-		if !flags.RecursiveFlag && path != flags.PathFlag && d.IsDir() {
-			return filepath.SkipDir
-		}
-
-		// if the user set max depth, skip directories deeper than max depth
-		if flags.RecursiveFlag && flags.MaxDepthFlag != -1 {
-			relPath, _ := filepath.Rel(flags.PathFlag, path)
-			depth := len(strings.Split(relPath, string(filepath.Separator)))
-			if depth > flags.MaxDepthFlag {
-				if d.IsDir() {
-					return filepath.SkipDir
-				}
-				return nil
+		if shouldSkipForDepth(flags, path, entry) {
+			if entry.IsDir() {
+				return filepath.SkipDir
 			}
+			return nil
 		}
 
-		name := d.Name()
-
-		// skips files like .DS_Store, package-lock.json, etc.
+		name := entry.Name()
 		if excludeFile(name) {
 			return nil
 		}
-
 		if !flags.HiddenFlag && strings.HasPrefix(name, ".") {
-			if d.IsDir() {
+			if entry.IsDir() {
 				return filepath.SkipDir
 			}
 			return nil
 		}
-
-		if d.IsDir() {
+		if entry.IsDir() {
 			if excludeDir(name) {
 				return filepath.SkipDir
 			}
-			codebaseStats.TotalDirs++
+			totalDirs++
 			return nil
 		}
-
 		if isBinary(name) {
 			return nil
 		}
 
-		// send job to loc workers to process file if we can determine its language by extension
-		ext := hasNoExt(name)
-		if ext != "" {
-			if langDefinition := determineLangByExt(ext); langDefinition != nil {
-				locJobs <- struct {
-					path    string
-					langDef *LanguageDefinition
-				}{path, langDefinition}
-			}
-		}
-
-		// send job to dependency scanner workers if file is a known dependency file
+		queueScanJob(path, name, locJobs)
 		if flags.DependencyFlag {
-			var depType string
-			switch {
-			case name == "go.mod":
-				depType = "Go Modules"
-			case name == "package.json":
-				depType = "npm/yarn"
-			case name == "requirements.txt":
-				depType = "pip"
-			case name == "pom.xml":
-				depType = "Maven"
-			case strings.HasSuffix(name, ".csproj"):
-				depType = ".NET/NuGet"
-			}
-
-			if depType != "" {
-				depJobs <- DependencyFile{
-					Path: path,
-					Type: depType,
-				}
-			}
+			queueDependencyJob(path, name, depJobs)
 		}
-
 		return nil
 	})
 
-	// cleanup and wait for final aggregation (consuming results)
-	close(locJobs)
-	if flags.DependencyFlag {
-		close(depJobs)
+	return totalDirs, err
+}
+
+func shouldSkipForDepth(flags Config, path string, entry fs.DirEntry) bool {
+	if !flags.RecursiveFlag {
+		return path != flags.PathFlag && entry.IsDir()
+	}
+	if flags.MaxDepthFlag == -1 {
+		return false
 	}
 
-	wgLocWorkers.Wait()
-	wgDepWorkers.Wait()
+	relPath, _ := filepath.Rel(flags.PathFlag, path)
+	depth := len(strings.Split(relPath, string(filepath.Separator)))
+	return depth > flags.MaxDepthFlag
+}
 
-	close(locResults)
-	if flags.DependencyFlag {
-		close(depResults)
+func queueScanJob(path, name string, jobs chan<- scanJob) {
+	ext := hasNoExt(name)
+	if ext == "" {
+		return
+	}
+	if langDefinition := determineLangByExt(ext); langDefinition != nil {
+		jobs <- scanJob{path: path, langDef: langDefinition}
+	}
+}
+
+func queueDependencyJob(path, name string, jobs chan<- DependencyFile) {
+	var dependencyType string
+	switch {
+	case name == "go.mod":
+		dependencyType = "Go Modules"
+	case name == "package.json":
+		dependencyType = "npm/yarn"
+	case name == "requirements.txt":
+		dependencyType = "pip"
+	case name == "pom.xml":
+		dependencyType = "Maven"
+	case strings.HasSuffix(name, ".csproj"):
+		dependencyType = ".NET/NuGet"
 	}
 
-	wgFinalResults.Wait()
-
-	if walkErr != nil {
-		return CodebaseReport{}, walkErr
+	if dependencyType != "" {
+		jobs <- DependencyFile{Path: path, Type: dependencyType}
 	}
+}
 
-	// the final aggregation and more calculations are done below
+func buildCodebaseReport(flags Config, startTime time.Time, workers []*WorkerStats, aggregation *scanAggregation) CodebaseReport {
+	aggregation.codebaseStats.TotalLines = aggregation.codebaseStats.TotalCode + aggregation.codebaseStats.TotalComments + aggregation.codebaseStats.TotalBlanks
+	languageStats := buildLanguageStats(aggregation.langStatsMap, aggregation.codebaseStats.TotalLines)
+	dirStats := buildDirectoryStats(aggregation.dirStatsMap, aggregation.codebaseStats.TotalLines)
+	aggregation.codebaseStats.TotalLanguages = len(languageStats)
 
-	// this is done after the walk is complete and all goroutines have finished
-	// because we need the final aggregated stats to calculate percentages
-	// it doesn't make sense to calculate percentages while we're still walking the directory
-	codebaseStats.TotalLines = codebaseStats.TotalCode + codebaseStats.TotalComments + codebaseStats.TotalBlanks
-
-	// prepare language stats for the final report
-	languageStats := make([]LanguageMetricsReport, 0, len(langStatsMap))
-	for _, stats := range langStatsMap {
-		languageStats = append(languageStats, LanguageMetricsReport{
-			Percentage: (float64(stats.Code) / float64(codebaseStats.TotalLines)) * 100,
-			Metrics:    *stats,
-		})
-	}
-
-	// prepare directory stats for the final report
-	dirStats := make([]DirMetricsReport, 0, len(dirStatsMap))
-	for dir, stat := range dirStatsMap {
-		dirStats = append(dirStats, DirMetricsReport{
-			Directory:  dir,
-			Percentage: (float64(stat) / float64(codebaseStats.TotalLines)) * 100,
-			Lines:      stat,
-		})
-	}
-
-	// total languages is simply the length of the language stats map
-	codebaseStats.TotalLanguages = len(languageStats)
-
-	// sort the lists for better presentation in the final report
-	sort.Slice(topFilesList, func(i, j int) bool {
-		return topFilesList[i].Metrics.Lines > topFilesList[j].Metrics.Lines
+	sort.Slice(aggregation.topFilesList, func(i, j int) bool {
+		return aggregation.topFilesList[i].Metrics.Lines > aggregation.topFilesList[j].Metrics.Lines
 	})
-
 	sort.Slice(languageStats, func(i, j int) bool {
 		return languageStats[i].Percentage > languageStats[j].Percentage
 	})
-
 	sort.Slice(dirStats, func(i, j int) bool {
 		return dirStats[i].Percentage > dirStats[j].Percentage
 	})
 
-	codebaseReport := CodebaseReport{
+	report := CodebaseReport{
 		LanguageMetrics:   languageStats,
-		FileMetrics:       topFilesList,
+		FileMetrics:       aggregation.topFilesList,
 		DirMetrics:        dirStats,
-		CodebaseMetrics:   codebaseStats,
-		AnnotationMetrics: annotationStats,
-		DependencyMetrics: dependencyStats,
+		CodebaseMetrics:   aggregation.codebaseStats,
+		AnnotationMetrics: aggregation.annotationStats,
+		DependencyMetrics: aggregation.dependencyStats,
 	}
-
 	if flags.ThroughputFlag {
-		totalFiles := codebaseStats.TotalFiles
 		totalTime := time.Since(startTime).Seconds()
-
-		codebaseReport.PerformanceMetrics = PerformanceMetrics{
+		report.PerformanceMetrics = PerformanceMetrics{
 			TotalWorkers:      flags.WorkerFlag,
 			WorkerStats:       workers,
 			TotalTimeSeconds:  totalTime,
-			OverallThroughput: float64(totalFiles) / totalTime,
+			OverallThroughput: float64(aggregation.codebaseStats.TotalFiles) / totalTime,
 		}
 	}
 
-	return codebaseReport, nil
+	return report
+}
+
+func buildLanguageStats(statsMap map[string]*LanguageMetrics, totalLines int) []LanguageMetricsReport {
+	stats := make([]LanguageMetricsReport, 0, len(statsMap))
+	for _, metrics := range statsMap {
+		stats = append(stats, LanguageMetricsReport{
+			Percentage: (float64(metrics.Code) / float64(totalLines)) * 100,
+			Metrics:    *metrics,
+		})
+	}
+	return stats
+}
+
+func buildDirectoryStats(statsMap map[string]int, totalLines int) []DirMetricsReport {
+	stats := make([]DirMetricsReport, 0, len(statsMap))
+	for directory, lines := range statsMap {
+		stats = append(stats, DirMetricsReport{
+			Directory:  directory,
+			Percentage: (float64(lines) / float64(totalLines)) * 100,
+			Lines:      lines,
+		})
+	}
+	return stats
 }

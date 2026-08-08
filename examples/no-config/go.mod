@@ -2,4 +2,4 @@ module pathfinder/examples/no-config
 
 go 1.24.5
 
-require github.com/andrearcaina/pathfinder v0.4.0
+require github.com/andrearcaina/pathfinder v0.4.1

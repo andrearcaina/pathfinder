@@ -174,13 +174,25 @@ func renderThroughputReport(report pathfinder.CodebaseReport) string {
 		))
 	}
 
-	scanPanel := renderMetricPanel("SCAN RESULTS", [][2]string{
+	scanMetrics := [][2]string{
 		{"Files", FormatIntBritishEnglish(report.CodebaseMetrics.TotalFiles)},
 		{"Directories", FormatIntBritishEnglish(report.CodebaseMetrics.TotalDirs)},
 		{"Lines", FormatIntBritishEnglish(report.CodebaseMetrics.TotalLines)},
-		{"Duration", fmt.Sprintf("%.2fs", metrics.TotalTimeSeconds)},
-		{"Overall rate", fmt.Sprintf("%.1f/s", metrics.OverallThroughput)},
-	})
+	}
+
+	if len(report.DependencyMetrics.DependencyFiles) > 0 {
+		scanMetrics = append(scanMetrics, [2]string{
+			"Dependencies",
+			FormatIntBritishEnglish(report.DependencyMetrics.TotalDependencies),
+		})
+	}
+
+	scanMetrics = append(scanMetrics,
+		[2]string{"Duration", fmt.Sprintf("%.2fs", metrics.TotalTimeSeconds)},
+		[2]string{"Overall rate", fmt.Sprintf("%.1f/s", metrics.OverallThroughput)},
+	)
+
+	scanPanel := renderMetricPanel("SCAN RESULTS", scanMetrics)
 
 	runtimePanel := renderMetricPanel("RUNTIME", [][2]string{
 		{"File workers", fmt.Sprint(metrics.FileWorkers)},

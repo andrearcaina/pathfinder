@@ -5,6 +5,7 @@ import (
 	"io/fs"
 	"log"
 	"path/filepath"
+	"runtime"
 	"sort"
 	"strings"
 	"sync"
@@ -324,11 +325,28 @@ func buildCodebaseReport(flags Config, startTime time.Time, workers []*WorkerSta
 	}
 	if flags.ThroughputFlag {
 		totalTime := time.Since(startTime).Seconds()
+		dependencyWorkers := 0
+		resultConsumers := 1
+		if flags.DependencyFlag {
+			dependencyWorkers = flags.WorkerFlag
+			resultConsumers++
+		}
+
+		totalWorkers := flags.WorkerFlag + dependencyWorkers
+		osThreadsCreated, _ := runtime.ThreadCreateProfile(nil)
+
 		report.PerformanceMetrics = PerformanceMetrics{
-			TotalWorkers:      flags.WorkerFlag,
-			WorkerStats:       workers,
-			TotalTimeSeconds:  totalTime,
-			OverallThroughput: float64(aggregation.codebaseStats.TotalFiles) / totalTime,
+			FileWorkers:        flags.WorkerFlag,
+			DependencyWorkers:  dependencyWorkers,
+			TotalWorkers:       totalWorkers,
+			ResultConsumers:    resultConsumers,
+			PipelineGoroutines: totalWorkers + resultConsumers + 1,
+			LogicalCPUs:        runtime.NumCPU(),
+			GOMAXPROCS:         runtime.GOMAXPROCS(0),
+			OSThreadsCreated:   osThreadsCreated,
+			WorkerStats:        workers,
+			TotalTimeSeconds:   totalTime,
+			OverallThroughput:  float64(aggregation.codebaseStats.TotalFiles) / totalTime,
 		}
 	}
 

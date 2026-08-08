@@ -17,25 +17,7 @@ func PrintReport(report pathfinder.CodebaseReport, throughputMode bool) {
 	}
 
 	if throughputMode { // display what really matters (the performance)
-		fmt.Println("Pathfinder • Throughput Mode")
-
-		fmt.Println()
-
-		for _, worker := range report.PerformanceMetrics.WorkerStats {
-			fmt.Printf("[Worker %d] processed %d files in %.2fs (%.1f files/sec)\n",
-				worker.Id, worker.Processed, worker.Duration, worker.Throughput,
-			)
-		}
-
-		fmt.Println()
-
-		fmt.Printf("Total workers: %d\n", report.PerformanceMetrics.TotalWorkers)
-		fmt.Printf("Total scanned files: %s\n", FormatIntBritishEnglish(report.CodebaseMetrics.TotalFiles))
-		fmt.Printf("Total scanned dirs: %s\n", FormatIntBritishEnglish(report.CodebaseMetrics.TotalDirs))
-		fmt.Printf("Total lines: %s\n", FormatIntBritishEnglish(report.CodebaseMetrics.TotalLines))
-		fmt.Printf("Total time taken: %.2fs\n", report.PerformanceMetrics.TotalTimeSeconds)
-		fmt.Printf("Overall throughput: %.1f files/sec\n", report.PerformanceMetrics.OverallThroughput)
-
+		fmt.Println(renderThroughputReport(report))
 		return
 	}
 
@@ -161,4 +143,89 @@ func PrintReport(report pathfinder.CodebaseReport, throughputMode bool) {
 			}
 		}
 	}
+}
+
+func renderThroughputReport(report pathfinder.CodebaseReport) string {
+	metrics := report.PerformanceMetrics
+
+	workerHeaderStyle := lipgloss.NewStyle().
+		Foreground(lipgloss.Color("#87CEEB")).
+		Bold(true)
+	throughputTitleStyle := lipgloss.NewStyle().
+		Foreground(lipgloss.Color("#50C878")).
+		Bold(true)
+	workerIDStyle := lipgloss.NewStyle().
+		Foreground(lipgloss.Color("#9ACD32")).
+		Bold(true)
+	panelStyle := lipgloss.NewStyle().
+		Border(lipgloss.RoundedBorder()).
+		BorderForeground(lipgloss.Color("#55565B")).
+		Padding(0, 1)
+
+	workerLines := []string{
+		workerHeaderStyle.Render(fmt.Sprintf("  %-3s %12s %12s %10s", "ID", "FILES", "RATE", "ACTIVE")),
+	}
+	for _, worker := range metrics.WorkerStats {
+		workerLines = append(workerLines, fmt.Sprintf("  %s %12s %12s %10s",
+			workerIDStyle.Render(fmt.Sprintf("%-3d", worker.Id)),
+			FormatIntBritishEnglish(worker.Processed),
+			fmt.Sprintf("%.1f/s", worker.Throughput),
+			fmt.Sprintf("%.2fs", worker.Duration),
+		))
+	}
+
+	scanPanel := renderMetricPanel("SCAN RESULTS", [][2]string{
+		{"Files", FormatIntBritishEnglish(report.CodebaseMetrics.TotalFiles)},
+		{"Directories", FormatIntBritishEnglish(report.CodebaseMetrics.TotalDirs)},
+		{"Lines", FormatIntBritishEnglish(report.CodebaseMetrics.TotalLines)},
+		{"Duration", fmt.Sprintf("%.2fs", metrics.TotalTimeSeconds)},
+		{"Overall rate", fmt.Sprintf("%.1f/s", metrics.OverallThroughput)},
+	})
+
+	runtimePanel := renderMetricPanel("RUNTIME", [][2]string{
+		{"File workers", fmt.Sprint(metrics.FileWorkers)},
+		{"Dependency workers", fmt.Sprint(metrics.DependencyWorkers)},
+		{"Total workers", fmt.Sprint(metrics.TotalWorkers)},
+		{"Result consumers", fmt.Sprint(metrics.ResultConsumers)},
+		{"Pipeline goroutines", fmt.Sprint(metrics.PipelineGoroutines)},
+		{"Logical CPUs", fmt.Sprint(metrics.LogicalCPUs)},
+		{"GOMAXPROCS", fmt.Sprint(metrics.GOMAXPROCS)},
+		{"OS threads created*", fmt.Sprint(metrics.OSThreadsCreated)},
+	})
+
+	return strings.Join([]string{
+		throughputTitleStyle.Render("⚡ Pathfinder • Throughput"),
+		"",
+		workerHeaderStyle.Render("File-worker performance"),
+		panelStyle.Render(strings.Join(workerLines, "\n")),
+		"",
+		workerHeaderStyle.Render("Summary"),
+		lipgloss.JoinHorizontal(lipgloss.Top, scanPanel, "  ", runtimePanel),
+		lipgloss.NewStyle().Foreground(lipgloss.Color("#777777")).Render("* OS threads created over the process lifetime"),
+	}, "\n")
+}
+
+func renderMetricPanel(title string, metrics [][2]string) string {
+	titleStyle := lipgloss.NewStyle().
+		Foreground(lipgloss.Color("#87CEEB")).
+		Bold(true)
+	labelStyle := lipgloss.NewStyle().
+		Foreground(lipgloss.Color("#A0A0A0")).
+		Width(20)
+	valueStyle := lipgloss.NewStyle().
+		Foreground(lipgloss.Color("#9ACD32")).
+		Bold(true)
+
+	lines := []string{titleStyle.Render(title), ""}
+	for _, metric := range metrics {
+		lines = append(lines, labelStyle.Render(metric[0])+valueStyle.Render(metric[1]))
+	}
+
+	return lipgloss.NewStyle().
+		Width(34).
+		Height(10).
+		Border(lipgloss.RoundedBorder()).
+		BorderForeground(lipgloss.Color("#50C878")).
+		Padding(0, 1).
+		Render(strings.Join(lines, "\n"))
 }

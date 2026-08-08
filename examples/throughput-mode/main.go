@@ -38,14 +38,21 @@ func scanWithConfig() {
 
 func printReport(report pathfinder.CodebaseReport) {
 	for _, worker := range report.PerformanceMetrics.WorkerStats {
-		fmt.Printf("[Worker %d] processed %d files in %.2fs (%.1f files/sec)\n",
+		fmt.Printf("[File worker %d] processed %d files in %.2fs (%.1f files/sec)\n",
 			worker.Id, worker.Processed, worker.Duration, worker.Throughput,
 		)
 	}
 
 	fmt.Println()
 
+	fmt.Printf("File workers: %d\n", report.PerformanceMetrics.FileWorkers)
+	fmt.Printf("Dependency workers: %d\n", report.PerformanceMetrics.DependencyWorkers)
 	fmt.Printf("Total workers: %d\n", report.PerformanceMetrics.TotalWorkers)
+	fmt.Printf("Result consumers: %d\n", report.PerformanceMetrics.ResultConsumers)
+	fmt.Printf("Pipeline goroutines: %d\n", report.PerformanceMetrics.PipelineGoroutines)
+	fmt.Printf("Logical CPUs: %d\n", report.PerformanceMetrics.LogicalCPUs)
+	fmt.Printf("GOMAXPROCS: %d\n", report.PerformanceMetrics.GOMAXPROCS)
+	fmt.Printf("OS threads created (process lifetime): %d\n", report.PerformanceMetrics.OSThreadsCreated)
 	fmt.Printf("Total scanned files: %d\n", report.CodebaseMetrics.TotalFiles)
 	fmt.Printf("Total scanned dirs: %d\n", report.CodebaseMetrics.TotalDirs)
 	fmt.Printf("Total lines %d\n", report.CodebaseMetrics.TotalLines)

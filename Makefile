@@ -1,4 +1,4 @@
-.PHONY: default build run clean
+.PHONY: default build run vet test check clean
 
 default:
 	echo "Code Metric Tool Created By Andre Arcaina"
@@ -9,6 +9,14 @@ build:
 
 run:
 	bash -c "./bin/pathfinder"
+
+vet:
+	go vet ./...
+
+test:
+	go test ./...
+
+check: vet test build
 
 clean:
 	rm -rf ./bin/**

@@ -121,10 +121,17 @@ type WorkerStats struct {
 
 // PerformanceMetrics holds the workers throughput and time taken for the scan.
 type PerformanceMetrics struct {
-	TotalWorkers      int            // Number of concurrent workers used
-	WorkerStats       []*WorkerStats // Detailed stats per worker
-	TotalTimeSeconds  float64        // Total time taken for the scan in seconds
-	OverallThroughput float64        // Files processed per second
+	FileWorkers        int            // Number of file-scanning workers
+	DependencyWorkers  int            // Number of dependency-scanning workers
+	TotalWorkers       int            // Total number of worker goroutines
+	ResultConsumers    int            // Number of result-consumer goroutines
+	PipelineGoroutines int            // Workers, result consumers, and the producer goroutine
+	LogicalCPUs        int            // Logical CPUs available to the process
+	GOMAXPROCS         int            // Maximum CPUs that can execute Go code simultaneously
+	OSThreadsCreated   int            // OS threads created during the process lifetime
+	WorkerStats        []*WorkerStats // Detailed stats for file-scanning workers
+	TotalTimeSeconds   float64        // Total time taken for the scan in seconds
+	OverallThroughput  float64        // Files processed per second
 }
 
 // CodebaseReport is the final output structure containing all analysis results.

@@ -20,8 +20,11 @@ jobs:
             - name: Verify dependencies
               run: go mod verify
 
-            - name: Build
-              run: make build
+            - name: Vet, test, and build project
+              run: make check
+
+            - name: Pathfinder version
+              run: ./bin/pathfinder version
 
             - name: Clean up
               run: make clean
